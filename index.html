@@ -144,35 +144,96 @@
       transform: translateY(-1px);
     }
 
-    .nav-links {
+    .nav-menu {
+      position: relative;
+      margin-left: auto;
+    }
+
+    .nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.45rem 1rem 0.45rem 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-toggle:hover {
+      border-color: rgba(22, 64, 46, 0.35);
+      box-shadow: var(--shadow);
+    }
+
+    .nav-toggle::after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--navy);
+      margin-top: 2px;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-toggle[aria-expanded="true"]::after {
+      transform: rotate(180deg);
+    }
+
+    .nav-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      min-width: min(280px, calc(100vw - 48px));
+      max-height: min(70vh, 420px);
+      overflow-y: auto;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-hover);
+      padding: 0.5rem 0;
+      z-index: 150;
+    }
+
+    .nav-dropdown.is-open {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .nav-dropdown-list {
       list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem 1.1rem;
       margin: 0;
       padding: 0;
-      justify-content: flex-end;
     }
 
-    .nav-links a {
-      font-size: 0.8rem;
+    .nav-dropdown-list a {
+      display: block;
+      padding: 0.55rem 1.25rem;
+      font-size: 0.88rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
       text-decoration: none;
-      color: var(--muted);
-      transition: color 0.2s ease, transform 0.2s ease;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .nav-links a:hover {
+    .nav-dropdown-list a:hover,
+    .nav-dropdown-list a:focus-visible {
+      background: rgba(15, 39, 68, 0.06);
       color: var(--navy);
-      transform: translateY(-1px);
+      outline: none;
     }
 
-    @media (max-width: 720px) {
-      .nav-links {
-        display: none;
-      }
+    .nav-dropdown-list li + li {
+      border-top: 1px solid rgba(15, 39, 68, 0.06);
     }
 
     /* —— Scroll reveal —— */
@@ -892,21 +953,35 @@
 
   <nav class="site-nav" id="siteNav" aria-label="Primary">
     <div class="wrap">
-      <a class="nav-brand" href="#">Assam Tea Economics</a>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#history">History</a></li>
-        <li><a href="#transition">Transition</a></li>
-        <li><a href="#literature">Literature</a></li>
-        <li><a href="#methodology">Methods</a></li>
-        <li><a href="#viz">Inequality</a></li>
-        <li><a href="#policy">Policy</a></li>
-        <li><a href="#insights">Insights</a></li>
-        <li><a href="#mapSection">Map</a></li>
-        <li><a href="#voices">Sources</a></li>
-        <li><a href="#findings">Metrics</a></li>
-        <li><a href="#conclusion">Conclusion</a></li>
-      </ul>
+      <a class="nav-brand" href="#top">Assam Tea Economics</a>
+      <div class="nav-menu">
+        <button
+          type="button"
+          class="nav-toggle"
+          id="navToggle"
+          aria-expanded="false"
+          aria-controls="navDropdown"
+          aria-haspopup="true"
+        >
+          Sections
+        </button>
+        <div class="nav-dropdown" id="navDropdown" role="menu" aria-label="Page sections">
+          <ul class="nav-dropdown-list">
+            <li role="none"><a href="#about" role="menuitem">About</a></li>
+            <li role="none"><a href="#history" role="menuitem">History</a></li>
+            <li role="none"><a href="#transition" role="menuitem">Transition</a></li>
+            <li role="none"><a href="#literature" role="menuitem">Literature</a></li>
+            <li role="none"><a href="#methodology" role="menuitem">Methods</a></li>
+            <li role="none"><a href="#viz" role="menuitem">Inequality</a></li>
+            <li role="none"><a href="#policy" role="menuitem">Policy</a></li>
+            <li role="none"><a href="#insights" role="menuitem">Insights</a></li>
+            <li role="none"><a href="#mapSection" role="menuitem">Map</a></li>
+            <li role="none"><a href="#voices" role="menuitem">Quotes</a></li>
+            <li role="none"><a href="#findings" role="menuitem">Metrics</a></li>
+            <li role="none"><a href="#conclusion" role="menuitem">Conclusion</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -919,8 +994,6 @@
       <h1>Tea, Labor, and the Long Shadow of the Plantation</h1>
       <p class="hero-sub">
         <strong style="color:var(--navy);font-weight:600;">An Economic Analysis of Assam Tea, Labor, and Global Markets.</strong>
-        This portfolio summarizes <em>only</em> claims traceable to your uploaded reading list (NGO briefings, peer-reviewed articles,
-        journalism citing historians, legal databases, and policy PDFs).
       </p>
       <div class="hero-meta">
         <span><strong>Author</strong> Aaira Goswami</span>
@@ -1273,7 +1346,7 @@
           </article>
         </div>
         <div class="callout" style="margin-top:1.25rem;" role="note">
-          <strong>Triangulation:</strong> pair NGO and journalistic claims with administrative data and peer-reviewed estimates as you build the capstone appendix — template rows remain in <a href="docs/SOURCES_INVENTORY.md">docs/SOURCES_INVENTORY.md</a>.
+          <strong>Triangulation:</strong> pair NGO and journalistic claims with administrative statistics and peer-reviewed quantitative estimates as you build the capstone appendix, and record claim–evidence pairs so each major figure can be audited.
         </div>
       </div>
     </section>
@@ -1334,7 +1407,6 @@
         <a href="mailto:aaira@example.edu">aaira@example.edu</a>
         <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="docs/RESEARCH_QUESTIONS.md">Research questions</a>
-        <a href="docs/SOURCES_INVENTORY.md">Sources</a>
         <a href="docs/MAP_SPEC.md">Map spec</a>
         <a href="docs/READING_LIST_EXTRACTION.md">Reading-list extraction</a>
       </div>
@@ -1387,6 +1459,46 @@
       }
       window.addEventListener("scroll", onScrollNav, { passive: true });
       onScrollNav();
+
+      /* Nav dropdown (sections menu) */
+      var navToggle = document.getElementById("navToggle");
+      var navDropdown = document.getElementById("navDropdown");
+      var navMenu = navToggle ? navToggle.closest(".nav-menu") : null;
+
+      function closeNavDropdown() {
+        if (!navToggle || !navDropdown) return;
+        navToggle.setAttribute("aria-expanded", "false");
+        navDropdown.classList.remove("is-open");
+      }
+
+      function toggleNavDropdown() {
+        if (!navToggle || !navDropdown) return;
+        var open = !navDropdown.classList.contains("is-open");
+        navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        navDropdown.classList.toggle("is-open", open);
+      }
+
+      if (navToggle && navDropdown) {
+        navToggle.addEventListener("click", function (e) {
+          e.stopPropagation();
+          toggleNavDropdown();
+        });
+        navDropdown.querySelectorAll("a").forEach(function (a) {
+          a.addEventListener("click", function () {
+            closeNavDropdown();
+          });
+        });
+      }
+
+      document.addEventListener("click", function (e) {
+        if (navMenu && navDropdown && navDropdown.classList.contains("is-open") && !navMenu.contains(e.target)) {
+          closeNavDropdown();
+        }
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeNavDropdown();
+      });
 
       /* IntersectionObserver: reveal */
       var revealEls = document.querySelectorAll(".reveal");
