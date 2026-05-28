@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="An economic analysis of Assam tea, plantation labor, global markets, and policy — Aaira Goswami." />
+  <meta name="description" content="Assam tea, plantation labor, and global markets — a story-first research site by Aaira Goswami (Stanford)." />
   <title>Assam Tea, Labor &amp; Markets | Aaira Goswami</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,23 +17,27 @@
   />
   <style>
     :root {
-      --bg: #fafaf8;
-      --surface: rgba(255, 255, 255, 0.72);
-      --surface-strong: #ffffff;
-      --navy: #0f2744;
-      --navy-soft: #1e3a5f;
-      --green: #16402e;
-      --green-soft: #1f5c42;
-      --text: #1a1a18;
-      --muted: #5a5a54;
-      --line: rgba(15, 39, 68, 0.12);
-      --shadow: 0 18px 48px rgba(15, 39, 68, 0.08), 0 2px 8px rgba(15, 39, 68, 0.04);
-      --shadow-hover: 0 24px 56px rgba(15, 39, 68, 0.12), 0 4px 12px rgba(22, 64, 46, 0.08);
+      --bg: #f3efe6;
+      --surface: rgba(255, 252, 247, 0.82);
+      --surface-strong: #fffdf9;
+      --navy: #142e24;
+      --navy-soft: #1e4a36;
+      --green: #1a4d32;
+      --green-soft: #2d6b4a;
+      --gold: #a67c52;
+      --gold-soft: #c9a87a;
+      --sepia: #ebe3d4;
+      --text: #1f241c;
+      --muted: #5a5f56;
+      --line: rgba(20, 46, 36, 0.12);
+      --shadow: 0 18px 48px rgba(20, 46, 36, 0.1), 0 2px 8px rgba(20, 46, 36, 0.05);
+      --shadow-hover: 0 24px 56px rgba(20, 46, 36, 0.14), 0 4px 12px rgba(26, 77, 50, 0.1);
       --radius: 16px;
       --radius-sm: 12px;
       --font-body: "Inter", system-ui, sans-serif;
       --font-display: "Playfair Display", Georgia, serif;
       --nav-h: 52px;
+      --hero-photo: url("https://images.unsplash.com/photo-1593691509543-c55fb32e5f82?auto=format&fit=crop&w=1920&q=80");
     }
 
     *,
@@ -53,6 +57,14 @@
       line-height: 1.65;
       color: var(--text);
       background: var(--bg);
+      background-image:
+        repeating-linear-gradient(
+          100deg,
+          transparent,
+          transparent 56px,
+          rgba(26, 77, 50, 0.025) 56px,
+          rgba(26, 77, 50, 0.025) 57px
+        );
       -webkit-font-smoothing: antialiased;
     }
 
@@ -256,57 +268,37 @@
       align-items: flex-end;
       padding: calc(var(--nav-h) + 3rem) 0 4.5rem;
       overflow: hidden;
+      color: #f6f8f4;
     }
 
     .hero-bg {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: var(--bg);
-    }
-
-    .hero-bg::before,
-    .hero-bg::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.45;
-      animation: drift 18s ease-in-out infinite alternate;
+      background: var(--hero-photo) center / cover no-repeat;
     }
 
     .hero-bg::before {
-      width: 55vw;
-      height: 55vw;
-      max-width: 520px;
-      max-height: 520px;
-      top: -12%;
-      right: -8%;
-      background: radial-gradient(circle, rgba(15, 39, 68, 0.35) 0%, transparent 70%);
-      animation-delay: -4s;
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(20, 46, 36, 0.93) 0%,
+        rgba(26, 77, 50, 0.78) 45%,
+        rgba(20, 46, 36, 0.55) 100%
+      );
     }
 
     .hero-bg::after {
-      width: 48vw;
-      height: 48vw;
-      max-width: 440px;
-      max-height: 440px;
-      bottom: -18%;
-      left: -12%;
-      background: radial-gradient(circle, rgba(22, 64, 46, 0.38) 0%, transparent 70%);
-      animation: drift 22s ease-in-out infinite alternate-reverse;
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(20, 46, 36, 0.85) 0%, transparent 42%);
     }
 
     .hero-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(15, 39, 68, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 39, 68, 0.04) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: linear-gradient(180deg, black 0%, transparent 85%);
-      opacity: 0.5;
-      animation: gridPulse 14s ease-in-out infinite;
+      display: none;
     }
 
     @keyframes drift {
@@ -324,19 +316,24 @@
       z-index: 1;
     }
 
+    .hero h1 {
+      color: #f8fbf6;
+      text-shadow: 0 2px 28px rgba(0, 0, 0, 0.35);
+    }
+
     .hero-kicker {
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--green);
+      color: var(--gold-soft);
       margin-bottom: 1rem;
     }
 
     .hero-sub {
       font-size: clamp(1.05rem, 2vw, 1.25rem);
-      color: var(--muted);
-      max-width: 38rem;
+      color: rgba(246, 248, 244, 0.9);
+      max-width: 40rem;
       margin-bottom: 2rem;
     }
 
@@ -345,13 +342,13 @@
       flex-wrap: wrap;
       gap: 0.75rem 2rem;
       padding-top: 0.5rem;
-      border-top: 1px solid var(--line);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
       margin-top: 0.5rem;
     }
 
     .hero-meta span {
       font-size: 0.9rem;
-      color: var(--navy);
+      color: rgba(246, 248, 244, 0.92);
     }
 
     .hero-meta strong {
@@ -360,8 +357,31 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--gold-soft);
       margin-bottom: 0.15rem;
+    }
+
+    .hero-cta {
+      margin-top: 1.25rem;
+    }
+
+    .hero-cta a {
+      display: inline-block;
+      padding: 0.65rem 1.35rem;
+      background: linear-gradient(135deg, var(--green-soft), var(--green));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-cta a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+      color: #fff;
     }
 
     /* —— Sections —— */
@@ -370,7 +390,232 @@
     }
 
     main > section:nth-of-type(even) {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(255, 253, 248, 0.7) 0%, transparent 100%);
+    }
+
+    .section-theme-history {
+      background: linear-gradient(180deg, var(--sepia) 0%, rgba(243, 239, 230, 0.4) 100%) !important;
+      border-top: 1px solid rgba(166, 124, 82, 0.2);
+      border-bottom: 1px solid rgba(166, 124, 82, 0.15);
+    }
+
+    .section-theme-labor {
+      background: linear-gradient(180deg, rgba(232, 242, 234, 0.9) 0%, transparent 100%) !important;
+    }
+
+    .section-theme-project {
+      background: linear-gradient(135deg, rgba(255, 253, 248, 0.95) 0%, rgba(232, 242, 234, 0.5) 100%) !important;
+      border-block: 3px solid var(--gold-soft);
+    }
+
+    .puzzle-callout {
+      border-left: 4px solid var(--gold);
+      padding: 1.25rem 1.5rem;
+      background: var(--surface-strong);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      box-shadow: var(--shadow);
+      margin: 1.5rem 0 2rem;
+    }
+
+    .puzzle-callout .lead {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      line-height: 1.4;
+      color: var(--navy);
+      margin: 0;
+    }
+
+    .rq-grid {
+      display: grid;
+      gap: 1rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .rq-card {
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 1.15rem 1.25rem;
+      border-top: 3px solid var(--green);
+      box-shadow: var(--shadow);
+    }
+
+    .rq-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--navy);
+      margin: 0 0 0.35rem;
+    }
+
+    .rq-card p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .term-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .term-card {
+      background: rgba(26, 77, 50, 0.06);
+      border: 1px solid rgba(26, 77, 50, 0.12);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .term-card dt {
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 0.25rem;
+    }
+
+    .term-card dd {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .contribution-box {
+      background: linear-gradient(135deg, rgba(26, 77, 50, 0.08) 0%, rgba(166, 124, 82, 0.1) 100%);
+      border: 1px solid rgba(26, 77, 50, 0.18);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .contribution-box h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--navy);
+      margin: 0 0 0.75rem;
+    }
+
+    .press-card {
+      display: grid;
+      grid-template-columns: minmax(200px, 280px) 1fr;
+      gap: 0;
+      margin: 2rem 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-hover);
+      border: 1px solid var(--line);
+      background: var(--surface-strong);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .press-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 28px 56px rgba(20, 46, 36, 0.18);
+    }
+
+    .press-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .press-card-body {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .press-masthead {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #c45c26;
+      margin-bottom: 0.5rem;
+    }
+
+    .press-headline {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      line-height: 1.35;
+      color: var(--navy);
+      margin: 0 0 0.5rem;
+    }
+
+    .press-dek {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    @media (max-width: 640px) {
+      .press-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sources-compact {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .source-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding: 0.85rem 1rem;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+    }
+
+    .source-type {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .source-type--press { background: rgba(196, 92, 38, 0.12); color: #8b4518; }
+    .source-type--peer { background: rgba(26, 77, 50, 0.12); color: var(--green); }
+    .source-type--ngo { background: rgba(30, 58, 95, 0.1); color: var(--navy-soft); }
+
+    .empirical-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .empirical-card {
+      border-top: 3px solid var(--gold);
+    }
+
+    .empirical-card h3 {
+      color: var(--navy);
+    }
+
+    .status-pill {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(166, 124, 82, 0.2);
+      color: #6b4f2e;
+      margin-bottom: 0.5rem;
     }
 
     .section-label {
@@ -967,17 +1212,14 @@
         </button>
         <div class="nav-dropdown" id="navDropdown" role="menu" aria-label="Page sections">
           <ul class="nav-dropdown-list">
-            <li role="none"><a href="#about" role="menuitem">About</a></li>
+            <li role="none"><a href="#story" role="menuitem">The story</a></li>
             <li role="none"><a href="#history" role="menuitem">History</a></li>
-            <li role="none"><a href="#transition" role="menuitem">Transition</a></li>
-            <li role="none"><a href="#literature" role="menuitem">Literature</a></li>
-            <li role="none"><a href="#methodology" role="menuitem">Methods</a></li>
+            <li role="none"><a href="#transition" role="menuitem">Today</a></li>
+            <li role="none"><a href="#empirical" role="menuitem">My project</a></li>
+            <li role="none"><a href="#literature" role="menuitem">Sources</a></li>
             <li role="none"><a href="#viz" role="menuitem">Inequality</a></li>
-            <li role="none"><a href="#policy" role="menuitem">Policy</a></li>
-            <li role="none"><a href="#insights" role="menuitem">Insights</a></li>
             <li role="none"><a href="#mapSection" role="menuitem">Map</a></li>
-            <li role="none"><a href="#voices" role="menuitem">Quotes</a></li>
-            <li role="none"><a href="#findings" role="menuitem">Metrics</a></li>
+            <li role="none"><a href="#insights" role="menuitem">Insights</a></li>
             <li role="none"><a href="#conclusion" role="menuitem">Conclusion</a></li>
           </ul>
         </div>
@@ -990,11 +1232,14 @@
       <div class="hero-grid"></div>
     </div>
     <div class="wrap hero-inner reveal">
-      <p class="hero-kicker">Research portfolio</p>
-      <h1>Tea, Labor, and the Long Shadow of the Plantation</h1>
+      <p class="hero-kicker">Assam tea gardens · economic research</p>
+      <h1>When the world drinks Assam tea, who actually benefits?</h1>
       <p class="hero-sub">
-        <strong style="color:var(--navy);font-weight:600;">An Economic Analysis of Assam Tea, Labor, and Global Markets.</strong>
+        A capstone story about plantation labor, global markets, and inequality that did not end with independence — told from Assam, with room for my own data next.
       </p>
+      <div class="hero-cta">
+        <a href="#story">Start with the puzzle</a>
+      </div>
       <div class="hero-meta">
         <span><strong>Author</strong> Aaira Goswami</span>
         <span><strong>Affiliation</strong> Stanford University</span>
@@ -1003,222 +1248,230 @@
   </header>
 
   <main id="main">
-    <section id="about" class="reveal">
+    <section id="story" class="reveal">
       <div class="wrap">
-        <p class="section-label">Project overview</p>
-        <h2>Assam tea, labor markets, and the distribution of value</h2>
-        <div class="about-grid">
-          <div>
-            <p>
-              This capstone website organizes evidence on India’s organized tea plantation sector with emphasis on <strong>Assam</strong>,
-              where independent investigations and peer-reviewed work document acute stress on wages, health, housing, and voice—especially for women workers.
-              The reading list combines a major NGO briefing (Oxfam, 2019), a sociological health review (Saikia &amp; Parida, 2026),
-              investigative journalism synthesizing historians’ work (<em>Indian Express</em>, 2025), a linguistic essay on migration and culture (Avtans, 2025),
-              governance commentary on IFC-linked plantations (Sachdev &amp; Satpute / ETI), and primary legal entry points (Tea Board PLA PDF; Indian Kanoon listing—verify text manually).
-            </p>
-            <p>
-              The site separates (i) <strong>verbatim or closely paraphrased claims tied to named documents</strong> from (ii) <strong>illustrative charts</strong> that remain pedagogical until you replace them with your own harmonized datasets.
-            </p>
-            <p style="margin-bottom:0;">
-              <strong>Scope note:</strong> Oxfam’s briefing reports household-level patterns from its field visits; it is advocacy research and should be read alongside government statistics and peer-reviewed studies, not as a substitute for them.
-            </p>
-          </div>
-          <aside class="card glass-card question-card">
-            <span class="illustrative-tag" style="background:rgba(22,64,46,0.12);color:var(--green);">Research question</span>
-            <h3>How do value-chain price distribution, statutory labor and health protections, and documented governance gaps jointly relate to labor and health outcomes for women workers in Assam’s organized tea sector?</h3>
-            <p style="margin-bottom:0;font-size:0.95rem;color:var(--muted);">
-              Components map to Oxfam (consumer-price shares), the Tea Plantation Act of 1951 as discussed in Saikia &amp; Parida (2026), and CAO/IFC findings summarized in Sachdev &amp; Satpute (ETI blog)—see extraction file for boundaries.
-            </p>
-          </aside>
+        <p class="section-label">The puzzle</p>
+        <h2>Why this matters</h2>
+        <p style="max-width:42rem;font-size:1.08rem;">
+          Assam produces a huge share of India’s tea. You can buy it in supermarkets and breakfast blends around the world.
+          On the estates, many families still live in housing tied to their employer, depend on estate clinics and water systems,
+          and earn wages that investigators and journalists describe as hard to live on — while women do most of the leaf plucking and much unpaid care work at home.
+        </p>
+        <p style="max-width:42rem;">
+          That gap is the puzzle: <strong>tea is celebrated; plantation labor is often invisible</strong> in national economic debate.
+          Laws and welfare boards exist, yet reports of poor health, weak bargaining power, and uneven enforcement keep appearing.
+          I am from Assam, and I built this site to make that tension legible — not as a reading-list summary, but as a research project I am still growing.
+        </p>
+
+        <div class="puzzle-callout" role="note">
+          <p class="lead">
+            Named tension: <em>legal progress without economic security on the estate</em> — rights on paper meet a plantation system built to keep workers dependent.
+          </p>
         </div>
+
+        <h3 style="font-family:var(--font-display);font-size:1.35rem;color:var(--navy);margin:2rem 0 0.75rem;">Questions I am pursuing (in plain language)</h3>
+        <div class="rq-grid">
+          <article class="rq-card">
+            <h3>1. Who gets the money?</h3>
+            <p>When tea is sold at a high price in shops or export markets, how much reaches workers and estates versus brands and middlemen?</p>
+          </article>
+          <article class="rq-card">
+            <h3>2. Do protections work in real life?</h3>
+            <p>Plantation labor laws promise housing, health care, and fair treatment — but do outcomes for women workers match those promises?</p>
+          </article>
+          <article class="rq-card">
+            <h3>3. What never left?</h3>
+            <p>Which parts of the colonial plantation system — tied housing, weak voice, gendered plucking — still shape work today?</p>
+          </article>
+        </div>
+
+        <h3 style="font-family:var(--font-display);font-size:1.1rem;color:var(--green);margin:1.5rem 0 0.5rem;">Terms I use (quick definitions)</h3>
+        <dl class="term-grid">
+          <div class="term-card">
+            <dt>Value chain</dt>
+            <dd>Everyone who touches tea from garden to cup — workers, estates, processors, brands, retailers — and who keeps profit at each step.</dd>
+          </div>
+          <div class="term-card">
+            <dt>Statutory labor protections</dt>
+            <dd>Worker rights written in law (minimum wages, housing, health services on estates) — not the same as what happens day to day.</dd>
+          </div>
+          <div class="term-card">
+            <dt>Governance gaps</dt>
+            <dd>When audits, courts, unions, or company policies fail to enforce standards — even after public investigations.</dd>
+          </div>
+        </dl>
       </div>
     </section>
 
-    <section id="history" class="reveal">
+    <section id="history" class="reveal section-theme-history">
       <div class="wrap">
         <p class="section-label">Historical foundations</p>
-        <h2>Colonial institutions and gendered plucking (as reported in secondary sources)</h2>
-        <p style="max-width:48rem;">
-          <em>Indian Express</em> (2025) synthesizes historians’ accounts of penal contracts after the Workmen’s Breach of Contract Act (1859),
-          recruitment of women and children, and wage discounts justified by planters as “lighter” work—attributing specific statistics and quotations
-          to Jayeeta Sharma, Samita Sen, Srijita Chakravarty, Andrew B. Liu, Rana Pratap Behal, and others. This section does <strong>not</strong> substitute for reading those primary scholarly works;
-          it records only that the newspaper article presents those claims and interviews.
+        <h2>How the plantation system was built</h2>
+        <p style="max-width:42rem;">
+          British-era expansion turned forest land into tea gardens and brought workers — often migrants — under tight estate control.
+          Historians describe penal contracts that made leaving punishable, heavy recruitment of women and children for plucking,
+          and wage gaps justified by calling women’s work “lighter.” Estates were more than farms: they were enclosed worlds of work, housing, and discipline.
         </p>
-        <div class="callout" role="note">
-          <strong>Supported detail (via journalism only):</strong> The article reports Liu’s statement that women were about half the nineteenth-century workforce on these lines and were paid about 20% less than men with a rationale of lighter work.
-        </div>
-        <p class="cite-inline"><a href="https://indianexpress.com/article/research/women-in-assams-tea-industry-forced-to-pluck-or-left-to-perish-9880666/">Indian Express</a> (2025). For linguistics of migration, see Avtans (2025) card below.</p>
+        <p style="max-width:42rem;">
+          Independence and new labor laws changed the formal rules. My question is what <strong>stuck</strong>: estate-bound life, gendered plucking,
+          and thin bargaining power when global buyers still capture most of the price.
+        </p>
+
+        <a
+          class="press-card"
+          href="https://indianexpress.com/article/research/women-in-assams-tea-industry-forced-to-pluck-or-left-to-perish-9880666/"
+          target="_blank"
+          rel="noopener noreferrer">
+          <img
+            src="https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
+            alt="Tea harvest — visual stand-in; open article for the newspaper piece"
+            width="280"
+            height="220"
+            loading="lazy" />
+          <div class="press-card-body">
+            <p class="press-masthead">The Indian Express · Research · 2025</p>
+            <p class="press-headline">Women in Assam’s tea industry: forced to pluck or left to perish</p>
+            <p class="press-dek">
+              Journalism synthesizing historians on penal labor, gendered wages, and legacies of the plantation — click to read.
+              <em>(Replace side image with your own article screenshot before publishing if your instructor requires it.)</em>
+            </p>
+          </div>
+        </a>
+        <p class="cite-inline" style="margin-top:0.5rem;">
+          Source: <a href="https://indianexpress.com/article/research/women-in-assams-tea-industry-forced-to-pluck-or-left-to-perish-9880666/">Indian Express</a> (2025).
+          Claims inside the piece are attributed by the newspaper to named scholars — verify in the article before citing in your thesis.
+        </p>
       </div>
     </section>
 
-    <section id="transition" class="reveal">
+    <section id="transition" class="reveal section-theme-labor">
       <div class="wrap">
-        <p class="section-label">Law, health, and contemporary structure</p>
-        <h2>From statute to outcomes</h2>
-        <p style="max-width:48rem;">
-          Saikia &amp; Parida (2026), in a literature review, ask why reported diseases among female laborers in Assam’s tea gardens have risen despite assurances of adequate health care under the <strong>Tea Plantation Act of 1951</strong>,
-          and frame management pressure on “female labour” as shaping sanitation, hygiene, and health. Separately, Sachdev &amp; Satpute (ETI blog) discuss <strong>Indian labour law compliance</strong>, wage levels relative to legal minima as they report them,
-          and CAO findings on freedom of association and grievance mechanisms for IFC-linked plantations.
+        <p class="section-label">Today on the estates</p>
+        <h2>Laws on paper, life in the garden</h2>
+        <p style="max-width:42rem;">
+          Today’s organized tea sector is supposed to provide minimum wages, housing, water, and health services on the estate.
+          Yet investigators, peer-reviewed reviews, and worker advocates still document poverty instruments (like ration cards),
+          reported health burdens among women pluckers, and disputes over whether audits and certifications actually change conditions.
         </p>
-        <div class="callout" role="note">
-          <strong>Primary law PDF (not summarized here):</strong> Tea Board India hosts an amended Plantations Labour Act PDF — open and cite specific sections after reading:
-          <a href="https://www.teaboard.gov.in/pdf/policy/Plantations%20Labour%20Act_amended.pdf">Plantations Labour Act (PDF)</a>.
-          Indian Kanoon document hub: <a href="https://indiankanoon.org/doc/703097/">indiankanoon.org/doc/703097</a> (automated fetch blocked; verify title in browser).
+        <p style="max-width:42rem;">
+          That is why “more law” alone is not the whole story: we also need to ask <strong>who enforces</strong> standards and <strong>who captures value</strong> in the supply chain.
+        </p>
+        <p class="cite-inline" style="margin-top:1.25rem;">
+          Evidence drawn later on this site from Saikia &amp; Parida (2026), Oxfam (2019), and ETI/CAO commentary — see <a href="#literature">sources</a> and <a href="#insights">insights</a>.
+          Primary law: <a href="https://www.teaboard.gov.in/pdf/policy/Plantations%20Labour%20Act_amended.pdf">Plantations Labour Act (Tea Board PDF)</a>.
+        </p>
+      </div>
+    </section>
+
+    <section id="empirical" class="reveal section-theme-project">
+      <div class="wrap">
+        <p class="section-label">My project — next step</p>
+        <h2>What I am adding (beyond the reading list)</h2>
+
+        <div class="contribution-box">
+          <h3>My contribution</h3>
+          <p style="margin:0;max-width:46rem;">
+            Others have documented pieces of this story — NGO field visits, a health review, journalism, governance investigations.
+            <strong>I am not trying to replace them.</strong> I am building an economics-facing narrative from Assam that connects
+            <strong>money in the supply chain</strong>, <strong>estate institutions</strong>, and <strong>women’s labor</strong>,
+            then testing that story with <strong>data I collect and analyze myself</strong>. This site’s charts are placeholders until that work is done.
+          </p>
         </div>
-        <p class="cite-inline">PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/40920342/">40920342</a>; ETI blog; Tea Board PDF.</p>
+
+        <p style="max-width:42rem;color:var(--muted);">
+          <strong>Current status:</strong> evidence synthesis and communication design. <strong>Next:</strong> stop expanding the literature summary and start the empirical core below.
+        </p>
+
+        <div class="empirical-grid">
+          <article class="card empirical-card">
+            <span class="status-pill">Planned</span>
+            <h3>Data I am targeting</h3>
+            <ul style="margin:0;padding-left:1.1rem;font-size:0.92rem;color:var(--muted);">
+              <li>Official wage notifications &amp; production/export series (Tea Board / labour dept.)</li>
+              <li>Selected PLA sections after reading the Tea Board PDF</li>
+              <li>Health or utilization statistics where publicly available</li>
+              <li>Documented NGO or CAO figures only with clear source rows</li>
+            </ul>
+          </article>
+          <article class="card empirical-card">
+            <span class="status-pill">Planned</span>
+            <h3>Empirical strategy</h3>
+            <p style="margin:0;font-size:0.92rem;color:var(--muted);">
+              Descriptive indices first (wages, housing, health access, voice) comparing colonial vs present <em>only where I can cite numerators and denominators</em>.
+              Then narrow to one defensible question — e.g. wage levels vs statutory minima, or consumer price shares — shaped by what data actually exist.
+            </p>
+          </article>
+          <article class="card empirical-card">
+            <span class="status-pill">Planned</span>
+            <h3>How the story will evolve</h3>
+            <p style="margin:0;font-size:0.92rem;color:var(--muted);">
+              Let available data refine the question, not the other way around. Replace illustrative charts with observed or officially published numbers;
+              keep journalism and advocacy claims labelled as such.
+            </p>
+          </article>
+        </div>
+        <p class="viz-caption" style="margin-top:1.25rem;">
+          Working notes: <a href="docs/RESEARCH_QUESTIONS.md">research questions</a> ·
+          <a href="docs/READING_LIST_EXTRACTION.md">reading-list extraction</a> (for citation boundaries only).
+        </p>
       </div>
     </section>
 
     <section id="literature" class="reveal">
       <div class="wrap">
-        <p class="section-label">Literature review</p>
-        <h2>Five sources from your reading list (structured summaries)</h2>
-        <p class="viz-caption" style="margin-bottom:1.5rem;">
-          Each card lists <strong>citation → question → method → findings → why it matters</strong>, strictly from the linked material or PubMed metadata (no invented results).
+        <p class="section-label">Sources (compact)</p>
+        <h2>What others have documented — one line each</h2>
+        <p class="viz-caption" style="margin-bottom:1.25rem;">
+          Full extraction with citation boundaries: <a href="docs/READING_LIST_EXTRACTION.md">docs/READING_LIST_EXTRACTION.md</a>.
+          I use these to triangulate; my own analysis will sit in <a href="#empirical">My project</a>.
         </p>
-        <div class="timeline" aria-label="Milestones referenced across sources">
-          <div class="timeline-item">
-            <time>1859</time>
-            <h3>Penal contracts</h3>
-            <p><em>Indian Express</em> cites the Workmen’s Breach of Contract Act (XIII) of 1859 in its historical section.</p>
+        <div class="sources-compact">
+          <div class="source-row">
+            <span class="source-type source-type--ngo">NGO · 2019</span>
+            <div>
+              <strong>Oxfam — <em>Addressing the Human Cost of Assam Tea</em></strong><br />
+              Household visits; value-chain price shares; BPL ration cards; reform agenda. <a href="https://policy-practice.oxfam.org/resources/addressing-the-human-cost-of-assam-tea-620945/">Resource page</a>
+            </div>
           </div>
-          <div class="timeline-item">
-            <time>1951</time>
-            <h3>Tea Plantation Act</h3>
-            <p>Saikia &amp; Parida (2026) abstract references health-care assurances under the Tea Plantation Act of 1951.</p>
+          <div class="source-row">
+            <span class="source-type source-type--peer">Peer review · 2026</span>
+            <div>
+              <strong>Saikia &amp; Parida — health burdens among women workers</strong><br />
+              Review linking social disparities to health; questions gaps vs Tea Plantation Act promises. <a href="https://pubmed.ncbi.nlm.nih.gov/40920342/">PubMed</a>
+            </div>
           </div>
-          <div class="timeline-item">
-            <time>2016</time>
-            <h3>CAO report</h3>
-            <p>ETI guest blog states the Compliance Advisor Ombudsman released its investigative report in November 2016.</p>
+          <div class="source-row">
+            <span class="source-type source-type--press">Press · 2025</span>
+            <div>
+              <strong><em>Indian Express</em> — women, plucking, colonial legacies</strong><br />
+              See visual link in <a href="#history">History</a>. <a href="https://indianexpress.com/article/research/women-in-assams-tea-industry-forced-to-pluck-or-left-to-perish-9880666/">Article</a>
+            </div>
           </div>
-          <div class="timeline-item">
-            <time>2019</time>
-            <h3>Oxfam briefing</h3>
-            <p>Banerji &amp; Willoughby — Oxfam resource page dated 10 Oct 2019.</p>
+          <div class="source-row">
+            <span class="source-type source-type--ngo">Governance · ETI</span>
+            <div>
+              <strong>Sachdev &amp; Satpute — IFC / CAO / APPL commentary</strong><br />
+              Wages vs reported minima; certification limits; freedom of association. ETI guest blog (verify figures against CAO primary report).
+            </div>
           </div>
-          <div class="timeline-item" style="padding-bottom:0;">
-            <time>2025–2026</time>
-            <h3>Recent scholarship &amp; press</h3>
-            <p>Avtans (2025) essay; <em>Indian Express</em> (2025) article; Saikia &amp; Parida volume 56(2) dated 2026 Apr (Epub Sep 2025).</p>
+          <div class="source-row">
+            <span class="source-type source-type--press">Essay · 2025</span>
+            <div>
+              <strong>Avtans — languages on Assam &amp; Darjeeling estates</strong><br />
+              Migration, lingua francas, mother-tongue loss. <a href="https://www.himalmag.com/culture/india-tea-estate-workers">Himal</a>
+            </div>
           </div>
         </div>
-        <div class="lit-grid" style="margin-top:2rem;">
-          <article class="card lit-card">
-            <span class="illustrative-tag" style="background:rgba(15,39,68,0.1);color:var(--navy);">Briefing paper</span>
-            <p class="paper-title">Addressing the Human Cost of Assam Tea</p>
-            <p class="author">Banerji, S., &amp; Willoughby, R. (2019). Oxfam. DOI 10.21201/2019.4870</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>RQ:</strong> Why are living wages and decent conditions systematically denied, and what reforms (price sharing, gender policy, law review) does Oxfam advance?</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Method:</strong> Oxfam-commissioned household visits (stated on resource page).</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Findings (overview):</strong> 50% of visited households held Assam BPL ration cards; healthcare/water/education struggles; brands/supermarkets may capture up to ~95% of end consumer price vs &lt;~5% remaining on estates in some cases; women in lowest-paid plucking and unpaid care.</p>
-            <p style="margin:0;font-size:0.92rem;"><strong>Why it matters:</strong> Explicit <strong>value-chain rent distribution</strong> narrative for your economics frame.</p>
-          </article>
-          <article class="card lit-card">
-            <span class="illustrative-tag" style="background:rgba(15,39,68,0.1);color:var(--navy);">Peer-reviewed review</span>
-            <p class="paper-title">Brewing Inequality…</p>
-            <p class="author">Saikia, V., &amp; Parida, P. K. (2026). <em>Int J Soc Determinants Health Health Serv</em>, 56(2), 256–261. DOI 10.1177/27551938251366878</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>RQ (abstract):</strong> How do social disparities among female tea workers relate to health disparities, and why rising reported disease despite Tea Plantation Act 1951 assurances?</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Method:</strong> Extensive literature review (PubMed publication type: Review).</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Findings (abstract only):</strong> Underpayment and marginalisation of women; coercion of “female labour” linked to sanitation, hygiene, and health; calls for comprehensive policies.</p>
-            <p style="margin:0;font-size:0.92rem;"><strong>Why it matters:</strong> Bridges <strong>labour economics</strong> and <strong>health inequality</strong> with statutory reference.</p>
-          </article>
-          <article class="card lit-card">
-            <span class="illustrative-tag" style="background:rgba(15,39,68,0.1);color:var(--navy);">Essay / Himal</span>
-            <p class="paper-title">The languages of tea-estate workers in Assam and Darjeeling</p>
-            <p class="author">Avtans, A. (2025, Jan 20). <em>Himal Southasian</em></p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>RQ (dek):</strong> How did migration to colonial tea gardens reshape language contact, lingua francas, and mother tongues?</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Method:</strong> Not stated in retrieved page fragment (essay form).</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Findings (visible lede):</strong> Diverse marginalised migrants brought eclectic languages; new lingua francas; erosion of many mother tongues.</p>
-            <p style="margin:0;font-size:0.92rem;"><strong>Why it matters:</strong> Adds <strong>cultural / linguistic capital</strong> dimension alongside wage and health evidence.</p>
-          </article>
-          <article class="card lit-card">
-            <span class="illustrative-tag" style="background:rgba(15,39,68,0.1);color:var(--navy);">Research journalism</span>
-            <p class="paper-title">Women in Assam’s tea industry: Forced to pluck or left to perish</p>
-            <p class="author"><em>Indian Express</em> (2025, Mar 11)</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>RQ:</strong> Frames historical role of women and legacies of indenture and penal discipline (article narrative).</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Method:</strong> Interviews with scholars + synthesis of published histories (as the article presents them).</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Findings:</strong> Attribute each empirical claim to the historian or book named <em>inside the article</em> when you cite it in your thesis — do not cite the newspaper as if it were primary archival evidence.</p>
-            <p style="margin:0;font-size:0.92rem;"><strong>Why it matters:</strong> Accessible bridge from <strong>colonial institutions</strong> to <strong>present gendered plucking</strong>.</p>
-          </article>
-          <article class="card lit-card">
-            <span class="illustrative-tag" style="background:rgba(15,39,68,0.1);color:var(--navy);">Governance / blog</span>
-            <p class="paper-title">A life of dignity long overdue for Assam’s tea workers</p>
-            <p class="author">Sachdev, S., &amp; Satpute, J. (guest). Ethical Trading Initiative</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>RQ:</strong> Did IFC/Tata APPL deliver promised conditions and worker voice?</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Method:</strong> Commentary referencing CAO report, IFC investment figures, complainant NGOs.</p>
-            <p style="margin:0 0 0.5rem;font-size:0.92rem;"><strong>Findings:</strong> IFC US $7.8m for 19.9% stake; CAO Nov 2016 report; blog lists CAO headline findings (wages, housing, health, child labour risk, freedom of association, pesticides, Indigenous classification, etc.); states Rs 126/day vs Rs 250 legal minimum at time of writing; argues boycotts harmful.</p>
-            <p style="margin:0;font-size:0.92rem;"><strong>Why it matters:</strong> <strong>Development finance + certification limits + FOA</strong> for policy economics.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="methodology" class="reveal">
-      <div class="wrap">
-        <p class="section-label">Methodology</p>
-        <h2>Evidence synthesis (what this site does and does not do)</h2>
-        <p style="max-width:48rem;margin-bottom:1.5rem;">
-          <strong>What is done here:</strong> Each reading-list item is parsed for bibliographic metadata, stated research questions, declared methods (where authors declare them), and findings that appear in abstracts, overviews, or blog text.
-          Claims are logged in <a href="docs/READING_LIST_EXTRACTION.md">docs/READING_LIST_EXTRACTION.md</a> with explicit boundaries (e.g., journalism vs peer review; PDFs not machine-read).
-        </p>
-        <p style="max-width:48rem;margin-bottom:2rem;">
-          <strong>What is not done here:</strong> No new econometric estimates, causal identification, or merged micro-datasets are produced on this page. Any chart labelled “illustrative” is pedagogical until you substitute coefficients or indices from your own analysis.
-          For your capstone <strong>empirical strategy</strong>, you might next: (1) download official wage and production series; (2) code policy events from the Plantations Labour Act PDF and amendments; (3) replicate or extend review themes from Saikia &amp; Parida using primary health data—those steps are <em>your</em> design choices once data access is confirmed.
-        </p>
-        <div class="flow-wrap">
-          <div class="card flow-step">
-            <div class="flow-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                <path d="M8 7h8M8 11h8M8 15h5" />
-              </svg>
-            </div>
-            <h3>Collection</h3>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">
-              Curated list: NGO briefing (Oxfam), peer-reviewed article (PubMed), journalism (<em>Indian Express</em>), essay (Himal), governance blog (ETI), legal PDF (Tea Board), and Kanoon pointer (manual read).
-            </p>
-          </div>
-          <div class="flow-arrow" aria-hidden="true">→</div>
-          <div class="card flow-step">
-            <div class="flow-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M3 3v18h18" />
-                <path d="M7 16l4-4 4 4 6-7" />
-              </svg>
-            </div>
-            <h3>Extraction</h3>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">
-              Structured fields per source; no extrapolation beyond quoted or paraphrased passages; 403-blocked pages flagged for human download.
-            </p>
-          </div>
-          <div class="flow-arrow" aria-hidden="true">→</div>
-          <div class="card flow-step">
-            <div class="flow-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 7v5l3 2" />
-              </svg>
-            </div>
-            <h3>Public synthesis</h3>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">
-              Website sections map extracted claims to overview, literature cards, policy implications, and source-linked metrics—separate from illustrative visuals.
-            </p>
-          </div>
-        </div>
-        <p class="viz-caption" style="margin-top:1.5rem;">
-          Triangulation rule used on this site: when only one source type states a number, it is labelled with that source and not treated as consensus.
-        </p>
       </div>
     </section>
 
     <section id="viz" class="viz-section reveal">
       <div class="wrap">
-        <p class="section-label">Interactive evidence</p>
-        <h2>Indexed labor conditions: colonial period vs. present (illustrative)</h2>
+        <p class="section-label">Interactive · placeholder data</p>
+        <h2>Labor conditions then and now (illustrative until my data are ready)</h2>
         <div class="chart-panel">
           <p style="margin-top:0;max-width:52ch;color:var(--muted);font-size:0.95rem;">
-            This chart is <strong>pedagogical only</strong> — it is <em>not</em> estimated from your reading-list tables. Use it until you replace dimensions with numerators/denominators from Oxfam field methods, government surveys, or estate-level data. Cross-check themes against <a href="docs/READING_LIST_EXTRACTION.md">docs/READING_LIST_EXTRACTION.md</a>.
+            This chart is a <strong>story scaffold</strong>, not my empirical results. I will replace it with indices built from official statistics and documented sources in <a href="#empirical">My project</a>.
           </p>
           <div class="btn-row" style="margin-top:0.75rem;">
             <button type="button" class="btn btn-ghost" id="chartModeIndexed" aria-pressed="true">Indexed (0–10)</button>
@@ -1258,12 +1511,11 @@
 
     <section id="policy" class="reveal">
       <div class="wrap">
-        <p class="section-label">Policy &amp; economic implications</p>
-        <h2>Implications supported by the reading list (not an exhaustive policy menu)</h2>
-        <p style="max-width:48rem;">
-          <strong>Oxfam (2019)</strong> explicitly points to fairer sharing of end consumer price, stronger gender policies, and review of plantation labour laws—conditional on its diagnosis of poverty, ration-card reliance, and care burdens.
-          <strong>Saikia &amp; Parida (2026)</strong> argue for comprehensive policies improving well-being given reported health burdens among women workers (abstract-level claim).
-          <strong>Sachdev &amp; Satpute (ETI)</strong> argue World Bank / IFC action plans were too narrow, that Indian labour-law compliance must improve, that certification schemes cannot be relied on alone, and that boycotting Assam tea would harm workers—advocating consumer pressure on IFC and APPL instead.
+        <p class="section-label">Policy directions</p>
+        <h2>Where evidence points (not my final recommendations yet)</h2>
+        <p style="max-width:42rem;">
+          Across sources, three threads recur: <strong>share consumer price more fairly</strong>, <strong>enforce plantation law and health obligations</strong>, and <strong>strengthen worker voice</strong> rather than rely on certification alone.
+          Advocacy pieces warn that boycotts can hurt workers if gardens close — pressure on buyers and public institutions is framed as an alternative.
         </p>
         <div class="callout" role="note">
           <strong>Legal text:</strong> Operational implications of the Plantations Labour Act require line-by-line reading of the Tea Board PDF and any case compilation you trust (e.g. Indian Kanoon after manual access)—this site does not interpret sections not yet excerpted.
@@ -1274,8 +1526,8 @@
 
     <section id="insights" class="reveal">
       <div class="wrap">
-        <p class="section-label">Key insights</p>
-        <h2>Evidence-linked takeaways (no new empirical claims)</h2>
+        <p class="section-label">Evidence snapshot</p>
+        <h2>Patterns that show up across sources</h2>
         <div class="insight-grid">
           <article class="card insight-card">
             <h3>Poverty instruments on estates</h3>
@@ -1383,14 +1635,13 @@
         <p class="section-label">Conclusion</p>
         <div class="conclusion-block">
           <p class="lead">
-            The reading list converges on a small set of economic themes: <strong>how consumer-price shares and reported estate wages relate to statutory minima and in-kind obligations</strong>,
-            how <strong>health outcomes</strong> are discussed relative to plantation labour law, and how <strong>governance actors</strong> (states, firms, IFC, unions) interact on enforcement and freedom of association.
+            Assam’s tea economy is a global success story and a local labor story at once. The puzzle — celebrated commodity, concealed labor regime — is still open.
           </p>
           <p>
-            This website does not adjudicate which single narrative is “correct”; it shows that <strong>Oxfam</strong>, <strong>peer-reviewed sociology of health</strong>, <strong>historians via journalism</strong>, and <strong>CAO-related commentary</strong> each supply partial, checkable pieces of a larger empirical puzzle your capstone can assemble with additional administrative and survey data.
+            This site started from real-world stakes in the gardens, not from abstracts. The reading list helped me see the landscape; <strong>my capstone still needs my own data and voice</strong> to answer the three plain questions on <a href="#story">the story page</a>.
           </p>
-          <p>
-            Next step for a publishable thesis: download the Tea Board PLA PDF and official wage series; reconcile ETI wage figures with current notifications; and replace illustrative charts with indices whose numerators and denominators you document.
+          <p style="margin-bottom:0;">
+            Next: build the empirical core in <a href="#empirical">My project</a>, swap illustrative charts for documented numbers, and keep Assam’s workers visible in how we teach Indian economics.
           </p>
         </div>
       </div>
@@ -1412,18 +1663,14 @@
       </div>
     </div>
     <div class="wrap mobile-nav" aria-label="Section links">
-      <a href="#about">About</a>
+      <a href="#story">Story</a>
       <a href="#history">History</a>
-      <a href="#transition">Transition</a>
-      <a href="#literature">Literature</a>
-      <a href="#methodology">Methods</a>
-      <a href="#viz">Inequality</a>
-      <a href="#policy">Policy</a>
-      <a href="#insights">Insights</a>
+      <a href="#transition">Today</a>
+      <a href="#empirical">My project</a>
+      <a href="#literature">Sources</a>
+      <a href="#viz">Chart</a>
       <a href="#mapSection">Map</a>
-      <a href="#voices">Quotes</a>
-      <a href="#findings">Metrics</a>
-      <a href="#conclusion">Conclusion</a>
+      <a href="#conclusion">Close</a>
     </div>
   </footer>
 
@@ -1499,6 +1746,11 @@
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") closeNavDropdown();
       });
+
+      /* Legacy anchor: #about → #story */
+      if (window.location.hash === "#about") {
+        window.location.replace("#story");
+      }
 
       /* IntersectionObserver: reveal */
       var revealEls = document.querySelectorAll(".reveal");
