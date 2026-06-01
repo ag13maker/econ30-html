@@ -447,6 +447,28 @@
     }
     .quota-briefing ul { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; }
     .quota-briefing[hidden] { display: none !important; }
+    .btn-start-confirmed {
+      display: block;
+      width: 100%;
+      margin-top: 1.25rem;
+      padding: 0.85rem 1.5rem;
+      background: var(--color-accent);
+      color: #0d1a0f;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      font-family: inherit;
+    }
+    .btn-start-confirmed:hover {
+      background: #6ab85a;
+      transform: translateY(-1px);
+    }
+    .btn-start-confirmed:active { transform: translateY(0); }
+    .quota-sim-grid[hidden] { display: none !important; }
+    .quota-start-btn[hidden] { display: none !important; }
     #sim-outcome { margin-top: 1.5rem; }
     .outcome-card {
       background: var(--color-card);
@@ -910,7 +932,7 @@
           <h3 id="quotaSimTitle">Quotas &amp; Penalties Simulator</h3>
           <p class="quota-sim-lead">Chase the <strong>Pluck leaves</strong> button — it jumps when rain, poor yield, or exhaustion hit. The quota often does not move. Missing it can mean wages cut.</p>
 
-          <div id="quotaBriefing" class="quota-briefing" hidden>
+          <div id="quotaBriefing" class="quota-briefing">
             <h4>Shift briefing</h4>
             <ul>
               <li>Today's shift: 6:00 AM — 5:00 PM</li>
@@ -919,9 +941,10 @@
               <li>Your status: 3rd trimester (many pluckers work through pregnancy)</li>
               <li>Penalty if you miss quota: wages docked proportionally</li>
             </ul>
+            <button type="button" id="start-confirmed" class="btn-start-confirmed">I understand — start my shift</button>
           </div>
 
-          <div class="quota-sim-grid">
+          <div class="quota-sim-grid" id="quotaSimGrid" hidden>
             <div class="quota-play-area">
               <div class="quota-hud" aria-live="polite">
                 <span>Time left: <strong id="quotaTimer">15</strong>s</span>
@@ -931,7 +954,7 @@
               <div class="quota-progress-wrap" aria-hidden="true"><div class="quota-progress-bar" id="quotaProgressBar"></div></div>
               <p class="quota-hazard" id="quotaHazard" aria-live="assertive"></p>
               <div class="quota-actions">
-                <button type="button" class="quota-start-btn" id="quotaStartBtn">Start shift</button>
+                <button type="button" class="quota-start-btn" id="quotaStartBtn" hidden aria-hidden="true">Start shift</button>
               </div>
               <div class="quota-chase-arena" id="quotaChaseArena" aria-label="Plucking area">
                 <p class="quota-difficulty-msg" id="quotaDifficultyMsg"></p>
@@ -1419,10 +1442,13 @@
         }
 
         function setQuotaSimVisible(show) {
-          var sim = document.getElementById("quotaSimulator");
-          if (!sim) return;
-          sim.hidden = !show;
-          sim.setAttribute("aria-hidden", show ? "false" : "true");
+          var simEl = document.getElementById("quotaSimulator");
+          if (!simEl) return;
+          simEl.hidden = !show;
+          simEl.setAttribute("aria-hidden", show ? "false" : "true");
+          if (show && typeof window.__quotaEnterBriefing === "function") {
+            window.__quotaEnterBriefing();
+          }
         }
 
         function setMapEra(era) {
@@ -1456,7 +1482,8 @@
       /* Quota simulator */
       (function initQuotaSimulator() {
         var sim = document.getElementById("quotaSimulator");
-        var startBtn = document.getElementById("quotaStartBtn");
+        var confirmBtn = document.getElementById("start-confirmed");
+        var simGrid = document.getElementById("quotaSimGrid");
         var pluckBtn = document.getElementById("quotaPluckBtn");
         var timerEl = document.getElementById("quotaTimer");
         var countEl = document.getElementById("quotaCount");
@@ -1473,16 +1500,18 @@
         var wagePenalty = document.getElementById("wagePenalty");
         var wageFinal = document.getElementById("wageFinal");
         var wageBase = document.getElementById("wageBase");
-        if (!sim || !startBtn || !pluckBtn) return;
+        if (!sim || !confirmBtn || !pluckBtn) return;
 
         var SHIFT_SEC = 15;
         var BASE_QUOTA = 26;
         var BASE_WAGE = 280;
         var INR_PER_USD = 84;
         var US_MIN_COMPARE = 58;
+        var RESTART_DELAY_SEC = 6;
         var tickId = null;
         var dodgeTimer = null;
-        var briefingTimer = null;
+        var restartCountdownId = null;
+        var restartIntervalId = null;
         var timeLeft = SHIFT_SEC;
         var plucked = 0;
         var quota = BASE_QUOTA;
@@ -1595,8 +1624,71 @@
             setTimeout(function () { if (playing) clickWeight = 1; }, 3000);
           }
         }
+        function clearRestartTimers() {
+          if (restartCountdownId) {
+            clearTimeout(restartCountdownId);
+            restartCountdownId = null;
+          }
+          if (restartIntervalId) {
+            clearInterval(restartIntervalId);
+            restartIntervalId = null;
+          }
+        }
+
+        function clearGameTimers() {
+          if (tickId) {
+            clearInterval(tickId);
+            tickId = null;
+          }
+          stopDodgeLoop();
+          clearRestartTimers();
+        }
+
+        function resetGameState() {
+          playing = false;
+          timeLeft = SHIFT_SEC;
+          plucked = 0;
+          quota = BASE_QUOTA;
+          clicksDisabledUntil = 0;
+          clickWeight = 1;
+          lastClickAt = 0;
+        }
+
+        function enterBriefingState() {
+          clearGameTimers();
+          resetGameState();
+          if (simGrid) {
+            simGrid.hidden = true;
+            simGrid.setAttribute("aria-hidden", "true");
+          }
+          if (briefingEl) {
+            briefingEl.hidden = false;
+            briefingEl.removeAttribute("aria-hidden");
+          }
+          if (simOutcomeEl) {
+            simOutcomeEl.style.display = "none";
+            simOutcomeEl.innerHTML = "";
+          }
+          if (statusEl) statusEl.textContent = "Ready";
+          showHazard("");
+          hideDifficulty();
+          centerPluckButton();
+          if (chaseArena) chaseArena.classList.remove("is-shake");
+          setWageDisplay(0, BASE_WAGE);
+          pluckBtn.disabled = true;
+          if (progressBar) {
+            progressBar.style.width = "0%";
+            progressBar.classList.remove("is-behind");
+          }
+          updateHud();
+        }
+
         function showOutcome() {
           if (!simOutcomeEl) return;
+          if (simGrid) {
+            simGrid.hidden = true;
+            simGrid.setAttribute("aria-hidden", "true");
+          }
           var dailyWage = BASE_WAGE;
           var kg = Math.floor(plucked);
           var shortfall = Math.max(0, quota - kg);
@@ -1618,7 +1710,9 @@
             '<div class="outcome-row"><span>US federal min wage (same hours)</span><strong>~$' + US_MIN_COMPARE + "</strong></div>" +
             '<p class="outcome-insight">' + insight + "</p>" +
             '<button type="button" id="copy-result" class="btn-copy">Copy my result</button>' +
-            "</div>";
+            '<p id="restart-countdown" style="font-size:0.8rem;color:var(--color-text-muted);margin-top:0.75rem;text-align:center;">Restarting in ' +
+            RESTART_DELAY_SEC +
+            "...</p></div>";
           simOutcomeEl.style.display = "block";
 
           lastCopyText =
@@ -1637,41 +1731,44 @@
 
           setWageDisplay(penalty, takehome);
           if (statusEl) statusEl.textContent = penalty > 0 ? "Penalty applied" : "Quota met";
+          scheduleAutoRestart();
         }
+
+        function scheduleAutoRestart() {
+          clearRestartTimers();
+          var countdownEl = document.getElementById("restart-countdown");
+          var secondsLeft = RESTART_DELAY_SEC;
+          function updateCountdownText() {
+            if (countdownEl) countdownEl.textContent = "Restarting in " + secondsLeft + "...";
+          }
+          updateCountdownText();
+          restartIntervalId = setInterval(function () {
+            secondsLeft -= 1;
+            if (secondsLeft <= 0) {
+              clearRestartTimers();
+              enterBriefingState();
+            } else {
+              updateCountdownText();
+            }
+          }, 1000);
+        }
+
         function endShift() {
           playing = false;
           pluckBtn.disabled = true;
+          if (tickId) {
+            clearInterval(tickId);
+            tickId = null;
+          }
           stopDodgeLoop();
-          if (tickId) { clearInterval(tickId); tickId = null; }
           showOutcome();
           updateHud();
         }
+
         function resetShift() {
-          if (tickId) clearInterval(tickId);
-          if (briefingTimer) clearTimeout(briefingTimer);
-          tickId = null;
-          stopDodgeLoop();
-          playing = false;
-          timeLeft = SHIFT_SEC;
-          plucked = 0;
-          quota = BASE_QUOTA;
-          clicksDisabledUntil = 0;
-          clickWeight = 1;
-          if (briefingEl) briefingEl.hidden = true;
-          if (simOutcomeEl) {
-            simOutcomeEl.style.display = "none";
-            simOutcomeEl.innerHTML = "";
-          }
-          if (statusEl) statusEl.textContent = "Ready";
-          showHazard("");
-          hideDifficulty();
-          centerPluckButton();
-          if (chaseArena) chaseArena.classList.remove("is-shake");
-          setWageDisplay(0, BASE_WAGE);
-          pluckBtn.disabled = true;
-          startBtn.disabled = false;
-          updateHud();
+          enterBriefingState();
         }
+
         function runShift() {
           playing = true;
           if (statusEl) statusEl.textContent = "Plucking…";
@@ -1690,14 +1787,24 @@
             if (timeLeft <= 0) { timeLeft = 0; endShift(); }
           }, 100);
         }
-        function startShift() {
-          resetShift();
-          startBtn.disabled = true;
-          if (briefingEl) briefingEl.hidden = false;
-          briefingTimer = setTimeout(function () {
-            if (briefingEl) briefingEl.hidden = true;
-            runShift();
-          }, 3000);
+
+        function confirmAndStartShift() {
+          clearRestartTimers();
+          if (briefingEl) {
+            briefingEl.hidden = true;
+            briefingEl.setAttribute("aria-hidden", "true");
+          }
+          if (simOutcomeEl) {
+            simOutcomeEl.style.display = "none";
+            simOutcomeEl.innerHTML = "";
+          }
+          if (simGrid) {
+            simGrid.hidden = false;
+            simGrid.removeAttribute("aria-hidden");
+          }
+          resetGameState();
+          updateHud();
+          runShift();
         }
         function registerPluck() {
           if (!playing || Date.now() < clicksDisabledUntil) return;
@@ -1709,16 +1816,24 @@
           updateHud();
           if (Math.random() < 0.18) dodgePluckButton("dodge");
         }
-        startBtn.addEventListener("click", startShift);
+        confirmBtn.addEventListener("click", confirmAndStartShift);
         pluckBtn.addEventListener("click", registerPluck);
+
+        window.__quotaEnterBriefing = enterBriefingState;
+
         document.querySelectorAll(".era-tab").forEach(function (btn) {
           btn.addEventListener("click", function () {
             if (btn.getAttribute("data-era") === "contemporary") {
               setTimeout(function () {
                 var el = document.getElementById("quotaSimulator");
-                if (el && !el.hidden) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                if (el && !el.hidden) {
+                  enterBriefingState();
+                  el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
               }, 200);
-            } else if (playing) resetShift();
+            } else if (playing) {
+              enterBriefingState();
+            }
           });
         });
         function openQuotaFromHash() {
@@ -1730,7 +1845,7 @@
         }
         openQuotaFromHash();
         window.addEventListener("hashchange", openQuotaFromHash);
-        resetShift();
+        enterBriefingState();
       })();
 
       /* Track Your Tea */
