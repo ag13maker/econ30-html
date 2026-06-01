@@ -189,7 +189,17 @@
       font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
       text-transform: uppercase; color: var(--color-accent-warm); margin-bottom: 1rem;
     }
-    .hero-sub { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--color-text-muted); max-width: 40rem; margin-bottom: 1.75rem; }
+    .hero-sub { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--color-text-muted); max-width: 40rem; margin-bottom: 0; }
+    .hero-question {
+      font-size: 1.15rem;
+      color: var(--color-accent-warm);
+      border-left: 3px solid var(--color-accent);
+      padding-left: 1.2rem;
+      margin-top: 1.2rem;
+      max-width: 640px;
+      line-height: 1.7;
+    }
+    .hero-content .btn-primary { margin-top: 1.75rem; }
     .btn-primary {
       display: inline-block; padding: 0.75rem 1.5rem;
       background: var(--color-accent); color: var(--color-bg);
@@ -284,41 +294,83 @@
     /* Timeline */
     #history { background: var(--color-surface); }
     .timeline-wrap { margin-top: 2rem; overflow-x: auto; padding-bottom: 0.5rem; }
-    .timeline-track {
-      display: flex; gap: 1.5rem; min-width: min(100%, 900px);
-      padding: 1rem 0 2rem;
+    .timeline {
+      display: flex;
+      gap: 0;
+      position: relative;
+      padding: 2rem 0;
+      overflow-x: auto;
+      min-width: min(100%, 900px);
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 3.2rem;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--color-border);
     }
     .timeline-node {
-      flex: 1; min-width: 200px; text-align: center; cursor: pointer;
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.5s, transform 0.5s, filter 0.3s;
+      flex: 1;
+      min-width: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
     }
-    .timeline-node.visible { opacity: 1; transform: translateY(0); }
-    .timeline-dot {
-      width: 56px; height: 56px; margin: 0 auto 0.75rem;
-      border-radius: 50%; border: 2px solid var(--color-border);
-      background: var(--color-card); display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display); font-size: 0.75rem; font-weight: 700;
-      color: var(--color-accent-warm); transition: box-shadow 0.3s, border-color 0.3s;
+    .t-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      border: 3px solid var(--color-bg);
+      margin-bottom: 0.75rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      z-index: 1;
     }
-    .timeline-node.is-active .timeline-dot {
-      border-color: var(--color-accent);
-      box-shadow: 0 0 24px var(--color-hero-glow), 0 0 0 4px rgba(90, 158, 75, 0.2);
+    .timeline-node:hover .t-dot {
+      transform: scale(1.4);
+      box-shadow: 0 0 12px var(--color-accent);
     }
-    .timeline-year { font-weight: 700; color: var(--color-text); font-size: 0.95rem; }
-    .timeline-label { font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.25rem; }
-    .timeline-detail {
-      display: none; margin-top: 2rem; padding: 1.25rem 1.5rem;
-      background: var(--color-card); border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm); text-align: left; font-size: 0.95rem;
-      max-width: 52rem;
+    .t-year {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-accent-warm);
+      margin-bottom: 0.5rem;
     }
-    .timeline-detail.is-open { display: block; animation: fadeIn 0.35s ease; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @media (max-width: 767px) {
-      .timeline-track { flex-direction: column; min-width: 0; }
-      .timeline-node { text-align: left; display: grid; grid-template-columns: 56px 1fr; gap: 1rem; align-items: center; }
-      .timeline-dot { margin: 0; }
+    .t-card {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.88rem;
+      text-align: center;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      max-width: 180px;
+    }
+    .t-card h4 {
+      color: var(--color-text);
+      font-size: 0.95rem;
+      margin: 0 0 0.4rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+    .t-card p { margin: 0; font-size: 0.88rem; }
+    @media (max-width: 768px) {
+      .timeline { flex-direction: column; min-width: 0; }
+      .timeline::before { display: none; }
+      .timeline-node {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+        min-width: unset;
+      }
+      .t-dot { margin-bottom: 0; margin-top: 0.3rem; flex-shrink: 0; }
+      .t-card { text-align: left; max-width: unset; flex: 1; }
     }
 
     /* Transition */
@@ -383,29 +435,59 @@
     .quota-sim[hidden] { display: none !important; }
     .quota-sim h3 { color: var(--color-text); margin-bottom: 0.5rem; }
     .quota-sim-lead { font-size: 0.95rem; margin-bottom: 1.25rem; }
-    .quota-briefing, .quota-outcome {
+    .quota-briefing {
       padding: 1.15rem 1.25rem; margin-bottom: 1rem;
       border-radius: var(--radius-sm); border: 1px solid var(--color-border);
       background: rgba(90, 158, 75, 0.08);
     }
-    .quota-briefing h4, .quota-outcome h4 {
+    .quota-briefing h4 {
       margin: 0 0 0.65rem; font-size: 0.9rem; color: var(--color-accent-warm);
       text-transform: uppercase; letter-spacing: 0.08em;
     }
     .quota-briefing ul { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; }
-    .quota-outcome.is-penalty { border-color: var(--color-accent-rust); background: rgba(184, 92, 42, 0.12); }
-    .quota-outcome.is-ok { border-color: var(--color-accent); background: rgba(90, 158, 75, 0.12); }
-    .quota-outcome[hidden], .quota-briefing[hidden] { display: none !important; }
-    .quota-outcome pre {
-      margin: 0; white-space: pre-wrap; font-family: var(--font-body);
-      font-size: 0.9rem; color: var(--color-text); line-height: 1.55;
+    .quota-briefing[hidden] { display: none !important; }
+    .sim-outcome {
+      margin-top: 1.5rem;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+    .sim-outcome.hidden { display: none; }
+    .sim-outcome h4 {
+      color: var(--color-accent-warm);
+      font-size: 1.1rem;
+      margin: 0 0 1rem;
+      font-family: var(--font-display);
+    }
+    .outcome-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 0.95rem;
+    }
+    .outcome-row span { color: var(--color-text-muted); }
+    .outcome-row strong { color: var(--color-text); }
+    .outcome-insight {
+      margin-top: 1rem;
+      font-style: italic;
+      color: var(--color-accent-warm);
+      font-size: 0.95rem;
+      line-height: 1.6;
     }
     .btn-copy {
-      margin-top: 0.75rem; padding: 0.5rem 1rem;
-      background: transparent; border: 1px solid var(--color-border);
-      color: var(--color-accent); border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
+      margin-top: 1rem;
+      background: transparent;
+      border: 1px solid var(--color-accent);
+      color: var(--color-accent);
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
-    .btn-copy:hover { border-color: var(--color-accent); color: var(--color-accent-warm); }
+    .btn-copy:hover { background: var(--color-accent); color: #0d1a0f; }
     .quota-sim-grid { display: grid; grid-template-columns: 1.4fr 0.9fr; gap: 1.25rem; }
     @media (max-width: 900px) { .quota-sim-grid { grid-template-columns: 1fr; } }
     .quota-hud {
@@ -528,6 +610,33 @@
     }
     .conclusion-inner { max-width: 44rem; margin: 0 auto; text-align: center; }
     .conclusion-inner p { color: var(--color-text); font-size: 1.05rem; }
+    .conclusion-answer {
+      font-style: italic;
+      color: var(--color-text-muted);
+      font-size: 1.05rem;
+      margin-top: 1rem;
+      text-align: left;
+    }
+    .progress-lens {
+      background: var(--color-card);
+      border-left: 4px solid var(--color-accent-warm);
+      padding: 1.5rem 2rem;
+      border-radius: 0 10px 10px 0;
+      margin: 2rem 0;
+      text-align: left;
+    }
+    .progress-lens h3 {
+      color: var(--color-accent-warm);
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+      font-family: var(--font-display);
+    }
+    .progress-lens p {
+      color: var(--color-text-muted);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin: 0;
+    }
     .takeaway-line {
       font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.2rem);
       font-style: italic; color: var(--color-accent-warm);
@@ -571,6 +680,7 @@
       <p class="hero-eyebrow">Assam · Stanford · 2025</p>
       <h1>You drink it every morning.<br>She earns ₹250 for the whole day.</h1>
       <p class="hero-sub">A research story about who actually benefits when Assam tea travels from garden to cup — and why four decades of labor law haven't changed that math.</p>
+      <p class="hero-question"><strong>Central question:</strong> Why do Assam tea workers remain below poverty thresholds despite 74 years of statutory wage and welfare law — and who benefits from that gap?</p>
       <a href="#story" class="btn-primary">See the evidence ↓</a>
     </div>
     <div class="hero-stat-strip">
@@ -636,9 +746,8 @@
         <p class="section-label">Historical foundations</p>
         <h2>How the plantation system was built</h2>
         <div class="timeline-wrap">
-          <div class="timeline-track" id="timelineTrack" role="list"></div>
+          <div class="timeline" id="timeline-container" role="list"></div>
         </div>
-        <div class="timeline-detail fade-up" id="timelineDetail" hidden></div>
       </div>
     </section>
 
@@ -668,7 +777,7 @@
           </article>
           <article class="chart-panel chart-panel--stat fade-up" data-chart-panel id="bplCounterPanel">
             <p class="chart-source">Source: Oxfam (2019) household visits</p>
-            <p class="bpl-counter"><span id="bplCount">0</span>%</p>
+            <p class="bpl-counter"><span id="bplCount" data-counter data-target="50" data-suffix="%">0%</span></p>
             <p class="bpl-label">of estate households visited by Oxfam researchers held Below Poverty Line ration cards</p>
           </article>
         </div>
@@ -702,12 +811,6 @@
             </ul>
           </div>
 
-          <div id="quotaOutcome" class="quota-outcome" hidden>
-            <h4>Shift result</h4>
-            <pre id="quotaOutcomeText"></pre>
-            <button type="button" class="btn-copy" id="quotaCopyBtn">Copy my result</button>
-          </div>
-
           <div class="quota-sim-grid">
             <div class="quota-play-area">
               <div class="quota-hud" aria-live="polite">
@@ -732,6 +835,27 @@
               <div class="quota-wage-row penalized" id="wagePenaltyRow" hidden><span>Quota penalty</span><span class="wage-amount" id="wagePenalty"><span class="wage-inr">−₹0</span></span></div>
               <div class="quota-wage-row"><span>You take home</span><span class="wage-amount" id="wageFinal"><span class="wage-inr">₹250</span></span></div>
             </aside>
+          </div>
+
+          <div id="sim-outcome" class="sim-outcome hidden">
+            <h4>Your shift is over</h4>
+            <div class="outcome-row">
+              <span>Leaves plucked</span><strong id="out-kg">0 kg</strong>
+            </div>
+            <div class="outcome-row">
+              <span>Quota</span><strong>26 kg</strong>
+            </div>
+            <div class="outcome-row penalty-row">
+              <span>Penalty deducted</span><strong id="out-penalty">₹0</strong>
+            </div>
+            <div class="outcome-row takehome-row">
+              <span>Take-home today</span><strong id="out-takehome">₹250</strong>
+            </div>
+            <div class="outcome-row compare-row">
+              <span>US federal minimum (same hours)</span><strong>~$58</strong>
+            </div>
+            <p id="out-insight" class="outcome-insight"></p>
+            <button type="button" id="copy-result" class="btn-copy">Copy my result</button>
           </div>
         </div>
       </div>
@@ -787,6 +911,11 @@
       <div class="wrap conclusion-inner">
         <h2>The answer to the question</h2>
         <p>Assam's tea workers are not poor <em>despite</em> the law. The quota system, tied housing, and estate dependency make poverty a structural feature — not a policy failure waiting to be fixed. The law is real. So is the enforcement gap. And the consumer price never reaches the garden.</p>
+        <p class="conclusion-answer">The answer: because the quota system, tied housing, and buyer market power make underpayment structurally profitable — not an oversight. Enforcement would cost the brands. So it doesn't happen.</p>
+        <div class="progress-lens">
+          <h3>What this tells us about progress</h3>
+          <p>Development economists distinguish between <em>legal formalization</em> and <em>real institutional change</em>. Assam is a clean case study: the formal rules arrived in 1951. Real wages, mobility, and bargaining power did not follow. The bottleneck is not law — it is the estate structure itself, which keeps workers geographically captive, ties welfare to employment, and lets global buyers extract value without accountability. Until buyer-side pressure or credible enforcement changes the cost calculus for brands, legal progress will keep outrunning economic progress. That gap is not unique to tea — it is the central problem of labor institutions in commodity export economies worldwide.</p>
+        </div>
         <div class="takeaway-line">"The leaf is picked. The price is kept. The law is silent."</div>
         <p class="conclusion-sub">— Aaira Goswami, Stanford University, 2025</p>
         <div class="conclusion-links">
@@ -909,48 +1038,57 @@
       })();
 
       /* Timeline */
-      var timelineEvents = [
-        { year: "1840s", label: "Plantation system begins", detail: "British expand into Assam forest land. Penal contracts bind workers — leaving is punishable. Women recruited for plucking, wages called 'lighter work'." },
-        { year: "1882", label: "Inland Emigration Act", detail: "Formalizes worker immobility. Historians call this era the 'Planters' Raj' — planters hold near-unchecked power over labor." },
-        { year: "1951", label: "Plantations Labour Act", detail: "Independence brings statutory housing, healthcare, and wage rights. Rules on paper — but enforcement mechanisms remain weak." },
-        { year: "Today", label: "Same structure, new labels", detail: "Tied housing, quota penalties, gendered plucking persist. Certifications and audits exist — yet Oxfam (2019) and Saikia & Parida (2026) document continued poverty-level outcomes." }
-      ];
-      var track = document.getElementById("timelineTrack");
-      var detailEl = document.getElementById("timelineDetail");
-      var activeIdx = 0;
-      if (track) {
-        timelineEvents.forEach(function (ev, i) {
-          var node = document.createElement("button");
-          node.type = "button";
-          node.className = "timeline-node" + (i === 0 ? " is-active" : "");
-          node.setAttribute("role", "listitem");
-          node.innerHTML = '<div class="timeline-dot">' + ev.year + '</div><div class="timeline-year">' + ev.year + '</div><div class="timeline-label">' + ev.label + '</div>';
-          node.addEventListener("click", function () {
-            activeIdx = i;
-            track.querySelectorAll(".timeline-node").forEach(function (n, j) {
-              n.classList.toggle("is-active", j === i);
-            });
-            if (detailEl) {
-              detailEl.hidden = false;
-              detailEl.classList.add("is-open");
-              detailEl.innerHTML = "<strong>" + ev.year + " — " + ev.label + "</strong><p style=\"margin:0.75rem 0 0\">" + ev.detail + "</p>";
-            }
-          });
-          track.appendChild(node);
-          if ("IntersectionObserver" in window) {
-            var tObs = new IntersectionObserver(function (entries, obs) {
-              entries.forEach(function (en) {
-                if (en.isIntersecting) { en.target.classList.add("visible"); obs.unobserve(en.target); }
-              });
-            }, { threshold: 0.2 });
-            tObs.observe(node);
-          } else node.classList.add("visible");
+      function buildTimeline() {
+        var timelineEvents = [
+          {
+            year: "1840s",
+            label: "Plantation system begins",
+            detail: "British expand into Assam forest land. Penal contracts bind workers — leaving is punishable. Women recruited for plucking; wages called 'lighter work' to justify lower pay."
+          },
+          {
+            year: "1882",
+            label: "Inland Emigration Act",
+            detail: "Formalizes worker immobility. Historians call this era the 'Planters' Raj' — planters hold near-unchecked power. Workers cannot leave without employer permission."
+          },
+          {
+            year: "1951",
+            label: "Plantations Labour Act",
+            detail: "Independence brings statutory housing, healthcare, and wage rights on paper. Enforcement mechanisms remain weak and estate-controlled."
+          },
+          {
+            year: "Today",
+            label: "Same structure, new labels",
+            detail: "Tied housing, quota penalties, gendered plucking persist. Oxfam (2019) and Saikia & Parida (2026) document continued poverty-level outcomes despite certifications and audits."
+          }
+        ];
+        var container = document.querySelector(".timeline") || document.getElementById("timeline-container");
+        if (!container) return;
+        container.innerHTML = timelineEvents
+          .map(function (e, i) {
+            return (
+              '<div class="timeline-node fade-up" role="listitem" style="transition-delay:' +
+              i * 0.15 +
+              's">' +
+              '<div class="t-dot"></div>' +
+              '<div class="t-year">' +
+              e.year +
+              "</div>" +
+              '<div class="t-card"><h4>' +
+              e.label +
+              "</h4><p>" +
+              e.detail +
+              "</p></div></div>"
+            );
+          })
+          .join("");
+        container.querySelectorAll(".timeline-node.fade-up").forEach(function (node) {
+          fadeObs.observe(node);
         });
-        if (detailEl && timelineEvents[0]) {
-          detailEl.hidden = false;
-          detailEl.classList.add("is-open");
-          detailEl.innerHTML = "<strong>" + timelineEvents[0].year + " — " + timelineEvents[0].label + "</strong><p style=\"margin:0.75rem 0 0\">" + timelineEvents[0].detail + "</p>";
-        }
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", buildTimeline);
+      } else {
+        buildTimeline();
       }
 
       /* Charts on scroll */
@@ -1028,19 +1166,40 @@
         }
       }
 
-      function animateCount(el, target, suffix, duration) {
-        var startTime = null;
-        function step(ts) {
-          if (!startTime) startTime = ts;
-          var p = Math.min((ts - startTime) / duration, 1);
-          var ease = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(target * ease) + (suffix || "");
-          if (p < 1) requestAnimationFrame(step);
+      function animateCounter(el, target, suffix, duration) {
+        suffix = suffix || "";
+        duration = duration || 1800;
+        var start = performance.now();
+        var isDecimal = String(target).indexOf(".") !== -1;
+        function step(now) {
+          var progress = Math.min((now - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var value = eased * target;
+          el.textContent = (isDecimal ? value.toFixed(1) : Math.round(value)) + suffix;
+          if (progress < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
       }
 
-      var bplDone = false;
+      if ("IntersectionObserver" in window) {
+        var counterObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting || entry.target.dataset.counted) return;
+            entry.target.dataset.counted = "true";
+            var target = parseFloat(entry.target.dataset.target, 10);
+            var suffix = entry.target.dataset.suffix || "";
+            animateCounter(entry.target, target, suffix);
+          });
+        }, { threshold: 0.5 });
+        document.querySelectorAll("[data-counter]").forEach(function (el) {
+          counterObserver.observe(el);
+        });
+      } else {
+        document.querySelectorAll("[data-counter]").forEach(function (el) {
+          el.textContent = el.dataset.target + (el.dataset.suffix || "");
+        });
+      }
+
       if ("IntersectionObserver" in window) {
         var chartObs = new IntersectionObserver(function (entries) {
           entries.forEach(function (en) {
@@ -1048,18 +1207,11 @@
             initCharts();
             if (supplyChainChartInst) supplyChainChartInst.update();
             if (wageGapChartInst) wageGapChartInst.update();
-            if (!bplDone && en.target.id === "bplCounterPanel") {
-              bplDone = true;
-              var bpl = document.getElementById("bplCount");
-              if (bpl) animateCount(bpl, 50, "", 1600);
-            }
           });
         }, { threshold: 0.2 });
         document.querySelectorAll("[data-chart-panel]").forEach(function (p) { chartObs.observe(p); });
       } else {
         initCharts();
-        var bpl = document.getElementById("bplCount");
-        if (bpl) bpl.textContent = "50";
       }
 
       /* Source filter */
@@ -1178,9 +1330,12 @@
         var hazardEl = document.getElementById("quotaHazard");
         var progressBar = document.getElementById("quotaProgressBar");
         var briefingEl = document.getElementById("quotaBriefing");
-        var outcomeEl = document.getElementById("quotaOutcome");
-        var outcomeText = document.getElementById("quotaOutcomeText");
-        var copyBtn = document.getElementById("quotaCopyBtn");
+        var simOutcomeEl = document.getElementById("sim-outcome");
+        var outKg = document.getElementById("out-kg");
+        var outPenalty = document.getElementById("out-penalty");
+        var outTakehome = document.getElementById("out-takehome");
+        var outInsight = document.getElementById("out-insight");
+        var copyResultBtn = document.getElementById("copy-result");
         var playArea = sim ? sim.querySelector(".quota-play-area") : null;
         var chaseArena = document.getElementById("quotaChaseArena");
         var difficultyMsg = document.getElementById("quotaDifficultyMsg");
@@ -1205,7 +1360,8 @@
         var clicksDisabledUntil = 0;
         var clickWeight = 1;
         var lastClickAt = 0;
-        var lastOutcomeText = "";
+        var lastCopyText = "";
+        var copyBound = false;
 
         var DIFFICULTY_LINES = {
           rain: ["Ooh — heavy rain. Wet leaves tear; your grip keeps slipping.", "Ooh — downpour. You wait for a break the supervisor does not grant."],
@@ -1310,28 +1466,35 @@
             setTimeout(function () { if (playing) clickWeight = 1; }, 3000);
           }
         }
-        function calcOutcome() {
-          var kg = Math.floor(plucked);
-          var penalty = kg < quota ? Math.round((quota - kg) / quota * BASE_WAGE) : 0;
-          var takehome = BASE_WAGE - penalty;
-          var usd = formatUsd(takehome);
-          return { kg: kg, penalty: penalty, takehome: takehome, usd: usd };
-        }
         function showOutcome() {
-          var o = calcOutcome();
-          lastOutcomeText =
-            "You plucked " + o.kg + " kg. Quota: " + quota + " kg.\n" +
-            "Penalty deducted: ₹" + o.penalty + "\n" +
-            "Take-home today: ₹" + o.takehome + " (~$" + o.usd + " USD)\n" +
-            "US federal minimum wage for same hours: ~$" + US_MIN_COMPARE;
-          if (outcomeText) outcomeText.textContent = lastOutcomeText;
-          if (outcomeEl) {
-            outcomeEl.hidden = false;
-            outcomeEl.classList.toggle("is-penalty", o.penalty > 0);
-            outcomeEl.classList.toggle("is-ok", o.penalty === 0);
+          var dailyWage = BASE_WAGE;
+          var kgPlucked = Math.floor(plucked);
+          var shortfall = Math.max(0, quota - kgPlucked);
+          var penaltyRate = shortfall / quota;
+          var penalty = Math.round(penaltyRate * dailyWage);
+          var takehome = dailyWage - penalty;
+          var usdTakehome = formatUsd(takehome);
+          var takehomeStrong = document.querySelector(".takehome-row strong");
+
+          if (outKg) outKg.textContent = kgPlucked + " kg";
+          if (outPenalty) outPenalty.textContent = "₹" + penalty;
+          if (outTakehome) outTakehome.textContent = "₹" + takehome + " (~$" + usdTakehome + " USD)";
+          if (outInsight) {
+            outInsight.textContent =
+              penalty > 0
+                ? "You missed quota by " + shortfall + " kg. The quota system turned that into a ₹" + penalty + " deduction — directly into employer savings. This is the mechanism."
+                : "You hit quota. Take-home: full ₹250. But tomorrow the target resets, and rain, exhaustion, or pregnancy can change everything.";
           }
-          setWageDisplay(o.penalty, o.takehome);
-          if (statusEl) statusEl.textContent = o.penalty > 0 ? "Penalty applied" : "Quota met";
+          if (takehomeStrong) {
+            takehomeStrong.style.color = penalty > 0 ? "var(--color-accent-rust)" : "var(--color-accent)";
+          }
+          if (simOutcomeEl) simOutcomeEl.classList.remove("hidden");
+
+          lastCopyText =
+            "Assam Tea Simulator result: Plucked " + kgPlucked + "/" + quota + " kg. Penalty: ₹" + penalty + ". Take-home: ₹" + takehome + " (~$" + usdTakehome + " USD). US minimum wage same hours: ~$" + US_MIN_COMPARE + ". Source: aairaecon30project.vercel.app";
+
+          setWageDisplay(penalty, takehome);
+          if (statusEl) statusEl.textContent = penalty > 0 ? "Penalty applied" : "Quota met";
         }
         function endShift() {
           playing = false;
@@ -1353,7 +1516,9 @@
           clicksDisabledUntil = 0;
           clickWeight = 1;
           if (briefingEl) briefingEl.hidden = true;
-          if (outcomeEl) outcomeEl.hidden = true;
+          if (simOutcomeEl) simOutcomeEl.classList.add("hidden");
+          var takehomeStrongReset = document.querySelector(".takehome-row strong");
+          if (takehomeStrongReset) takehomeStrongReset.style.color = "";
           if (statusEl) statusEl.textContent = "Ready";
           showHazard("");
           hideDifficulty();
@@ -1403,12 +1568,13 @@
         }
         startBtn.addEventListener("click", startShift);
         pluckBtn.addEventListener("click", registerPluck);
-        if (copyBtn) {
-          copyBtn.addEventListener("click", function () {
-            if (!lastOutcomeText) return;
-            navigator.clipboard.writeText(lastOutcomeText).then(function () {
-              copyBtn.textContent = "Copied!";
-              setTimeout(function () { copyBtn.textContent = "Copy my result"; }, 2000);
+        if (copyResultBtn && !copyBound) {
+          copyBound = true;
+          copyResultBtn.addEventListener("click", function () {
+            if (!lastCopyText) return;
+            navigator.clipboard.writeText(lastCopyText).then(function () {
+              copyResultBtn.textContent = "Copied!";
+              setTimeout(function () { copyResultBtn.textContent = "Copy my result"; }, 2000);
             });
           });
         }
