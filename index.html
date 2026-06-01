@@ -651,6 +651,101 @@
       text-align: center; font-size: 0.9rem;
     }
     footer a { color: var(--color-accent); }
+
+    /* Track Your Tea */
+    #trackYourTea { background: var(--color-surface); }
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--color-text);
+      line-height: 1.8;
+      max-width: 680px;
+    }
+    .method-note {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin-top: 0.75rem;
+      line-height: 1.6;
+      max-width: 680px;
+    }
+    .tyt-section { margin-top: 2rem; }
+    .brand-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .brand-btn {
+      cursor: pointer;
+      border: 1px solid var(--color-border);
+      background: var(--color-card);
+      color: var(--color-text);
+      padding: 0.65rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .brand-btn:hover { border-color: var(--color-accent); color: var(--color-accent-warm); }
+    .brand-btn.active {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-bg);
+    }
+    .brand-btn.active span { opacity: 0.9; }
+    .tyt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 768px) { .tyt-grid { grid-template-columns: 1fr; } }
+    .tyt-sublabel {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-muted);
+      margin-bottom: 1rem;
+    }
+    .tyt-bar-row { margin-bottom: 1rem; }
+    .tyt-bar-label { font-size: 13px; color: var(--color-text); margin-bottom: 4px; }
+    .tyt-bar-wrap {
+      height: 10px;
+      background: var(--color-bg);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 3px;
+    }
+    .tyt-bar-fill { height: 100%; border-radius: 5px; transition: width 0.5s ease; }
+    .tyt-bar-val { font-size: 12px; font-weight: 600; display: inline; }
+    .tyt-bar-note { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
+    .tyt-stat-stack { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+    .tyt-stat {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .tyt-stat-num { font-size: 2rem; font-family: var(--font-display); }
+    .tyt-stat-label { font-size: 12px; color: var(--color-text-muted); line-height: 1.4; }
+    .tyt-insight {
+      background: var(--color-card);
+      border-left: 3px solid var(--color-accent);
+      padding: 1rem 1.2rem;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      border-radius: 0 8px 8px 0;
+    }
+    .tyt-insight p { margin: 0 0 0.5rem; font-size: 13px; }
+    .tyt-source { font-size: 11px; opacity: 0.6; margin-top: 0.5rem; margin-bottom: 0; }
   </style>
 </head>
 <body>
@@ -668,6 +763,7 @@
           <li><a href="#viz" data-nav="viz">Data</a></li>
           <li><a href="#literature" data-nav="literature">Sources</a></li>
           <li><a href="#quotaSimulator" data-nav="quotaSimulator">Simulator</a></li>
+          <li><a href="#trackYourTea" data-nav="trackYourTea">Track Tea</a></li>
           <li><a href="#conclusion" data-nav="conclusion">Conclusion</a></li>
         </ul>
       </div>
@@ -907,6 +1003,28 @@
       </div>
     </section>
 
+    <section id="trackYourTea" class="fade-up">
+      <div class="wrap">
+        <p class="section-label">Your contribution</p>
+        <h2>Track Your Tea</h2>
+        <p class="section-intro">Pick a brand in your kitchen. These numbers come from Tea Board of India auction data (GTAC FY 2024–25), verified UK/US retail prices, and Assam government wage notifications. This price decomposition is my own calculation — not Oxfam's estimate.</p>
+        <p class="method-note">Method: retail price per kg calculated from supermarket listings (Tesco UK, Walmart US, verified June 2025). Auction price: GTAC average ₹227.70/kg (FY 2024–25, Tribune India / Tea Board). Worker wage per kg: ₹280/day statutory minimum ÷ 26 kg daily quota = ₹10.77/kg. All rupee conversions at ₹106 = £1, ₹84 = $1 (illustrative; verify before submission).</p>
+        <div class="tyt-section">
+          <div class="brand-row" id="tyt-brands" role="tablist" aria-label="Tea brand"></div>
+          <div class="tyt-grid">
+            <div class="tyt-left">
+              <p class="tyt-sublabel">Price breakdown per kg of tea</p>
+              <div id="tyt-bars"></div>
+            </div>
+            <div class="tyt-right">
+              <div class="tyt-stat-stack" id="tyt-stats"></div>
+              <div class="tyt-insight" id="tyt-insight"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="conclusion" class="conclusion fade-up">
       <div class="wrap conclusion-inner">
         <h2>The answer to the question</h2>
@@ -962,7 +1080,7 @@
       window.addEventListener("scroll", onScrollNav, { passive: true });
       onScrollNav();
 
-      var sectionIds = ["story", "history", "transition", "viz", "literature", "quotaSimulator", "conclusion"];
+      var sectionIds = ["story", "history", "transition", "viz", "literature", "quotaSimulator", "trackYourTea", "conclusion"];
       if ("IntersectionObserver" in window) {
         var navObs = new IntersectionObserver(function (entries) {
           entries.forEach(function (en) {
@@ -1599,6 +1717,159 @@
         window.addEventListener("hashchange", openQuotaFromHash);
         resetShift();
       })();
+
+      /* Track Your Tea */
+      var TYT_DATA = [
+        {
+          name: "Twinings",
+          market: "UK (Tesco)",
+          retail_per_kg: 23000,
+          retail_display: "£3.00 / 100g = ₹23,000/kg",
+          steps: [
+            { label: "Worker wage", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota" },
+            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC avg FY2024-25" },
+            { label: "Export & processing", val: 600, color: "#c8a951", note: "Author estimate: logistics, blending" },
+            { label: "Brand margin (Twinings/ABF)", val: 9500, color: "#d4883a", note: "Residual after known costs" },
+            { label: "Retailer (Tesco)", val: 12662, color: "#b85c2a", note: "Residual shelf margin" }
+          ],
+          worker_share: 0.047,
+          auction_share: 1.0,
+          key_fact: "A worker earns ₹10.77 per kg she picks. Twinings sells that same kg for ₹23,000 at retail. That is a 2,135× markup from hand to shelf.",
+          source: "Tesco UK (June 2025); GTAC FY2024-25; Assam wage notification Apr 2026"
+        },
+        {
+          name: "Tetley",
+          market: "UK (Tesco)",
+          retail_per_kg: 7350,
+          retail_display: "£8.75 / 1.25kg = ₹7,350/kg",
+          steps: [
+            { label: "Worker wage", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota" },
+            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC avg FY2024-25" },
+            { label: "Export & processing", val: 500, color: "#c8a951", note: "Tata vertical integration reduces cost" },
+            { label: "Brand margin (Tata/Tetley)", val: 3200, color: "#d4883a", note: "Residual after known costs" },
+            { label: "Retailer (Tesco)", val: 3412, color: "#b85c2a", note: "Residual shelf margin" }
+          ],
+          worker_share: 0.15,
+          auction_share: 3.1,
+          key_fact: "Tata owns both the Assam estates (APPL) and the Tetley brand. More margin stays within one company — but the worker's 0.15% share barely moves.",
+          source: "Tesco UK (June 2025); GTAC FY2024-25; Assam wage notification Apr 2026"
+        },
+        {
+          name: "Lipton",
+          market: "US (Walmart)",
+          retail_per_kg: 2050,
+          retail_display: "$4.92 / ~200g = ₹2,050/kg",
+          steps: [
+            { label: "Worker wage", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota" },
+            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC avg FY2024-25" },
+            { label: "Export & processing", val: 400, color: "#c8a951", note: "Broker-mediated supply chain" },
+            { label: "Brand margin (Unilever)", val: 800, color: "#d4883a", note: "Residual after known costs" },
+            { label: "Retailer (Walmart)", val: 612, color: "#b85c2a", note: "Residual shelf margin" }
+          ],
+          worker_share: 0.53,
+          auction_share: 11.1,
+          key_fact: "Walmart's low shelf price means the worker's share looks higher — 0.53% — but in absolute terms she still earns ₹10.77 regardless of what the brand charges.",
+          source: "Walmart US (June 2025); GTAC FY2024-25; Assam wage notification Apr 2026"
+        }
+      ];
+
+      var tytActive = 0;
+
+      function renderTYT() {
+        var d = TYT_DATA[tytActive];
+        var total = d.retail_per_kg;
+        var brandsEl = document.getElementById("tyt-brands");
+        var barsEl = document.getElementById("tyt-bars");
+        var statsEl = document.getElementById("tyt-stats");
+        var insightEl = document.getElementById("tyt-insight");
+        if (!brandsEl || !barsEl || !statsEl || !insightEl) return;
+
+        brandsEl.innerHTML = TYT_DATA.map(function (b, i) {
+          return (
+            '<button type="button" class="brand-btn' +
+            (i === tytActive ? " active" : "") +
+            '" data-tyt-index="' +
+            i +
+            '" role="tab" aria-selected="' +
+            (i === tytActive ? "true" : "false") +
+            '">' +
+            b.name +
+            '<br><span style="font-size:11px;opacity:0.75">' +
+            b.market +
+            "</span></button>"
+          );
+        }).join("");
+
+        barsEl.innerHTML = d.steps
+          .map(function (s) {
+            var pct = Math.max((s.val / total) * 100, 0.5);
+            var displayPct =
+              s.val < 1
+                ? s.val.toFixed(2)
+                : s.val >= 1000
+                  ? (s.val / 1000).toFixed(1) + "k"
+                  : Math.round(s.val);
+            return (
+              '<div class="tyt-bar-row">' +
+              '<div class="tyt-bar-label">' +
+              s.label +
+              "</div>" +
+              '<div class="tyt-bar-wrap"><div class="tyt-bar-fill" style="width:' +
+              Math.min(pct, 100) +
+              "%;background:" +
+              s.color +
+              '"></div></div>' +
+              '<div class="tyt-bar-val" style="color:' +
+              s.color +
+              '">₹' +
+              displayPct +
+              "</div>" +
+              '<div class="tyt-bar-note">' +
+              s.note +
+              "</div></div>"
+            );
+          })
+          .join("");
+
+        statsEl.innerHTML =
+          '<div class="tyt-stat">' +
+          '<span class="tyt-stat-num" style="color:#5a9e4b">' +
+          d.worker_share +
+          "%</span>" +
+          '<span class="tyt-stat-label">worker\'s share of retail price</span></div>' +
+          '<div class="tyt-stat">' +
+          '<span class="tyt-stat-num" style="color:#c8a951">' +
+          d.auction_share +
+          "%</span>" +
+          '<span class="tyt-stat-label">estate auction price as % of retail</span></div>' +
+          '<div class="tyt-stat">' +
+          '<span class="tyt-stat-num" style="color:#b85c2a">₹' +
+          Math.round(total / 10.77).toLocaleString() +
+          "×</span>" +
+          '<span class="tyt-stat-label">retail markup over worker wage per kg</span></div>';
+
+        insightEl.innerHTML =
+          "<p>" +
+          d.key_fact +
+          '</p><p class="tyt-source">Sources: ' +
+          d.source +
+          "</p>";
+      }
+
+      window.setTYT = function (i) {
+        tytActive = i;
+        renderTYT();
+      };
+
+      var tytBrands = document.getElementById("tyt-brands");
+      if (tytBrands) {
+        tytBrands.addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-tyt-index]");
+          if (!btn) return;
+          setTYT(parseInt(btn.getAttribute("data-tyt-index"), 10));
+        });
+        renderTYT();
+      }
     })();
   </script>
 </body>
