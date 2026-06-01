@@ -510,6 +510,99 @@
       font-weight: 600;
     }
     .btn-copy:hover { background: var(--color-accent); color: #0d1a0f; }
+    .btn-restart {
+      display: block;
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.85rem 1.5rem;
+      background: transparent;
+      color: var(--color-accent);
+      border: 2px solid var(--color-accent);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .btn-restart:hover {
+      background: var(--color-accent);
+      color: #0d1a0f;
+      transform: translateY(-1px);
+    }
+    .comparison-card {
+      margin-top: 1.5rem;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+    .comparison-card h4 {
+      color: var(--color-accent-warm);
+      font-size: 1.05rem;
+      margin: 0 0 0.3rem;
+      font-family: var(--font-display);
+    }
+    .comparison-sub {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      margin: 0 0 1.25rem;
+    }
+    .comp-row {
+      display: grid;
+      grid-template-columns: 200px 1fr 70px;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    @media (max-width: 600px) {
+      .comp-row { grid-template-columns: 1fr 1fr 55px; }
+      .comp-label { font-size: 0.75rem; }
+    }
+    .comp-label {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      line-height: 1.3;
+    }
+    .comp-bar-wrap {
+      background: var(--color-surface);
+      border-radius: 4px;
+      height: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+    .comp-bar {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 0%;
+    }
+    .you-tag {
+      position: absolute;
+      right: -42px;
+      font-size: 0.7rem;
+      color: var(--color-accent-warm);
+      white-space: nowrap;
+      font-weight: 600;
+    }
+    .worker-row .comp-bar-wrap {
+      border: 1px solid var(--color-accent-rust);
+    }
+    .comp-val {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: right;
+    }
+    .comparison-note {
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      margin: 1rem 0 0;
+      line-height: 1.5;
+      opacity: 0.7;
+    }
     .quota-sim-grid { display: grid; grid-template-columns: 1.4fr 0.9fr; gap: 1.25rem; }
     @media (max-width: 900px) { .quota-sim-grid { grid-template-columns: 1fr; } }
     .quota-hud {
@@ -1683,6 +1776,79 @@
           updateHud();
         }
 
+        function buildComparison(takehome) {
+          var shiftHours = 9;
+          var usdRate = INR_PER_USD;
+          var data = [
+            { role: "Min. wage worker", location: "Silicon Valley, USA", flag: "🇺🇸", total: 50 * shiftHours, color: "#b85c2a", isWorker: false },
+            { role: "Min. wage worker", location: "United Kingdom", flag: "🇬🇧", total: 15.17 * shiftHours, color: "#7aab6e", isWorker: false },
+            { role: "Min. wage worker", location: "Australia", flag: "🇦🇺", total: 14.34 * shiftHours, color: "#c8a951", isWorker: false },
+            { role: "Min. wage worker", location: "Germany", flag: "🇩🇪", total: 13.44 * shiftHours, color: "#d4883a", isWorker: false },
+            { role: "Min. wage worker", location: "United States", flag: "🇺🇸", total: 7.25 * shiftHours, color: "#5a9e4b", isWorker: false },
+            { role: "Tea plucker", location: "Assam, India", flag: "🇮🇳", total: takehome / usdRate, color: "#b85c2a", isWorker: true }
+          ];
+          data.sort(function (a, b) { return b.total - a.total; });
+          var maxVal = data[0].total;
+          var container = document.getElementById("comparison-rows");
+          if (!container) return;
+          container.innerHTML = data
+            .map(function (d) {
+              var barWidth = Math.max((d.total / maxVal) * 100, 1.5);
+              var label = d.isWorker
+                ? '<span style="color:#c8a951;font-weight:700">' + d.flag + " " + d.role + " · " + d.location + "</span>"
+                : "<span>" + d.flag + " " + d.role + " · " + d.location + "</span>";
+              var barColor = d.isWorker ? "var(--color-accent-rust)" : d.color;
+              return (
+                '<div class="comp-row' +
+                (d.isWorker ? " worker-row" : "") +
+                '">' +
+                '<div class="comp-label">' +
+                label +
+                "</div>" +
+                '<div class="comp-bar-wrap">' +
+                '<div class="comp-bar" data-target-width="' +
+                barWidth +
+                '" style="background:' +
+                barColor +
+                '">' +
+                (d.isWorker ? '<span class="you-tag">← you</span>' : "") +
+                "</div></div>" +
+                '<div class="comp-val" style="color:' +
+                barColor +
+                '">$' +
+                d.total.toFixed(2) +
+                "</div></div>"
+              );
+            })
+            .join("");
+          setTimeout(function () {
+            container.querySelectorAll(".comp-bar").forEach(function (bar) {
+              var target = bar.getAttribute("data-target-width");
+              if (target) bar.style.width = target + "%";
+            });
+          }, 100);
+        }
+
+        function bindOutcomeButtons() {
+          var copyBtn = document.getElementById("copy-result");
+          if (copyBtn) {
+            copyBtn.addEventListener("click", function () {
+              if (!lastCopyText) return;
+              navigator.clipboard.writeText(lastCopyText).then(function () {
+                copyBtn.textContent = "Copied!";
+                setTimeout(function () { copyBtn.textContent = "Copy my result"; }, 2000);
+              });
+            });
+          }
+          var restartBtn = document.getElementById("restart-btn");
+          if (restartBtn) {
+            restartBtn.addEventListener("click", function () {
+              clearRestartTimers();
+              enterBriefingState();
+            });
+          }
+        }
+
         function showOutcome() {
           if (!simOutcomeEl) return;
           if (simGrid) {
@@ -1710,24 +1876,24 @@
             '<div class="outcome-row"><span>US federal min wage (same hours)</span><strong>~$' + US_MIN_COMPARE + "</strong></div>" +
             '<p class="outcome-insight">' + insight + "</p>" +
             '<button type="button" id="copy-result" class="btn-copy">Copy my result</button>' +
+            '<div class="comparison-card">' +
+            "<h4>Meanwhile, in the same 9 hours...</h4>" +
+            '<p class="comparison-sub">What workers around the world earned during your shift</p>' +
+            '<div class="comparison-rows" id="comparison-rows"></div>' +
+            '<p class="comparison-note">Exchange rates illustrative (₹84 = $1). US/UK/AU/DE minimum wage rates as of 2024–25. Silicon Valley intern: Glassdoor median.</p>' +
+            "</div>" +
             '<p id="restart-countdown" style="font-size:0.8rem;color:var(--color-text-muted);margin-top:0.75rem;text-align:center;">Restarting in ' +
             RESTART_DELAY_SEC +
-            "...</p></div>";
+            "...</p>" +
+            '<button type="button" id="restart-btn" class="btn-restart">↺ Start New Shift</button>' +
+            "</div>";
           simOutcomeEl.style.display = "block";
 
           lastCopyText =
             "Assam Tea Simulator result: Plucked " + kg + "/" + quota + " kg. Penalty: ₹" + penalty + ". Take-home: ₹" + takehome + " (~$" + usd + " USD). US minimum wage same hours: ~$" + US_MIN_COMPARE + ". Source: aairaecon30project.vercel.app";
 
-          var copyBtn = document.getElementById("copy-result");
-          if (copyBtn) {
-            copyBtn.addEventListener("click", function () {
-              if (!lastCopyText) return;
-              navigator.clipboard.writeText(lastCopyText).then(function () {
-                copyBtn.textContent = "Copied!";
-                setTimeout(function () { copyBtn.textContent = "Copy my result"; }, 2000);
-              });
-            });
-          }
+          buildComparison(takehome);
+          bindOutcomeButtons();
 
           setWageDisplay(penalty, takehome);
           if (statusEl) statusEl.textContent = penalty > 0 ? "Penalty applied" : "Quota met";
