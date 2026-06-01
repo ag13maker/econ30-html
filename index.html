@@ -480,6 +480,57 @@
       line-height: 1.45;
     }
 
+    .story-intro {
+      display: grid;
+      grid-template-columns: 1fr min(400px, 44%);
+      gap: 2rem 2.25rem;
+      align-items: start;
+      margin-bottom: 1.75rem;
+    }
+
+    @media (max-width: 900px) {
+      .story-intro {
+        grid-template-columns: 1fr;
+      }
+      .story-figure {
+        order: -1;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+    }
+
+    .story-intro-text p {
+      max-width: 42rem;
+    }
+
+    .story-figure {
+      margin: 0;
+    }
+
+    .story-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 3px solid rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow-hover);
+      object-fit: cover;
+      aspect-ratio: 4 / 5;
+      object-position: center 20%;
+    }
+
+    .story-figure figcaption {
+      margin-top: 0.65rem;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .story-figure figcaption strong {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
     .contribution-box {
       background: linear-gradient(135deg, rgba(26, 77, 50, 0.08) 0%, rgba(166, 124, 82, 0.1) 100%);
       border: 1px solid rgba(26, 77, 50, 0.18);
@@ -1201,7 +1252,69 @@
       flex-wrap: wrap;
       gap: 0.75rem;
       align-items: center;
+      margin-bottom: 0.65rem;
+    }
+
+    .quota-chase-arena {
+      position: relative;
+      min-height: 152px;
       margin-bottom: 0.75rem;
+      border-radius: var(--radius-sm);
+      background:
+        linear-gradient(180deg, rgba(232, 242, 234, 0.9) 0%, rgba(243, 239, 230, 0.95) 100%);
+      border: 2px dashed rgba(26, 77, 50, 0.22);
+      overflow: hidden;
+    }
+
+    .quota-chase-arena.is-shake {
+      animation: quotaArenaShake 0.35s ease;
+    }
+
+    @keyframes quotaArenaShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
+    .quota-difficulty-msg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      margin: 0;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.86rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #6b3a1f;
+      background: rgba(255, 248, 240, 0.94);
+      border-bottom: 1px solid rgba(196, 92, 38, 0.25);
+      min-height: 2.75rem;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: none;
+    }
+
+    .quota-difficulty-msg.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .quota-chase-arena .quota-pluck-btn {
+      position: absolute;
+      left: 50%;
+      top: 62%;
+      z-index: 3;
+      transform: translate(-50%, -50%);
+      transition: left 0.22s cubic-bezier(0.34, 1.2, 0.64, 1), top 0.22s cubic-bezier(0.34, 1.2, 0.64, 1),
+        box-shadow 0.15s ease, opacity 0.15s ease;
+    }
+
+    .quota-chase-arena .quota-pluck-btn.is-dodging {
+      transform: none;
+      box-shadow: 0 10px 28px rgba(139, 69, 19, 0.35);
     }
 
     .quota-pluck-btn {
@@ -1215,24 +1328,40 @@
       color: #fff;
       background: linear-gradient(135deg, var(--green) 0%, var(--green-soft) 100%);
       box-shadow: 0 8px 24px rgba(26, 77, 50, 0.35);
-      transition: transform 0.08s ease, box-shadow 0.15s ease, opacity 0.15s ease;
       user-select: none;
       touch-action: manipulation;
     }
 
-    .quota-pluck-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(26, 77, 50, 0.4);
+    .quota-chase-arena .quota-pluck-btn:hover:not(:disabled) {
+      filter: brightness(1.05);
     }
 
-    .quota-pluck-btn:active:not(:disabled) {
-      transform: scale(0.97);
+    .quota-chase-arena .quota-pluck-btn:active:not(:disabled) {
+      transform: scale(0.96);
+    }
+
+    .quota-chase-arena .quota-pluck-btn.is-dodging:active:not(:disabled) {
+      transform: scale(0.96);
     }
 
     .quota-pluck-btn:disabled {
       opacity: 0.45;
       cursor: not-allowed;
       box-shadow: none;
+    }
+
+    .quota-chase-label {
+      position: absolute;
+      bottom: 6px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      pointer-events: none;
     }
 
     .quota-start-btn {
@@ -1299,6 +1428,39 @@
 
     .quota-wage-row.penalized {
       color: #8b2e2e;
+    }
+
+    .wage-amount {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.12rem;
+      text-align: right;
+    }
+
+    .wage-inr {
+      font-weight: 600;
+      color: var(--navy);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wage-usd {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quota-wage-row.penalized .wage-inr,
+    .quota-wage-row.penalized .wage-usd {
+      color: #8b2e2e;
+    }
+
+    .quota-fx-note {
+      margin: 0.65rem 0 0;
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.4;
     }
 
     .quota-penalty-flash {
@@ -1522,16 +1684,34 @@
       <div class="wrap">
         <p class="section-label">The puzzle</p>
         <h2>Why this matters</h2>
-        <p style="max-width:42rem;font-size:1.08rem;">
-          Assam produces a huge share of India’s tea. You can buy it in supermarkets and breakfast blends around the world.
-          On the estates, many families still live in housing tied to their employer, depend on estate clinics and water systems,
-          and earn wages that investigators and journalists describe as hard to live on — while women do most of the leaf plucking and much unpaid care work at home.
-        </p>
-        <p style="max-width:42rem;">
-          That gap is the puzzle: <strong>tea is celebrated; plantation labor is often invisible</strong> in national economic debate.
-          Laws and welfare boards exist, yet reports of poor health, weak bargaining power, and uneven enforcement keep appearing.
-          I am from Assam, and I built this site to make that tension legible — not as a reading-list summary, but as a research project I am still growing.
-        </p>
+
+        <div class="story-intro">
+          <div class="story-intro-text">
+            <p style="font-size:1.08rem;">
+              Assam produces a huge share of India’s tea. You can buy it in supermarkets and breakfast blends around the world.
+              On the estates, many families still live in housing tied to their employer, depend on estate clinics and water systems,
+              and earn wages that investigators and journalists describe as hard to live on — while women do most of the leaf plucking and much unpaid care work at home.
+            </p>
+            <p>
+              That gap is the puzzle: <strong>tea is celebrated; plantation labor is often invisible</strong> in national economic debate.
+              Laws and welfare boards exist, yet reports of poor health, weak bargaining power, and uneven enforcement keep appearing.
+              I am from Assam, and I built this site to make that tension legible — not as a reading-list summary, but as a research project I am still growing.
+            </p>
+          </div>
+          <figure class="story-figure">
+            <img
+              src="assets/images/tea-workers-why-it-matters.jpg"
+              alt="Women tea pluckers on a lush green plantation — a central worker in a red and orange sari with a plucking strap, others working among the tea rows behind her"
+              width="800"
+              height="1000"
+              loading="lazy"
+              decoding="async" />
+            <figcaption>
+              <strong>Who bears the quota.</strong> Women do most of Assam’s leaf plucking — the work behind daily targets, penalties, and global tea prices.
+              <em>Add photo credit here before publishing.</em>
+            </figcaption>
+          </figure>
+        </div>
 
         <div class="puzzle-callout" role="note">
           <p class="lead">
@@ -1851,9 +2031,8 @@
             <p class="section-label" style="margin-bottom:0.35rem;">Contemporary era · interactive</p>
             <h3 id="quotaSimTitle">Quotas &amp; Penalties Simulator</h3>
             <p class="quota-sim-lead">
-              You are on a plucking shift. Hit <strong>Pluck leaves</strong> as fast as you can before the timer ends.
-              Random setbacks — heavy rain, poor leaf yield, exhaustion — mirror what women pluckers report facing in the field.
-              Missing the quota does not just mean “a bad day”; in many systems it means <strong>wages are cut</strong>.
+              You are on a plucking shift. Chase the <strong>Pluck leaves</strong> button — it will jump away when rain, poor yield, or exhaustion hit.
+              That is the point: the work itself gets harder, but the <strong>quota often does not move</strong>. Missing it can mean <strong>wages cut</strong>.
             </p>
 
             <div class="quota-sim-grid">
@@ -1869,26 +2048,42 @@
                 <p class="quota-hazard" id="quotaHazard" aria-live="assertive"></p>
                 <div class="quota-actions">
                   <button type="button" class="quota-start-btn" id="quotaStartBtn">Start shift</button>
+                </div>
+                <div class="quota-chase-arena" id="quotaChaseArena" aria-label="Plucking area — button may move when conditions worsen">
+                  <p class="quota-difficulty-msg" id="quotaDifficultyMsg"></p>
                   <button type="button" class="quota-pluck-btn" id="quotaPluckBtn" disabled>Pluck leaves</button>
+                  <span class="quota-chase-label">Catch the button before the shift ends</span>
                 </div>
                 <p class="viz-caption" style="margin:0;">
-                  Tip: hazards can block clicks or raise the quota mid-shift. This is a teaching simulation, not observed estate data.
+                  When the button dodges, read why — then notice if your count still falls short. Teaching simulation only.
                 </p>
               </div>
               <aside class="quota-wage-panel" aria-live="polite">
                 <h4>Today’s pay (illustrative)</h4>
                 <div class="quota-wage-row">
                   <span>Stated daily wage</span>
-                  <span id="wageBase">₹250</span>
+                  <span class="wage-amount" id="wageBase">
+                    <span class="wage-inr">₹250</span>
+                    <span class="wage-usd">≈ $2.98 USD</span>
+                  </span>
                 </div>
-                <div class="quota-wage-row" id="wagePenaltyRow" hidden>
+                <div class="quota-wage-row penalized" id="wagePenaltyRow" hidden>
                   <span>Quota penalty (−50%)</span>
-                  <span id="wagePenalty">−₹125</span>
+                  <span class="wage-amount" id="wagePenalty">
+                    <span class="wage-inr">−₹125</span>
+                    <span class="wage-usd">≈ −$1.49 USD</span>
+                  </span>
                 </div>
                 <div class="quota-wage-row">
                   <span>You take home</span>
-                  <span id="wageFinal">₹250</span>
+                  <span class="wage-amount" id="wageFinal">
+                    <span class="wage-inr">₹250</span>
+                    <span class="wage-usd">≈ $2.98 USD</span>
+                  </span>
                 </div>
+                <p class="quota-fx-note">
+                  USD shown at an illustrative <strong>₹84 = $1</strong> (for comparison only — not a live rate; verify before citing).
+                </p>
               </aside>
             </div>
 
@@ -2487,13 +2682,19 @@
         var wagePenaltyRow = document.getElementById("wagePenaltyRow");
         var wageFinal = document.getElementById("wageFinal");
         var playArea = sim ? sim.querySelector(".quota-play-area") : null;
+        var chaseArena = document.getElementById("quotaChaseArena");
+        var difficultyMsg = document.getElementById("quotaDifficultyMsg");
 
         if (!sim || !startBtn || !pluckBtn) return;
 
         var SHIFT_SEC = 15;
         var BASE_QUOTA = 26;
         var BASE_WAGE = 250;
+        var INR_PER_USD = 84;
+        var wageBase = document.getElementById("wageBase");
+        var wagePenalty = document.getElementById("wagePenalty");
         var tickId = null;
+        var dodgeTimer = null;
         var timeLeft = SHIFT_SEC;
         var plucked = 0;
         var quota = BASE_QUOTA;
@@ -2502,9 +2703,47 @@
         var clickWeight = 1;
         var lastClickAt = 0;
 
+        var DIFFICULTY_LINES = {
+          rain: [
+            "Ooh — heavy rain. Wet leaves tear; your grip keeps slipping.",
+            "Ooh — downpour. You wait for a break the supervisor does not grant."
+          ],
+          yield: [
+            "Ooh — poor flush after pruning. You walk twice the row for the same kilos.",
+            "Ooh — thin tips today — but the quota is still yesterday's number."
+          ],
+          exhaustion: [
+            "Ooh — no proper meal, long walk in. Your arms will not keep pace.",
+            "Ooh — malnutrition slows your hands. The timer does not slow down."
+          ],
+          dodge: [
+            "Ooh — blistered fingers. Each sprig is harder to snap.",
+            "Ooh — steep bend. Balance and speed do not mix.",
+            "Ooh — spray drift from yesterday. Nausea hits mid-row.",
+            "Ooh — basket strap digs in. You lose a second adjusting it.",
+            "Ooh — cold morning mist. Stiff joints, slower hands."
+          ]
+        };
+
+        function formatUsd(inr) {
+          return (inr / INR_PER_USD).toFixed(2);
+        }
+
+        function setDualWage(container, inr, negative) {
+          if (!container) return;
+          var inrEl = container.querySelector(".wage-inr");
+          var usdEl = container.querySelector(".wage-usd");
+          var abs = Math.abs(inr);
+          var sign = negative ? "−" : "";
+          if (inrEl) inrEl.textContent = sign + "₹" + abs;
+          if (usdEl) usdEl.textContent = "≈ " + sign + "$" + formatUsd(abs) + " USD";
+        }
+
         function setWageDisplay(penalized) {
           if (wagePenaltyRow) wagePenaltyRow.hidden = !penalized;
-          if (wageFinal) wageFinal.textContent = penalized ? "₹125" : "₹" + BASE_WAGE;
+          setDualWage(wageBase, BASE_WAGE, false);
+          setDualWage(wagePenalty, 125, true);
+          setDualWage(wageFinal, penalized ? 125 : BASE_WAGE, false);
         }
 
         function updateHud() {
@@ -2523,6 +2762,72 @@
 
         function showHazard(msg) {
           if (hazardEl) hazardEl.textContent = msg;
+        }
+
+        function pickLine(kind) {
+          var list = DIFFICULTY_LINES[kind] || DIFFICULTY_LINES.dodge;
+          return list[Math.floor(Math.random() * list.length)];
+        }
+
+        function showDifficulty(kind) {
+          if (!difficultyMsg) return;
+          difficultyMsg.textContent = pickLine(kind);
+          difficultyMsg.classList.add("is-visible");
+        }
+
+        function hideDifficulty() {
+          if (difficultyMsg) {
+            difficultyMsg.classList.remove("is-visible");
+            difficultyMsg.textContent = "";
+          }
+        }
+
+        function centerPluckButton() {
+          pluckBtn.classList.remove("is-dodging");
+          pluckBtn.style.left = "50%";
+          pluckBtn.style.top = "62%";
+          pluckBtn.style.transform = "translate(-50%, -50%)";
+        }
+
+        function dodgePluckButton(kind) {
+          if (!playing || !chaseArena || pluckBtn.disabled) return;
+          var w = chaseArena.clientWidth;
+          var h = chaseArena.clientHeight;
+          var bw = pluckBtn.offsetWidth || 160;
+          var bh = pluckBtn.offsetHeight || 48;
+          var topBand = 52;
+          var pad = 10;
+          var maxX = Math.max(pad, w - bw - pad);
+          var maxY = Math.max(topBand + pad, h - bh - pad - 22);
+          var x = pad + Math.random() * Math.max(0, maxX - pad);
+          var y = topBand + pad + Math.random() * Math.max(0, maxY - topBand - pad);
+
+          pluckBtn.style.left = x + "px";
+          pluckBtn.style.top = y + "px";
+          pluckBtn.style.transform = "none";
+          pluckBtn.classList.add("is-dodging");
+          showDifficulty(kind);
+
+          if (chaseArena) {
+            chaseArena.classList.remove("is-shake");
+            void chaseArena.offsetWidth;
+            chaseArena.classList.add("is-shake");
+          }
+        }
+
+        function stopDodgeLoop() {
+          if (dodgeTimer) {
+            clearInterval(dodgeTimer);
+            dodgeTimer = null;
+          }
+        }
+
+        function startDodgeLoop() {
+          stopDodgeLoop();
+          dodgeTimer = setInterval(function () {
+            if (!playing || Date.now() < clicksDisabledUntil) return;
+            if (Math.random() < 0.5) dodgePluckButton("dodge");
+          }, 2600);
         }
 
         function leafBurst() {
@@ -2545,13 +2850,16 @@
           if (roll < 0.34) {
             showHazard("⛈ Heavy rain — plucking paused for 2 seconds.");
             clicksDisabledUntil = Date.now() + 2000;
+            dodgePluckButton("rain");
           } else if (roll < 0.67) {
             quota += 5;
             showHazard("🌿 Poor leaf yield — today's quota raised by 5 units.");
+            dodgePluckButton("yield");
             updateHud();
           } else {
             clickWeight = 0.5;
             showHazard("😓 Exhaustion / malnutrition — each pluck counts half for 3 seconds.");
+            dodgePluckButton("exhaustion");
             setTimeout(function () {
               if (playing) clickWeight = 1;
             }, 3000);
@@ -2561,6 +2869,7 @@
         function endShift() {
           playing = false;
           pluckBtn.disabled = true;
+          stopDodgeLoop();
           if (tickId) {
             clearInterval(tickId);
             tickId = null;
@@ -2586,6 +2895,7 @@
         function resetShift() {
           if (tickId) clearInterval(tickId);
           tickId = null;
+          stopDodgeLoop();
           playing = false;
           timeLeft = SHIFT_SEC;
           plucked = 0;
@@ -2595,6 +2905,9 @@
           if (flashEl) flashEl.hidden = true;
           if (statusEl) statusEl.textContent = "Ready";
           showHazard("");
+          hideDifficulty();
+          centerPluckButton();
+          if (chaseArena) chaseArena.classList.remove("is-shake");
           setWageDisplay(false);
           pluckBtn.disabled = true;
           updateHud();
@@ -2605,7 +2918,12 @@
           playing = true;
           if (statusEl) statusEl.textContent = "Plucking…";
           pluckBtn.disabled = false;
+          centerPluckButton();
           pluckBtn.focus();
+          startDodgeLoop();
+          setTimeout(function () {
+            if (playing) dodgePluckButton("dodge");
+          }, 1200);
           var hazardAt = [4, 9, 13];
           var hazardIdx = 0;
           tickId = setInterval(function () {
@@ -2630,6 +2948,7 @@
           plucked += clickWeight >= 1 ? 1 : 0.5;
           leafBurst();
           updateHud();
+          if (Math.random() < 0.18) dodgePluckButton("dodge");
         }
 
         startBtn.addEventListener("click", startShift);
