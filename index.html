@@ -296,7 +296,7 @@
     .timeline-wrap { margin-top: 2rem; overflow-x: auto; padding-bottom: 0.5rem; }
     .timeline {
       display: flex;
-      gap: 0;
+      gap: 1rem;
       position: relative;
       padding: 2rem 0;
       overflow-x: auto;
@@ -305,65 +305,64 @@
     .timeline::before {
       content: "";
       position: absolute;
-      top: 3.2rem;
+      top: 2.8rem;
       left: 0;
       right: 0;
       height: 2px;
       background: var(--color-border);
+      z-index: 0;
     }
     .timeline-node {
       flex: 1;
-      min-width: 200px;
+      min-width: 180px;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
-      cursor: pointer;
+      cursor: default;
+    }
+    .timeline-node.fade-up.visible,
+    .timeline-node.fade-up.is-visible {
       opacity: 1;
-      transform: none;
+      transform: translateY(0);
     }
     .t-dot {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: var(--color-accent);
       border: 3px solid var(--color-bg);
-      margin-bottom: 0.75rem;
-      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 0.6rem;
       position: relative;
       z-index: 1;
     }
-    .timeline-node:hover .t-dot {
-      transform: scale(1.4);
-      box-shadow: 0 0 12px var(--color-accent);
-    }
     .t-year {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--color-accent-warm);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
     .t-card {
       background: var(--color-card);
       border: 1px solid var(--color-border);
       border-radius: 8px;
-      padding: 1rem;
-      font-size: 0.88rem;
+      padding: 0.9rem;
+      font-size: 0.85rem;
       text-align: center;
       color: var(--color-text-muted);
-      line-height: 1.6;
-      max-width: 180px;
+      line-height: 1.55;
+      max-width: 170px;
     }
     .t-card h4 {
       color: var(--color-text);
-      font-size: 0.95rem;
-      margin: 0 0 0.4rem;
+      font-size: 0.9rem;
+      margin: 0 0 0.35rem;
       font-family: var(--font-display);
       font-weight: 600;
     }
-    .t-card p { margin: 0; font-size: 0.88rem; }
+    .t-card p { margin: 0; font-size: 0.85rem; }
     @media (max-width: 768px) {
-      .timeline { flex-direction: column; min-width: 0; }
+      .timeline { flex-direction: column; overflow-x: visible; min-width: 0; }
       .timeline::before { display: none; }
       .timeline-node {
         flex-direction: row;
@@ -371,7 +370,7 @@
         gap: 1rem;
         min-width: unset;
       }
-      .t-dot { margin-bottom: 0; margin-top: 0.3rem; flex-shrink: 0; }
+      .t-dot { flex-shrink: 0; margin-top: 0.25rem; margin-bottom: 0; }
       .t-card { text-align: left; max-width: unset; flex: 1; }
     }
 
@@ -790,7 +789,7 @@
     <div class="wrap hero-content fade-up">
       <p class="hero-eyebrow">Assam · Stanford · 2025</p>
       <h1>You drink it every morning.<br>She earns ₹280 on paper — rarely in hand.</h1>
-      <p class="hero-sub">A research story about who actually benefits when Assam tea travels from garden to cup — and why four decades of labor law haven't changed that math.</p>
+      <p class="hero-sub">A research story about who actually benefits when Assam tea travels from garden to cup — and why seven decades of labor law haven't changed that math.</p>
       <p class="hero-question"><strong>Central question:</strong> Why do Assam's tea workers — mostly women — remain near poverty thresholds despite 74 years of statutory wage and welfare law, while the tea they pick sells for up to 2,000× their wage per kilogram at retail?</p>
       <a href="#story" class="btn-primary">See the evidence ↓</a>
     </div>
@@ -857,7 +856,7 @@
         <p class="section-label">Historical foundations</p>
         <h2>How the plantation system was built</h2>
         <div class="timeline-wrap">
-          <div class="timeline" id="timeline-container" role="list"></div>
+          <div class="timeline" id="timeline-container" data-timeline role="list"></div>
         </div>
       </div>
     </section>
@@ -888,7 +887,7 @@
           </article>
           <article class="chart-panel chart-panel--stat fade-up" data-chart-panel id="bplCounterPanel">
             <p class="chart-source">Source: Oxfam (2019) household visits</p>
-            <p class="bpl-counter"><span id="bplCount" data-counter data-target="50" data-suffix="%">0%</span></p>
+            <p class="bpl-counter"><span id="bplCount" class="counter" data-counter data-target="50" data-suffix="%">0%</span></p>
             <p class="bpl-label">of estate households visited by Oxfam researchers held Below Poverty Line ration cards</p>
           </article>
         </div>
@@ -1151,36 +1150,44 @@
         tryLocal();
       })();
 
-      /* Timeline */
+      /* Timeline — inject on DOM ready */
       function buildTimeline() {
         var timelineEvents = [
           {
             year: "1840s",
             label: "Plantation system begins",
-            detail: "Penal contracts bind workers — leaving is punishable. Women recruited for plucking; wages called 'lighter work' to justify lower pay."
+            detail: "British expand into Assam forest land. Penal contracts bind workers — leaving is punishable. Women recruited for plucking; wages called 'lighter work' to justify lower pay."
           },
           {
             year: "1882",
             label: "Inland Emigration Act",
-            detail: "Formalizes immobility. The 'Planters' Raj' — planters hold unchecked power over labor and movement."
+            detail: "Formalizes worker immobility. Historians call this era the 'Planters' Raj' — planters hold unchecked power. Workers cannot leave without employer permission."
           },
           {
             year: "1951",
             label: "Plantations Labour Act",
-            detail: "Independence brings statutory housing, healthcare, and wage rights on paper. Enforcement mechanisms remain weak."
+            detail: "Independence brings statutory housing, healthcare, and wage rights on paper. Enforcement mechanisms remain weak and estate-controlled."
           },
           {
             year: "Today",
             label: "Same structure, new labels",
-            detail: "Tied housing, quota penalties, gendered plucking persist. Oxfam (2019) and Saikia & Parida (2026) document continued poverty-level outcomes."
+            detail: "Tied housing, quota penalties, and gendered plucking persist. Oxfam (2019) and Saikia & Parida (2026) document continued poverty-level outcomes despite certifications."
           }
         ];
-        var container = document.getElementById("timeline-container") || document.querySelector(".timeline");
-        if (!container) return;
+        var container =
+          document.querySelector(".timeline") ||
+          document.querySelector("#timeline-container") ||
+          document.querySelector("[data-timeline]");
+        if (!container) {
+          console.error("Timeline container not found — check selector");
+          return;
+        }
         container.innerHTML = timelineEvents
-          .map(function (e) {
+          .map(function (e, i) {
             return (
-              '<div class="timeline-node" role="listitem">' +
+              '<div class="timeline-node fade-up visible" role="listitem" style="transition-delay:' +
+              i * 0.12 +
+              's">' +
               '<div class="t-dot"></div>' +
               '<div class="t-year">' +
               e.year +
@@ -1193,6 +1200,9 @@
             );
           })
           .join("");
+        container.querySelectorAll(".timeline-node.fade-up").forEach(function (node) {
+          fadeObs.observe(node);
+        });
       }
 
       /* Charts on scroll */
@@ -1271,7 +1281,7 @@
       }
 
       function animateCounter(el, target, suffix, duration) {
-        duration = duration || 1800;
+        duration = duration || 2000;
         suffix = suffix || "";
         var start = performance.now();
         function step(now) {
@@ -1283,6 +1293,12 @@
         requestAnimationFrame(step);
       }
 
+      function runCounter(el) {
+        if (!el || el.dataset.counted) return;
+        el.dataset.counted = "true";
+        animateCounter(el, parseFloat(el.dataset.target, 10), el.dataset.suffix || "", 2000);
+      }
+
       function initCounters() {
         if (!("IntersectionObserver" in window)) {
           document.querySelectorAll("[data-counter]").forEach(function (el) {
@@ -1290,33 +1306,26 @@
           });
           return;
         }
-        var cObs = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (!e.isIntersecting || e.target.dataset.counted) return;
-            e.target.dataset.counted = "true";
-            animateCounter(
-              e.target,
-              parseFloat(e.target.dataset.target, 10),
-              e.target.dataset.suffix || ""
-            );
+        var counterObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !entry.target.dataset.counted) {
+              runCounter(entry.target);
+            }
           });
-        }, { threshold: 0.35 });
+        }, { threshold: 0.5 });
         document.querySelectorAll("[data-counter]").forEach(function (el) {
-          cObs.observe(el);
+          counterObs.observe(el);
         });
-        var bplPanel = document.getElementById("bplCounterPanel");
-        var bplEl = document.getElementById("bplCount");
-        if (bplPanel && bplEl && !bplEl.dataset.counted) {
-          var panelObs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) {
-              if (!en.isIntersecting || bplEl.dataset.counted) return;
-              bplEl.dataset.counted = "true";
-              animateCounter(bplEl, 50, "%");
-              panelObs.disconnect();
-            });
-          }, { threshold: 0.25 });
-          panelObs.observe(bplPanel);
-        }
+      }
+
+      function checkCountersInView() {
+        document.querySelectorAll("[data-counter]").forEach(function (el) {
+          if (el.dataset.counted) return;
+          var rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.9 && rect.bottom > 0) {
+            runCounter(el);
+          }
+        });
       }
 
       if ("IntersectionObserver" in window) {
@@ -1326,12 +1335,19 @@
             initCharts();
             if (supplyChainChartInst) supplyChainChartInst.update();
             if (wageGapChartInst) wageGapChartInst.update();
+            if (en.target.id === "bplCounterPanel") {
+              runCounter(document.getElementById("bplCount"));
+            }
           });
         }, { threshold: 0.2 });
         document.querySelectorAll("[data-chart-panel]").forEach(function (p) { chartObs.observe(p); });
       } else {
         initCharts();
+        var bplFallback = document.getElementById("bplCount");
+        if (bplFallback) bplFallback.textContent = "50%";
       }
+
+      window.addEventListener("load", checkCountersInView);
 
       /* Source filter */
       document.querySelectorAll(".filter-chip").forEach(function (chip) {
@@ -1874,14 +1890,17 @@
         renderTYT();
       }
 
+      var domReadyDone = false;
       function onDomReady() {
+        if (domReadyDone) return;
+        domReadyDone = true;
         buildTimeline();
         initCounters();
         initTrackYourTea();
+        setTimeout(checkCountersInView, 400);
       }
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", onDomReady);
-      } else {
+      document.addEventListener("DOMContentLoaded", onDomReady);
+      if (document.readyState !== "loading") {
         onDomReady();
       }
     })();
