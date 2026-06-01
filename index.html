@@ -191,7 +191,7 @@
     }
     .hero-sub { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--color-text-muted); max-width: 40rem; margin-bottom: 0; }
     .hero-question {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--color-accent-warm);
       border-left: 3px solid var(--color-accent);
       padding-left: 1.2rem;
@@ -319,6 +319,8 @@
       align-items: center;
       position: relative;
       cursor: pointer;
+      opacity: 1;
+      transform: none;
     }
     .t-dot {
       width: 16px;
@@ -446,26 +448,25 @@
     }
     .quota-briefing ul { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; }
     .quota-briefing[hidden] { display: none !important; }
-    .sim-outcome {
-      margin-top: 1.5rem;
+    #sim-outcome { margin-top: 1.5rem; }
+    .outcome-card {
       background: var(--color-card);
       border: 1px solid var(--color-border);
       border-radius: 10px;
       padding: 1.5rem;
     }
-    .sim-outcome.hidden { display: none; }
-    .sim-outcome h4 {
+    .outcome-card h4 {
       color: var(--color-accent-warm);
-      font-size: 1.1rem;
       margin: 0 0 1rem;
       font-family: var(--font-display);
+      font-size: 1.1rem;
     }
     .outcome-row {
       display: flex;
       justify-content: space-between;
       padding: 0.5rem 0;
       border-bottom: 1px solid var(--color-border);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
     .outcome-row span { color: var(--color-text-muted); }
     .outcome-row strong { color: var(--color-text); }
@@ -473,7 +474,7 @@
       margin-top: 1rem;
       font-style: italic;
       color: var(--color-accent-warm);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       line-height: 1.6;
     }
     .btn-copy {
@@ -659,6 +660,7 @@
       color: var(--color-text);
       line-height: 1.8;
       max-width: 680px;
+      margin-bottom: 0.75rem;
     }
     .method-note {
       font-size: 11px;
@@ -666,7 +668,7 @@
       border: 1px solid var(--color-border);
       border-radius: 6px;
       padding: 0.75rem 1rem;
-      margin-top: 0.75rem;
+      margin-bottom: 1.5rem;
       line-height: 1.6;
       max-width: 680px;
     }
@@ -699,9 +701,10 @@
     .brand-btn.active span { opacity: 0.9; }
     .tyt-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.2fr 1fr;
       gap: 2rem;
       margin-top: 1.5rem;
+      align-items: start;
     }
     @media (max-width: 768px) { .tyt-grid { grid-template-columns: 1fr; } }
     .tyt-sublabel {
@@ -711,19 +714,20 @@
       color: var(--color-text-muted);
       margin-bottom: 1rem;
     }
-    .tyt-bar-row { margin-bottom: 1rem; }
-    .tyt-bar-label { font-size: 13px; color: var(--color-text); margin-bottom: 4px; }
-    .tyt-bar-wrap {
+    .tyt-bar-row { margin-bottom: 1.2rem; }
+    .tyt-bar-label { font-size: 13px; color: var(--color-text); margin-bottom: 5px; font-weight: 500; }
+    .tyt-bar-track {
       height: 10px;
-      background: var(--color-bg);
+      background: var(--color-surface);
       border-radius: 5px;
       overflow: hidden;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
-    .tyt-bar-fill { height: 100%; border-radius: 5px; transition: width 0.5s ease; }
-    .tyt-bar-val { font-size: 12px; font-weight: 600; display: inline; }
-    .tyt-bar-note { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
-    .tyt-stat-stack { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+    .tyt-bar-fill { height: 100%; border-radius: 5px; transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1); }
+    .tyt-bar-meta { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .tyt-bar-val { font-size: 12px; font-weight: 600; min-width: 40px; }
+    .tyt-bar-note { font-size: 11px; color: var(--color-text-muted); line-height: 1.4; }
+    .tyt-stat-stack { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem; }
     .tyt-stat {
       background: var(--color-card);
       border: 1px solid var(--color-border);
@@ -733,7 +737,12 @@
       flex-direction: column;
       gap: 4px;
     }
-    .tyt-stat-num { font-size: 2rem; font-family: var(--font-display); }
+    .tyt-stat-num {
+      font-size: 1.9rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1;
+    }
     .tyt-stat-label { font-size: 12px; color: var(--color-text-muted); line-height: 1.4; }
     .tyt-insight {
       background: var(--color-card);
@@ -745,7 +754,13 @@
       border-radius: 0 8px 8px 0;
     }
     .tyt-insight p { margin: 0 0 0.5rem; font-size: 13px; }
-    .tyt-source { font-size: 11px; opacity: 0.6; margin-top: 0.5rem; margin-bottom: 0; }
+    .tyt-source {
+      font-size: 11px;
+      opacity: 0.55;
+      margin-top: 0.6rem;
+      margin-bottom: 0;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
@@ -774,14 +789,14 @@
     <div class="hero-bg-leaves" id="heroBgLeaves" aria-hidden="true"></div>
     <div class="wrap hero-content fade-up">
       <p class="hero-eyebrow">Assam · Stanford · 2025</p>
-      <h1>You drink it every morning.<br>She earns ₹250 for the whole day.</h1>
+      <h1>You drink it every morning.<br>She earns ₹280 on paper — rarely in hand.</h1>
       <p class="hero-sub">A research story about who actually benefits when Assam tea travels from garden to cup — and why four decades of labor law haven't changed that math.</p>
-      <p class="hero-question"><strong>Central question:</strong> Why do Assam tea workers remain below poverty thresholds despite 74 years of statutory wage and welfare law — and who benefits from that gap?</p>
+      <p class="hero-question"><strong>Central question:</strong> Why do Assam's tea workers — mostly women — remain near poverty thresholds despite 74 years of statutory wage and welfare law, while the tea they pick sells for up to 2,000× their wage per kilogram at retail?</p>
       <a href="#story" class="btn-primary">See the evidence ↓</a>
     </div>
     <div class="hero-stat-strip">
       <div class="stat fade-up"><span class="stat-num">95%</span><span class="stat-label">of tea price captured by brands &amp; supermarkets</span></div>
-      <div class="stat fade-up"><span class="stat-num">₹250</span><span class="stat-label">daily wage — less than $3 USD</span></div>
+      <div class="stat fade-up"><span class="stat-num">₹280</span><span class="stat-label">statutory minimum (Apr 2026) — rarely enforced on estates</span></div>
       <div class="stat fade-up"><span class="stat-num">50%</span><span class="stat-label">of visited households held BPL ration cards</span></div>
     </div>
   </header>
@@ -797,8 +812,8 @@
             <cite>Oxfam, 2019</cite>
           </article>
           <article class="arg-card fade-up">
-            <span class="arg-num">49%</span>
-            <p>gap between reported daily wages and the Assam legal minimum — law exists; enforcement does not</p>
+            <span class="arg-num">40%</span>
+            <p>gap between reported daily wages (ETI/CAO) and the Apr 2026 statutory minimum — law exists; enforcement does not</p>
             <cite>ETI / Sachdev &amp; Satpute</cite>
           </article>
           <article class="arg-card fade-up">
@@ -867,8 +882,8 @@
             <div class="chart-canvas-wrap"><canvas id="supplyChainChart" aria-label="Donut chart of value chain shares"></canvas></div>
           </article>
           <article class="chart-panel fade-up" data-chart-panel>
-            <h3>₹126 reported vs ₹250 legal minimum — a 49% gap</h3>
-            <p class="chart-source">Source: ETI / Sachdev &amp; Satpute</p>
+            <h3>₹167 reported (ETI/CAO) vs ₹280 statutory minimum (Apr 2026) — a 40% gap</h3>
+            <p class="chart-source">Source: ETI / Sachdev &amp; Satpute; Assam govt notification March 2026</p>
             <div class="chart-canvas-wrap"><canvas id="wageGapChart" aria-label="Horizontal bar chart of reported wage versus legal minimum"></canvas></div>
           </article>
           <article class="chart-panel chart-panel--stat fade-up" data-chart-panel id="bplCounterPanel">
@@ -927,32 +942,13 @@
             </div>
             <aside class="quota-wage-panel" aria-live="polite">
               <h4>Live wage panel</h4>
-              <div class="quota-wage-row"><span>Stated daily wage</span><span class="wage-amount" id="wageBase"><span class="wage-inr">₹250</span></span></div>
+              <div class="quota-wage-row"><span>Stated daily wage</span><span class="wage-amount" id="wageBase"><span class="wage-inr">₹280</span></span></div>
               <div class="quota-wage-row penalized" id="wagePenaltyRow" hidden><span>Quota penalty</span><span class="wage-amount" id="wagePenalty"><span class="wage-inr">−₹0</span></span></div>
-              <div class="quota-wage-row"><span>You take home</span><span class="wage-amount" id="wageFinal"><span class="wage-inr">₹250</span></span></div>
+              <div class="quota-wage-row"><span>You take home</span><span class="wage-amount" id="wageFinal"><span class="wage-inr">₹280</span></span></div>
             </aside>
           </div>
 
-          <div id="sim-outcome" class="sim-outcome hidden">
-            <h4>Your shift is over</h4>
-            <div class="outcome-row">
-              <span>Leaves plucked</span><strong id="out-kg">0 kg</strong>
-            </div>
-            <div class="outcome-row">
-              <span>Quota</span><strong>26 kg</strong>
-            </div>
-            <div class="outcome-row penalty-row">
-              <span>Penalty deducted</span><strong id="out-penalty">₹0</strong>
-            </div>
-            <div class="outcome-row takehome-row">
-              <span>Take-home today</span><strong id="out-takehome">₹250</strong>
-            </div>
-            <div class="outcome-row compare-row">
-              <span>US federal minimum (same hours)</span><strong>~$58</strong>
-            </div>
-            <p id="out-insight" class="outcome-insight"></p>
-            <button type="button" id="copy-result" class="btn-copy">Copy my result</button>
-          </div>
+          <div id="sim-outcome" style="display:none;margin-top:1.5rem;" aria-live="polite"></div>
         </div>
       </div>
     </section>
@@ -990,7 +986,7 @@
           <article class="source-card fade-up" data-type="Governance">
             <span class="source-tag source-tag--gov">Governance · ETI</span>
             <h3>Sachdev &amp; Satpute — IFC / CAO / APPL</h3>
-            <p>Rs 126/day vs Rs 250 legal minimum cited; CAO findings on housing, health, freedom of association, and certification limits.</p>
+            <p>₹167/day reported vs ₹280 statutory minimum (Apr 2026); CAO findings on housing, health, freedom of association, and certification limits.</p>
             <a class="source-link" href="https://www.ethicaltrade.org/resources/blog/life-dignity-long-overdue-assams-tea-workers" target="_blank" rel="noopener noreferrer">ETI blog →</a>
           </article>
           <article class="source-card fade-up" data-type="Press">
@@ -1006,14 +1002,14 @@
     <section id="trackYourTea" class="fade-up">
       <div class="wrap">
         <p class="section-label">Your contribution</p>
-        <h2>Track Your Tea</h2>
-        <p class="section-intro">Pick a brand in your kitchen. These numbers come from Tea Board of India auction data (GTAC FY 2024–25), verified UK/US retail prices, and Assam government wage notifications. This price decomposition is my own calculation — not Oxfam's estimate.</p>
-        <p class="method-note">Method: retail price per kg calculated from supermarket listings (Tesco UK, Walmart US, verified June 2025). Auction price: GTAC average ₹227.70/kg (FY 2024–25, Tribune India / Tea Board). Worker wage per kg: ₹280/day statutory minimum ÷ 26 kg daily quota = ₹10.77/kg. All rupee conversions at ₹106 = £1, ₹84 = $1 (illustrative; verify before submission).</p>
-        <div class="tyt-section">
+        <h2>Track Your Tea: Where does the money go?</h2>
+        <p class="section-intro">Pick a brand you might have at home. Every number here comes from primary sources I verified myself: Tea Board of India auction data (GTAC FY 2024–25), current supermarket prices checked June 2025, and the Assam government wage notification from April 2026. The price decomposition and markup calculations are my own.</p>
+        <p class="method-note">Method: retail price per kg calculated from Tesco UK and Walmart US listings (verified June 2025). Auction price: GTAC average ₹227.70/kg (FY 2024–25, Tribune India / Tea Board of India). Worker wage per kg: ₹280/day statutory minimum ÷ 26 kg daily quota = ₹10.77/kg. Currency: ₹106 = £1, ₹84 = $1 (illustrative rate for comparison).</p>
+        <div class="tyt-section fade-up">
           <div class="brand-row" id="tyt-brands" role="tablist" aria-label="Tea brand"></div>
           <div class="tyt-grid">
             <div class="tyt-left">
-              <p class="tyt-sublabel">Price breakdown per kg of tea</p>
+              <p class="tyt-sublabel">Price breakdown — per kg of tea, in rupees</p>
               <div id="tyt-bars"></div>
             </div>
             <div class="tyt-right">
@@ -1031,7 +1027,7 @@
         <p>Assam's tea workers are not poor <em>despite</em> the law. The quota system, tied housing, and estate dependency make poverty a structural feature — not a policy failure waiting to be fixed. The law is real. So is the enforcement gap. And the consumer price never reaches the garden.</p>
         <p class="conclusion-answer">The answer: because the quota system, tied housing, and buyer market power make underpayment structurally profitable — not an oversight. Enforcement would cost the brands. So it doesn't happen.</p>
         <div class="progress-lens">
-          <h3>What this tells us about progress</h3>
+          <h3>What this tells us about development</h3>
           <p>Development economists distinguish between <em>legal formalization</em> and <em>real institutional change</em>. Assam is a clean case study: the formal rules arrived in 1951. Real wages, mobility, and bargaining power did not follow. The bottleneck is not law — it is the estate structure itself, which keeps workers geographically captive, ties welfare to employment, and lets global buyers extract value without accountability. Until buyer-side pressure or credible enforcement changes the cost calculus for brands, legal progress will keep outrunning economic progress. That gap is not unique to tea — it is the central problem of labor institutions in commodity export economies worldwide.</p>
         </div>
         <div class="takeaway-line">"The leaf is picked. The price is kept. The law is silent."</div>
@@ -1161,32 +1157,30 @@
           {
             year: "1840s",
             label: "Plantation system begins",
-            detail: "British expand into Assam forest land. Penal contracts bind workers — leaving is punishable. Women recruited for plucking; wages called 'lighter work' to justify lower pay."
+            detail: "Penal contracts bind workers — leaving is punishable. Women recruited for plucking; wages called 'lighter work' to justify lower pay."
           },
           {
             year: "1882",
             label: "Inland Emigration Act",
-            detail: "Formalizes worker immobility. Historians call this era the 'Planters' Raj' — planters hold near-unchecked power. Workers cannot leave without employer permission."
+            detail: "Formalizes immobility. The 'Planters' Raj' — planters hold unchecked power over labor and movement."
           },
           {
             year: "1951",
             label: "Plantations Labour Act",
-            detail: "Independence brings statutory housing, healthcare, and wage rights on paper. Enforcement mechanisms remain weak and estate-controlled."
+            detail: "Independence brings statutory housing, healthcare, and wage rights on paper. Enforcement mechanisms remain weak."
           },
           {
             year: "Today",
             label: "Same structure, new labels",
-            detail: "Tied housing, quota penalties, gendered plucking persist. Oxfam (2019) and Saikia & Parida (2026) document continued poverty-level outcomes despite certifications and audits."
+            detail: "Tied housing, quota penalties, gendered plucking persist. Oxfam (2019) and Saikia & Parida (2026) document continued poverty-level outcomes."
           }
         ];
-        var container = document.querySelector(".timeline") || document.getElementById("timeline-container");
+        var container = document.getElementById("timeline-container") || document.querySelector(".timeline");
         if (!container) return;
         container.innerHTML = timelineEvents
-          .map(function (e, i) {
+          .map(function (e) {
             return (
-              '<div class="timeline-node fade-up" role="listitem" style="transition-delay:' +
-              i * 0.15 +
-              's">' +
+              '<div class="timeline-node" role="listitem">' +
               '<div class="t-dot"></div>' +
               '<div class="t-year">' +
               e.year +
@@ -1199,14 +1193,6 @@
             );
           })
           .join("");
-        container.querySelectorAll(".timeline-node.fade-up").forEach(function (node) {
-          fadeObs.observe(node);
-        });
-      }
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", buildTimeline);
-      } else {
-        buildTimeline();
       }
 
       /* Charts on scroll */
@@ -1218,8 +1204,8 @@
         datasets: [{ data: [95, 3.5, 1.5], backgroundColor: ["#b85c2a", "#c8a951", "#5a9e4b"], borderWidth: 0 }]
       };
       var wageData = {
-        labels: ["Reported daily wage (ETI blog)", "Assam legal minimum wage"],
-        datasets: [{ data: [126, 250], backgroundColor: ["#b85c2a", "#5a9e4b"], borderRadius: 6, borderSkipped: false }]
+        labels: ["Reported daily wage (ETI/CAO)", "Statutory minimum (Apr 2026)"],
+        datasets: [{ data: [167, 280], backgroundColor: ["#b85c2a", "#5a9e4b"], borderRadius: 6, borderSkipped: false }]
       };
 
       function initCharts() {
@@ -1247,7 +1233,7 @@
               indexAxis: "y", responsive: true, maintainAspectRatio: false,
               plugins: { legend: { display: false } },
               scales: {
-                x: { beginAtZero: true, max: 280, grid: { color: chartGrid }, ticks: { color: chartText } },
+                x: { beginAtZero: true, max: 320, grid: { color: chartGrid }, ticks: { color: chartText } },
                 y: { grid: { display: false }, ticks: { color: chartText, font: { size: 11 } } }
               }
             },
@@ -1259,24 +1245,24 @@
                 if (!meta || !meta.data[0] || !meta.data[1]) return;
                 var xScale = chart.scales.x;
                 var y = meta.data[1].y;
-                var x126 = xScale.getPixelForValue(126);
-                var x250 = xScale.getPixelForValue(250);
-                var xMid = (x126 + x250) / 2;
+                var x167 = xScale.getPixelForValue(167);
+                var x280 = xScale.getPixelForValue(280);
+                var xMid = (x167 + x280) / 2;
                 ctx.save();
                 ctx.strokeStyle = "#d45a4a";
                 ctx.fillStyle = "#d45a4a";
                 ctx.lineWidth = 2;
                 ctx.setLineDash([5, 4]);
                 ctx.beginPath();
-                ctx.moveTo(x126, y - 14);
-                ctx.lineTo(x126, y - 6);
-                ctx.lineTo(x250, y - 6);
-                ctx.lineTo(x250, y - 14);
+                ctx.moveTo(x167, y - 14);
+                ctx.lineTo(x167, y - 6);
+                ctx.lineTo(x280, y - 6);
+                ctx.lineTo(x280, y - 14);
                 ctx.stroke();
                 ctx.setLineDash([]);
                 ctx.font = "600 12px Inter, sans-serif";
                 ctx.textAlign = "center";
-                ctx.fillText("49% gap", xMid, y - 20);
+                ctx.fillText("40% gap", xMid, y - 20);
                 ctx.restore();
               }
             }]
@@ -1285,37 +1271,52 @@
       }
 
       function animateCounter(el, target, suffix, duration) {
-        suffix = suffix || "";
         duration = duration || 1800;
+        suffix = suffix || "";
         var start = performance.now();
-        var isDecimal = String(target).indexOf(".") !== -1;
         function step(now) {
           var progress = Math.min((now - start) / duration, 1);
           var eased = 1 - Math.pow(1 - progress, 3);
-          var value = eased * target;
-          el.textContent = (isDecimal ? value.toFixed(1) : Math.round(value)) + suffix;
+          el.textContent = Math.round(eased * target) + suffix;
           if (progress < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
       }
 
-      if ("IntersectionObserver" in window) {
-        var counterObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting || entry.target.dataset.counted) return;
-            entry.target.dataset.counted = "true";
-            var target = parseFloat(entry.target.dataset.target, 10);
-            var suffix = entry.target.dataset.suffix || "";
-            animateCounter(entry.target, target, suffix);
+      function initCounters() {
+        if (!("IntersectionObserver" in window)) {
+          document.querySelectorAll("[data-counter]").forEach(function (el) {
+            el.textContent = el.dataset.target + (el.dataset.suffix || "");
           });
-        }, { threshold: 0.5 });
+          return;
+        }
+        var cObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting || e.target.dataset.counted) return;
+            e.target.dataset.counted = "true";
+            animateCounter(
+              e.target,
+              parseFloat(e.target.dataset.target, 10),
+              e.target.dataset.suffix || ""
+            );
+          });
+        }, { threshold: 0.35 });
         document.querySelectorAll("[data-counter]").forEach(function (el) {
-          counterObserver.observe(el);
+          cObs.observe(el);
         });
-      } else {
-        document.querySelectorAll("[data-counter]").forEach(function (el) {
-          el.textContent = el.dataset.target + (el.dataset.suffix || "");
-        });
+        var bplPanel = document.getElementById("bplCounterPanel");
+        var bplEl = document.getElementById("bplCount");
+        if (bplPanel && bplEl && !bplEl.dataset.counted) {
+          var panelObs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              if (!en.isIntersecting || bplEl.dataset.counted) return;
+              bplEl.dataset.counted = "true";
+              animateCounter(bplEl, 50, "%");
+              panelObs.disconnect();
+            });
+          }, { threshold: 0.25 });
+          panelObs.observe(bplPanel);
+        }
       }
 
       if ("IntersectionObserver" in window) {
@@ -1449,11 +1450,6 @@
         var progressBar = document.getElementById("quotaProgressBar");
         var briefingEl = document.getElementById("quotaBriefing");
         var simOutcomeEl = document.getElementById("sim-outcome");
-        var outKg = document.getElementById("out-kg");
-        var outPenalty = document.getElementById("out-penalty");
-        var outTakehome = document.getElementById("out-takehome");
-        var outInsight = document.getElementById("out-insight");
-        var copyResultBtn = document.getElementById("copy-result");
         var playArea = sim ? sim.querySelector(".quota-play-area") : null;
         var chaseArena = document.getElementById("quotaChaseArena");
         var difficultyMsg = document.getElementById("quotaDifficultyMsg");
@@ -1465,7 +1461,7 @@
 
         var SHIFT_SEC = 15;
         var BASE_QUOTA = 26;
-        var BASE_WAGE = 250;
+        var BASE_WAGE = 280;
         var INR_PER_USD = 84;
         var US_MIN_COMPARE = 58;
         var tickId = null;
@@ -1479,7 +1475,6 @@
         var clickWeight = 1;
         var lastClickAt = 0;
         var lastCopyText = "";
-        var copyBound = false;
 
         var DIFFICULTY_LINES = {
           rain: ["Ooh — heavy rain. Wet leaves tear; your grip keeps slipping.", "Ooh — downpour. You wait for a break the supervisor does not grant."],
@@ -1585,31 +1580,44 @@
           }
         }
         function showOutcome() {
+          if (!simOutcomeEl) return;
           var dailyWage = BASE_WAGE;
-          var kgPlucked = Math.floor(plucked);
-          var shortfall = Math.max(0, quota - kgPlucked);
-          var penaltyRate = shortfall / quota;
-          var penalty = Math.round(penaltyRate * dailyWage);
+          var kg = Math.floor(plucked);
+          var shortfall = Math.max(0, quota - kg);
+          var penalty = Math.round((shortfall / quota) * dailyWage);
           var takehome = dailyWage - penalty;
-          var usdTakehome = formatUsd(takehome);
-          var takehomeStrong = document.querySelector(".takehome-row strong");
+          var usd = formatUsd(takehome);
+          var color = penalty > 0 ? "#b85c2a" : "#5a9e4b";
+          var insight =
+            penalty > 0
+              ? "You missed quota by " + shortfall + " kg. The penalty mechanism turned that into ₹" + penalty + " deducted — directly into employer savings. This is structural, not accidental."
+              : "You hit quota. Full ₹" + dailyWage + " today. But the target resets tomorrow, and rain, pregnancy, or exhaustion can change everything.";
 
-          if (outKg) outKg.textContent = kgPlucked + " kg";
-          if (outPenalty) outPenalty.textContent = "₹" + penalty;
-          if (outTakehome) outTakehome.textContent = "₹" + takehome + " (~$" + usdTakehome + " USD)";
-          if (outInsight) {
-            outInsight.textContent =
-              penalty > 0
-                ? "You missed quota by " + shortfall + " kg. The quota system turned that into a ₹" + penalty + " deduction — directly into employer savings. This is the mechanism."
-                : "You hit quota. Take-home: full ₹250. But tomorrow the target resets, and rain, exhaustion, or pregnancy can change everything.";
-          }
-          if (takehomeStrong) {
-            takehomeStrong.style.color = penalty > 0 ? "var(--color-accent-rust)" : "var(--color-accent)";
-          }
-          if (simOutcomeEl) simOutcomeEl.classList.remove("hidden");
+          simOutcomeEl.innerHTML =
+            '<div class="outcome-card">' +
+            "<h4>Shift complete</h4>" +
+            '<div class="outcome-row"><span>Leaves plucked</span><strong>' + kg + " / " + quota + " kg</strong></div>" +
+            '<div class="outcome-row"><span>Penalty deducted</span><strong style="color:' + color + '">₹' + penalty + "</strong></div>" +
+            '<div class="outcome-row takehome"><span>Take-home today</span><strong style="color:' + color + '">₹' + takehome + " (~$" + usd + ")</strong></div>" +
+            '<div class="outcome-row"><span>US federal min wage (same hours)</span><strong>~$' + US_MIN_COMPARE + "</strong></div>" +
+            '<p class="outcome-insight">' + insight + "</p>" +
+            '<button type="button" id="copy-result" class="btn-copy">Copy my result</button>' +
+            "</div>";
+          simOutcomeEl.style.display = "block";
 
           lastCopyText =
-            "Assam Tea Simulator result: Plucked " + kgPlucked + "/" + quota + " kg. Penalty: ₹" + penalty + ". Take-home: ₹" + takehome + " (~$" + usdTakehome + " USD). US minimum wage same hours: ~$" + US_MIN_COMPARE + ". Source: aairaecon30project.vercel.app";
+            "Assam Tea Simulator result: Plucked " + kg + "/" + quota + " kg. Penalty: ₹" + penalty + ". Take-home: ₹" + takehome + " (~$" + usd + " USD). US minimum wage same hours: ~$" + US_MIN_COMPARE + ". Source: aairaecon30project.vercel.app";
+
+          var copyBtn = document.getElementById("copy-result");
+          if (copyBtn) {
+            copyBtn.addEventListener("click", function () {
+              if (!lastCopyText) return;
+              navigator.clipboard.writeText(lastCopyText).then(function () {
+                copyBtn.textContent = "Copied!";
+                setTimeout(function () { copyBtn.textContent = "Copy my result"; }, 2000);
+              });
+            });
+          }
 
           setWageDisplay(penalty, takehome);
           if (statusEl) statusEl.textContent = penalty > 0 ? "Penalty applied" : "Quota met";
@@ -1634,9 +1642,10 @@
           clicksDisabledUntil = 0;
           clickWeight = 1;
           if (briefingEl) briefingEl.hidden = true;
-          if (simOutcomeEl) simOutcomeEl.classList.add("hidden");
-          var takehomeStrongReset = document.querySelector(".takehome-row strong");
-          if (takehomeStrongReset) takehomeStrongReset.style.color = "";
+          if (simOutcomeEl) {
+            simOutcomeEl.style.display = "none";
+            simOutcomeEl.innerHTML = "";
+          }
           if (statusEl) statusEl.textContent = "Ready";
           showHazard("");
           hideDifficulty();
@@ -1686,16 +1695,6 @@
         }
         startBtn.addEventListener("click", startShift);
         pluckBtn.addEventListener("click", registerPluck);
-        if (copyResultBtn && !copyBound) {
-          copyBound = true;
-          copyResultBtn.addEventListener("click", function () {
-            if (!lastCopyText) return;
-            navigator.clipboard.writeText(lastCopyText).then(function () {
-              copyResultBtn.textContent = "Copied!";
-              setTimeout(function () { copyResultBtn.textContent = "Copy my result"; }, 2000);
-            });
-          });
-        }
         document.querySelectorAll(".era-tab").forEach(function (btn) {
           btn.addEventListener("click", function () {
             if (btn.getAttribute("data-era") === "contemporary") {
@@ -1722,58 +1721,64 @@
       var TYT_DATA = [
         {
           name: "Twinings",
-          market: "UK (Tesco)",
+          market: "UK · Tesco",
           retail_per_kg: 23000,
-          retail_display: "£3.00 / 100g = ₹23,000/kg",
           steps: [
-            { label: "Worker wage", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota" },
-            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC avg FY2024-25" },
-            { label: "Export & processing", val: 600, color: "#c8a951", note: "Author estimate: logistics, blending" },
-            { label: "Brand margin (Twinings/ABF)", val: 9500, color: "#d4883a", note: "Residual after known costs" },
-            { label: "Retailer (Tesco)", val: 12662, color: "#b85c2a", note: "Residual shelf margin" }
+            { label: "Worker wage per kg picked", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota — Assam notification Apr 2026" },
+            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC average FY 2024–25 (Tea Board of India)" },
+            { label: "Export, shipping & processing", val: 600, color: "#c8a951", note: "Author estimate based on industry cost structures" },
+            { label: "Brand margin (Twinings / ABF)", val: 9500, color: "#d4883a", note: "Residual after auction + logistics costs" },
+            { label: "Retailer margin (Tesco)", val: 12662, color: "#b85c2a", note: "Residual shelf margin — largest single slice" }
           ],
-          worker_share: 0.047,
-          auction_share: 1.0,
-          key_fact: "A worker earns ₹10.77 per kg she picks. Twinings sells that same kg for ₹23,000 at retail. That is a 2,135× markup from hand to shelf.",
-          source: "Tesco UK (June 2025); GTAC FY2024-25; Assam wage notification Apr 2026"
+          worker_share: "0.047",
+          auction_share: "1.0",
+          markup: "2,135",
+          key_fact: "A worker earns ₹10.77 for every kg she picks. Twinings sells that same kg for ₹23,000 at retail — a 2,135× markup from hand to shelf. The auction price (what the estate gets) is just 1% of what the consumer pays.",
+          source: "Tesco UK, June 2025 · GTAC FY2024–25 · Assam wage notification Mar 2026"
         },
         {
           name: "Tetley",
-          market: "UK (Tesco)",
+          market: "UK · Tesco",
           retail_per_kg: 7350,
-          retail_display: "£8.75 / 1.25kg = ₹7,350/kg",
           steps: [
-            { label: "Worker wage", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota" },
-            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC avg FY2024-25" },
-            { label: "Export & processing", val: 500, color: "#c8a951", note: "Tata vertical integration reduces cost" },
-            { label: "Brand margin (Tata/Tetley)", val: 3200, color: "#d4883a", note: "Residual after known costs" },
-            { label: "Retailer (Tesco)", val: 3412, color: "#b85c2a", note: "Residual shelf margin" }
+            { label: "Worker wage per kg picked", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota — same regardless of brand" },
+            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC average FY 2024–25 (Tea Board of India)" },
+            { label: "Export, shipping & processing", val: 500, color: "#c8a951", note: "Tata vertical integration reduces intermediary cost" },
+            { label: "Brand margin (Tata / Tetley)", val: 3200, color: "#d4883a", note: "Residual after known costs" },
+            { label: "Retailer margin (Tesco)", val: 3412, color: "#b85c2a", note: "Residual shelf margin" }
           ],
-          worker_share: 0.15,
-          auction_share: 3.1,
-          key_fact: "Tata owns both the Assam estates (APPL) and the Tetley brand. More margin stays within one company — but the worker's 0.15% share barely moves.",
-          source: "Tesco UK (June 2025); GTAC FY2024-25; Assam wage notification Apr 2026"
+          worker_share: "0.15",
+          auction_share: "3.1",
+          markup: "682",
+          key_fact: "Tata owns both the Assam estates (APPL) and the Tetley brand — more margin stays in one company. But the worker's share is still 0.15%. ETI and CAO found APPL wages below statutory minima.",
+          source: "Tesco UK, June 2025 · GTAC FY2024–25 · Assam wage notification Mar 2026"
         },
         {
           name: "Lipton",
-          market: "US (Walmart)",
+          market: "US · Walmart",
           retail_per_kg: 2050,
-          retail_display: "$4.92 / ~200g = ₹2,050/kg",
           steps: [
-            { label: "Worker wage", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota" },
-            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC avg FY2024-25" },
-            { label: "Export & processing", val: 400, color: "#c8a951", note: "Broker-mediated supply chain" },
+            { label: "Worker wage per kg picked", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota — fixed regardless of retail price" },
+            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC average FY 2024–25 (Tea Board of India)" },
+            { label: "Export, shipping & processing", val: 400, color: "#c8a951", note: "Broker-mediated supply chain adds cost" },
             { label: "Brand margin (Unilever)", val: 800, color: "#d4883a", note: "Residual after known costs" },
-            { label: "Retailer (Walmart)", val: 612, color: "#b85c2a", note: "Residual shelf margin" }
+            { label: "Retailer margin (Walmart)", val: 612, color: "#b85c2a", note: "Residual shelf margin" }
           ],
-          worker_share: 0.53,
-          auction_share: 11.1,
-          key_fact: "Walmart's low shelf price means the worker's share looks higher — 0.53% — but in absolute terms she still earns ₹10.77 regardless of what the brand charges.",
-          source: "Walmart US (June 2025); GTAC FY2024-25; Assam wage notification Apr 2026"
+          worker_share: "0.53",
+          auction_share: "11.1",
+          markup: "190",
+          key_fact: "Walmart's lower shelf price makes the worker's share look higher at 0.53% — but she still earns the same ₹10.77 per kg regardless of what brand charges. The absolute wage never moves. Only the brand's take changes.",
+          source: "Walmart US, June 2025 · GTAC FY2024–25 · Assam wage notification Mar 2026"
         }
       ];
 
       var tytActive = 0;
+
+      function tytBarWidthPct(val, maxVal) {
+        var logVal = Math.log10(Math.max(val, 0.01));
+        var logMax = Math.log10(Math.max(maxVal, 1));
+        return Math.max((logVal / logMax) * 100, 10);
+      }
 
       function renderTYT() {
         var d = TYT_DATA[tytActive];
@@ -1802,31 +1807,32 @@
 
         barsEl.innerHTML = d.steps
           .map(function (s) {
-            var pct = Math.max((s.val / total) * 100, 0.5);
-            var displayPct =
+            var pct = tytBarWidthPct(s.val, total);
+            var display =
               s.val < 1
                 ? s.val.toFixed(2)
                 : s.val >= 1000
                   ? (s.val / 1000).toFixed(1) + "k"
-                  : Math.round(s.val);
+                  : Math.round(s.val).toLocaleString("en-IN");
             return (
               '<div class="tyt-bar-row">' +
               '<div class="tyt-bar-label">' +
               s.label +
               "</div>" +
-              '<div class="tyt-bar-wrap"><div class="tyt-bar-fill" style="width:' +
+              '<div class="tyt-bar-track"><div class="tyt-bar-fill" style="width:' +
               Math.min(pct, 100) +
               "%;background:" +
               s.color +
               '"></div></div>' +
-              '<div class="tyt-bar-val" style="color:' +
+              '<div class="tyt-bar-meta">' +
+              '<span class="tyt-bar-val" style="color:' +
               s.color +
               '">₹' +
-              displayPct +
-              "</div>" +
-              '<div class="tyt-bar-note">' +
+              display +
+              "</span>" +
+              '<span class="tyt-bar-note">' +
               s.note +
-              "</div></div>"
+              "</span></div></div>"
             );
           })
           .join("");
@@ -1836,24 +1842,20 @@
           '<span class="tyt-stat-num" style="color:#5a9e4b">' +
           d.worker_share +
           "%</span>" +
-          '<span class="tyt-stat-label">worker\'s share of retail price</span></div>' +
+          '<span class="tyt-stat-label">of retail price reaches the worker who picked the leaf</span></div>' +
           '<div class="tyt-stat">' +
           '<span class="tyt-stat-num" style="color:#c8a951">' +
           d.auction_share +
           "%</span>" +
           '<span class="tyt-stat-label">estate auction price as % of retail</span></div>' +
           '<div class="tyt-stat">' +
-          '<span class="tyt-stat-num" style="color:#b85c2a">₹' +
-          Math.round(total / 10.77).toLocaleString() +
+          '<span class="tyt-stat-num" style="color:#b85c2a">' +
+          d.markup +
           "×</span>" +
-          '<span class="tyt-stat-label">retail markup over worker wage per kg</span></div>';
+          '<span class="tyt-stat-label">retail markup over the worker\'s wage per kg</span></div>';
 
         insightEl.innerHTML =
-          "<p>" +
-          d.key_fact +
-          '</p><p class="tyt-source">Sources: ' +
-          d.source +
-          "</p>";
+          "<p>" + d.key_fact + '</p><p class="tyt-source">Sources: ' + d.source + "</p>";
       }
 
       window.setTYT = function (i) {
@@ -1861,14 +1863,26 @@
         renderTYT();
       };
 
-      var tytBrands = document.getElementById("tyt-brands");
-      if (tytBrands) {
+      function initTrackYourTea() {
+        var tytBrands = document.getElementById("tyt-brands");
+        if (!tytBrands) return;
         tytBrands.addEventListener("click", function (e) {
           var btn = e.target.closest("[data-tyt-index]");
           if (!btn) return;
           setTYT(parseInt(btn.getAttribute("data-tyt-index"), 10));
         });
         renderTYT();
+      }
+
+      function onDomReady() {
+        buildTimeline();
+        initCounters();
+        initTrackYourTea();
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", onDomReady);
+      } else {
+        onDomReady();
       }
     })();
   </script>
