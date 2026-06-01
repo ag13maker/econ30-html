@@ -3,1625 +3,545 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Assam tea, plantation labor, and global markets — a story-first research site by Aaira Goswami (Stanford)." />
-  <title>Assam Tea, Labor &amp; Markets | Aaira Goswami</title>
+  <meta name="description" content="Assam tea, plantation labor, and global markets — research by Aaira Goswami (Stanford)." />
+  <meta name="theme-color" content="#0d1a0f" />
+  <title>Assam Tea &amp; Labor | Aaira Goswami</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍃</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <style>
     :root {
-      --bg: #f3efe6;
-      --surface: rgba(255, 252, 247, 0.82);
-      --surface-strong: #fffdf9;
-      --navy: #142e24;
-      --navy-soft: #1e4a36;
-      --green: #1a4d32;
-      --green-soft: #2d6b4a;
-      --gold: #a67c52;
-      --gold-soft: #c9a87a;
-      --sepia: #ebe3d4;
-      --text: #1f241c;
-      --muted: #5a5f56;
-      --line: rgba(20, 46, 36, 0.12);
-      --shadow: 0 18px 48px rgba(20, 46, 36, 0.1), 0 2px 8px rgba(20, 46, 36, 0.05);
-      --shadow-hover: 0 24px 56px rgba(20, 46, 36, 0.14), 0 4px 12px rgba(26, 77, 50, 0.1);
-      --radius: 16px;
-      --radius-sm: 12px;
+      --color-bg: #0d1a0f;
+      --color-surface: #132918;
+      --color-card: #1a3320;
+      --color-border: #2d5c38;
+      --color-accent: #5a9e4b;
+      --color-accent-warm: #c8a951;
+      --color-accent-rust: #b85c2a;
+      --color-text: #e8f0e2;
+      --color-text-muted: #8aab80;
+      --color-hero-glow: rgba(90, 158, 75, 0.15);
+      --bg: var(--color-bg);
+      --surface: var(--color-surface);
+      --surface-strong: var(--color-card);
+      --card: var(--color-card);
+      --line: var(--color-border);
+      --border: var(--color-border);
+      --navy: var(--color-text);
+      --navy-soft: var(--color-accent-warm);
+      --green: var(--color-accent);
+      --green-soft: #6fb85f;
+      --gold: var(--color-accent-warm);
+      --gold-soft: var(--color-accent-warm);
+      --text: var(--color-text);
+      --muted: var(--color-text-muted);
+      --accent: var(--color-accent);
+      --radius: 14px;
+      --radius-sm: 10px;
       --font-body: "Inter", system-ui, sans-serif;
       --font-display: "Playfair Display", Georgia, serif;
-      --nav-h: 52px;
-      --hero-photo: url("https://images.unsplash.com/photo-1593691509543-c55fb32e5f82?auto=format&fit=crop&w=1920&q=80");
+      --nav-h: 48px;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      --hero-photo: url("assets/images/tea-workers-why-it-matters.jpg");
     }
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: var(--font-body);
-      font-size: 17px;
-      line-height: 1.65;
-      color: var(--text);
-      background: var(--bg);
-      background-image:
-        repeating-linear-gradient(
-          100deg,
-          transparent,
-          transparent 56px,
-          rgba(26, 77, 50, 0.025) 56px,
-          rgba(26, 77, 50, 0.025) 57px
-        );
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--color-text-muted);
+      background: var(--color-bg);
       -webkit-font-smoothing: antialiased;
     }
 
-    h1,
-    h2,
-    h3,
-    .display {
+    h1, h2, h3, .display {
       font-family: var(--font-display);
       font-weight: 600;
       letter-spacing: -0.02em;
-      color: var(--navy);
+      color: var(--color-text);
     }
-
     h1 {
-      font-size: clamp(2.35rem, 5vw, 3.75rem);
-      line-height: 1.08;
-      margin: 0 0 0.5rem;
-    }
-
-    h2 {
-      font-size: clamp(1.65rem, 3vw, 2.25rem);
-      margin: 0 0 1rem;
-    }
-
-    h3 {
-      font-size: 1.15rem;
-      margin: 0 0 0.5rem;
-      color: var(--green);
-    }
-
-    p {
-      margin: 0 0 1rem;
-    }
-
-    a {
-      color: var(--navy-soft);
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-      transition: color 0.2s ease, opacity 0.2s ease;
-    }
-
-    a:hover {
-      color: var(--green-soft);
-    }
-
-    .wrap {
-      width: min(1120px, 100% - 40px);
-      margin-inline: auto;
-    }
-
-    /* —— Sticky nav —— */
-    .site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      height: var(--nav-h);
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid var(--line);
-      background: rgba(250, 250, 248, 0.82);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      transition: box-shadow 0.25s ease;
-    }
-
-    .site-nav.is-scrolled {
-      box-shadow: 0 8px 32px rgba(15, 39, 68, 0.06);
-    }
-
-    .site-nav .wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .nav-brand {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--navy);
-      text-decoration: none;
-      white-space: nowrap;
-      transition: color 0.2s ease, transform 0.2s ease;
-    }
-
-    .nav-brand:hover {
-      color: var(--green);
-      transform: translateY(-1px);
-    }
-
-    .nav-menu {
-      position: relative;
-      margin-left: auto;
-    }
-
-    .nav-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: var(--surface-strong);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0.45rem 1rem 0.45rem 0.85rem;
-      cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .nav-toggle:hover {
-      border-color: rgba(22, 64, 46, 0.35);
-      box-shadow: var(--shadow);
-    }
-
-    .nav-toggle::after {
-      content: "";
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 6px solid var(--navy);
-      margin-top: 2px;
-      transition: transform 0.2s ease;
-    }
-
-    .nav-toggle[aria-expanded="true"]::after {
-      transform: rotate(180deg);
-    }
-
-    .nav-dropdown {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: calc(100% + 8px);
-      min-width: min(280px, calc(100vw - 48px));
-      max-height: min(70vh, 420px);
-      overflow-y: auto;
-      background: var(--surface-strong);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-      box-shadow: var(--shadow-hover);
-      padding: 0.5rem 0;
-      z-index: 150;
-    }
-
-    .nav-dropdown.is-open {
-      display: block;
-      animation: fadeIn 0.25s ease;
-    }
-
-    .nav-dropdown-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .nav-dropdown-list a {
-      display: block;
-      padding: 0.55rem 1.25rem;
-      font-size: 0.88rem;
-      font-weight: 600;
-      text-decoration: none;
-      color: var(--text);
-      letter-spacing: 0.02em;
-      transition: background 0.15s ease, color 0.15s ease;
-    }
-
-    .nav-dropdown-list a:hover,
-    .nav-dropdown-list a:focus-visible {
-      background: rgba(15, 39, 68, 0.06);
-      color: var(--navy);
-      outline: none;
-    }
-
-    .nav-dropdown-list li + li {
-      border-top: 1px solid rgba(15, 39, 68, 0.06);
-    }
-
-    /* —— Scroll reveal —— */
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* —— Hero —— */
-    .hero {
-      position: relative;
-      min-height: min(92vh, 820px);
-      display: flex;
-      align-items: flex-end;
-      padding: calc(var(--nav-h) + 3rem) 0 4.5rem;
-      overflow: hidden;
-      color: #f6f8f4;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: var(--hero-photo) center / cover no-repeat;
-    }
-
-    .hero-bg::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        105deg,
-        rgba(20, 46, 36, 0.93) 0%,
-        rgba(26, 77, 50, 0.78) 45%,
-        rgba(20, 46, 36, 0.55) 100%
-      );
-    }
-
-    .hero-bg::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(0deg, rgba(20, 46, 36, 0.85) 0%, transparent 42%);
-    }
-
-    .hero-grid {
-      display: none;
-    }
-
-    @keyframes drift {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(-24px, 18px) scale(1.06); }
-    }
-
-    @keyframes gridPulse {
-      0%, 100% { opacity: 0.35; }
-      50% { opacity: 0.55; }
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero h1 {
-      color: #f8fbf6;
-      text-shadow: 0 2px 28px rgba(0, 0, 0, 0.35);
-    }
-
-    .hero-kicker {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold-soft);
-      margin-bottom: 1rem;
-    }
-
-    .hero-sub {
-      font-size: clamp(1.05rem, 2vw, 1.25rem);
-      color: rgba(246, 248, 244, 0.9);
-      max-width: 40rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem 2rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      margin-top: 0.5rem;
-    }
-
-    .hero-meta span {
-      font-size: 0.9rem;
-      color: rgba(246, 248, 244, 0.92);
-    }
-
-    .hero-meta strong {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gold-soft);
-      margin-bottom: 0.15rem;
-    }
-
-    .hero-cta {
-      margin-top: 1.25rem;
-    }
-
-    .hero-cta a {
-      display: inline-block;
-      padding: 0.65rem 1.35rem;
-      background: linear-gradient(135deg, var(--green-soft), var(--green));
-      color: #fff;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.88rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .hero-cta a:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
-      color: #fff;
-    }
-
-    /* —— Sections —— */
-    section {
-      padding: 5.5rem 0;
-    }
-
-    main > section:nth-of-type(even) {
-      background: linear-gradient(180deg, rgba(255, 253, 248, 0.7) 0%, transparent 100%);
-    }
-
-    .section-theme-history {
-      background: linear-gradient(180deg, var(--sepia) 0%, rgba(243, 239, 230, 0.4) 100%) !important;
-      border-top: 1px solid rgba(166, 124, 82, 0.2);
-      border-bottom: 1px solid rgba(166, 124, 82, 0.15);
-    }
-
-    .section-theme-labor {
-      background: linear-gradient(180deg, rgba(232, 242, 234, 0.9) 0%, transparent 100%) !important;
-    }
-
-    .section-theme-project {
-      background: linear-gradient(135deg, rgba(255, 253, 248, 0.95) 0%, rgba(232, 242, 234, 0.5) 100%) !important;
-      border-block: 3px solid var(--gold-soft);
-    }
-
-    .puzzle-callout {
-      border-left: 4px solid var(--gold);
-      padding: 1.25rem 1.5rem;
-      background: var(--surface-strong);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      box-shadow: var(--shadow);
-      margin: 1.5rem 0 2rem;
-    }
-
-    .puzzle-callout .lead {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      line-height: 1.4;
-      color: var(--navy);
-      margin: 0;
-    }
-
-    .rq-grid {
-      display: grid;
-      gap: 1rem;
-      margin: 1.5rem 0 2rem;
-    }
-
-    .rq-card {
-      background: var(--surface-strong);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-      padding: 1.15rem 1.25rem;
-      border-top: 3px solid var(--green);
-      box-shadow: var(--shadow);
-    }
-
-    .rq-card h3 {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      color: var(--navy);
-      margin: 0 0 0.35rem;
-    }
-
-    .rq-card p {
-      margin: 0;
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
-
-    .term-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-    }
-
-    .term-card {
-      background: rgba(26, 77, 50, 0.06);
-      border: 1px solid rgba(26, 77, 50, 0.12);
-      border-radius: var(--radius-sm);
-      padding: 0.85rem 1rem;
-      font-size: 0.9rem;
-    }
-
-    .term-card dt {
-      font-weight: 700;
-      color: var(--green);
-      margin-bottom: 0.25rem;
-    }
-
-    .term-card dd {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.45;
-    }
-
-    .story-intro {
-      display: grid;
-      grid-template-columns: 1fr min(400px, 44%);
-      gap: 2rem 2.25rem;
-      align-items: start;
-      margin-bottom: 1.75rem;
-    }
-
-    @media (max-width: 900px) {
-      .story-intro {
-        grid-template-columns: 1fr;
-      }
-      .story-figure {
-        order: -1;
-        max-width: 520px;
-        margin: 0 auto;
-      }
-    }
-
-    .story-intro-text p {
-      max-width: 42rem;
-    }
-
-    .story-figure {
-      margin: 0;
-    }
-
-    .story-figure img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: var(--radius);
-      border: 3px solid rgba(255, 255, 255, 0.95);
-      box-shadow: var(--shadow-hover);
-      object-fit: cover;
-      aspect-ratio: 4 / 5;
-      object-position: center 20%;
-    }
-
-    .story-figure figcaption {
-      margin-top: 0.65rem;
-      font-size: 0.82rem;
-      line-height: 1.45;
-      color: var(--muted);
-    }
-
-    .story-figure figcaption strong {
-      color: var(--navy);
-      font-weight: 600;
-    }
-
-    .contribution-box {
-      background: linear-gradient(135deg, rgba(26, 77, 50, 0.08) 0%, rgba(166, 124, 82, 0.1) 100%);
-      border: 1px solid rgba(26, 77, 50, 0.18);
-      border-radius: var(--radius);
-      padding: 1.5rem 1.75rem;
-      margin-bottom: 2rem;
-    }
-
-    .contribution-box h3 {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      color: var(--navy);
-      margin: 0 0 0.75rem;
-    }
-
-    .press-card {
-      display: grid;
-      grid-template-columns: minmax(200px, 280px) 1fr;
-      gap: 0;
-      margin: 2rem 0;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-hover);
-      border: 1px solid var(--line);
-      background: var(--surface-strong);
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .press-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 28px 56px rgba(20, 46, 36, 0.18);
-    }
-
-    .press-card img {
-      width: 100%;
-      height: 100%;
-      min-height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .press-card-body {
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .press-masthead {
-      font-size: 0.7rem;
+      font-size: clamp(2.8rem, 6vw, 5rem);
       font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #c45c26;
-      margin-bottom: 0.5rem;
+      line-height: 1.05;
+      margin: 0 0 1rem;
     }
-
-    .press-headline {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      line-height: 1.35;
-      color: var(--navy);
-      margin: 0 0 0.5rem;
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: var(--color-accent-warm);
+      margin: 0 0 1rem;
     }
+    h3 { font-size: 1.15rem; color: var(--color-accent); margin: 0 0 0.5rem; }
+    p { margin: 0 0 1rem; }
+    a { color: var(--color-accent); text-underline-offset: 3px; transition: color 0.2s; }
+    a:hover { color: var(--color-accent-warm); }
 
-    .press-dek {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin: 0;
+    .wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+    .skip-link {
+      position: absolute; left: -9999px; top: 0; z-index: 200;
+      padding: 0.5rem 1rem; background: var(--color-accent); color: var(--color-bg);
     }
+    .skip-link:focus { left: 1rem; top: 1rem; }
 
-    @media (max-width: 640px) {
-      .press-card {
-        grid-template-columns: 1fr;
-      }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-
-    .sources-compact {
-      display: grid;
-      gap: 0.65rem;
-    }
-
-    .source-row {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1rem;
-      align-items: start;
-      padding: 0.85rem 1rem;
-      background: var(--surface-strong);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-      font-size: 0.92rem;
-    }
-
-    .source-type {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      white-space: nowrap;
-    }
-
-    .source-type--press { background: rgba(196, 92, 38, 0.12); color: #8b4518; }
-    .source-type--peer { background: rgba(26, 77, 50, 0.12); color: var(--green); }
-    .source-type--ngo { background: rgba(30, 58, 95, 0.1); color: var(--navy-soft); }
-
-    .empirical-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-    }
-
-    .empirical-card {
-      border-top: 3px solid var(--gold);
-    }
-
-    .empirical-card h3 {
-      color: var(--navy);
-    }
-
-    .status-pill {
-      display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      background: rgba(166, 124, 82, 0.2);
-      color: #6b4f2e;
-      margin-bottom: 0.5rem;
-    }
+    .fade-up.visible, .fade-up.is-visible { opacity: 1; transform: translateY(0); }
 
     .section-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 0.75rem;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--color-accent); margin-bottom: 0.75rem;
     }
 
-    /* —— Cards —— */
-    .card {
-      background: var(--surface-strong);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 1.5rem 1.6rem;
-      box-shadow: var(--shadow);
-      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-hover);
-      border-color: rgba(22, 64, 46, 0.2);
-    }
-
-    .glass-card {
-      background: var(--surface);
+    /* Nav */
+    .site-nav {
+      position: sticky; top: 0; z-index: 100;
+      height: var(--nav-h);
+      background: rgba(19, 41, 24, 0.88);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.25s;
     }
-
-    /* —— About grid —— */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 2.5rem;
-      align-items: start;
+    .site-nav.is-scrolled,
+    .site-nav.scrolled { border-bottom-color: var(--color-border); }
+    .site-nav .wrap {
+      display: flex; align-items: center; justify-content: space-between;
+      height: var(--nav-h); gap: 1rem;
     }
-
-    @media (max-width: 900px) {
-      .about-grid {
-        grid-template-columns: 1fr;
+    .nav-brand {
+      font-family: var(--font-display); font-size: 0.95rem; font-weight: 600;
+      color: var(--color-text); text-decoration: none; white-space: nowrap;
+    }
+    .nav-brand:hover { color: var(--color-accent-warm); }
+    .nav-links {
+      display: flex; flex-wrap: wrap; gap: 0.15rem 1.1rem;
+      list-style: none; margin: 0; padding: 0;
+    }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 600; text-decoration: none;
+      color: var(--color-accent); opacity: 0.85;
+    }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--color-accent-warm); }
+    .nav-hamburger {
+      display: none; background: none; border: 1px solid var(--color-border);
+      color: var(--color-text); border-radius: 8px; padding: 0.4rem 0.65rem;
+      cursor: pointer; font-size: 1.1rem; line-height: 1;
+    }
+    @media (max-width: 767px) {
+      .nav-hamburger { display: block; }
+      .nav-drawer {
+        display: none; position: absolute; right: 20px; top: calc(var(--nav-h) + 4px);
+        min-width: 200px; background: var(--color-surface);
+        border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+        box-shadow: var(--shadow); padding: 0.5rem 0; z-index: 120;
       }
-    }
-
-    .question-card {
-      border-left: 4px solid var(--navy);
-      background: linear-gradient(135deg, rgba(15, 39, 68, 0.04) 0%, rgba(22, 64, 46, 0.06) 100%);
-    }
-
-    .question-card h3 {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      color: var(--navy);
-      line-height: 1.35;
-    }
-
-    /* —— Literature —— */
-    .lit-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .lit-card .paper-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      color: var(--navy);
-      margin-bottom: 0.35rem;
-      line-height: 1.35;
-    }
-
-    .lit-card .author {
-      font-size: 0.85rem;
-      color: var(--green);
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
-
-    .illustrative-tag {
-      display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: rgba(15, 39, 68, 0.08);
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      margin-bottom: 0.75rem;
-    }
-
-    /* —— Methodology flow —— */
-    .flow-step {
-      text-align: center;
-      padding: 2rem 1.25rem;
-    }
-
-    .flow-icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: linear-gradient(145deg, rgba(15, 39, 68, 0.08), rgba(22, 64, 46, 0.1));
-      color: var(--navy);
-    }
-
-    .flow-icon svg {
-      width: 28px;
-      height: 28px;
-    }
-
-    .flow-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      font-size: 1.5rem;
-      user-select: none;
-    }
-
-    @media (max-width: 768px) {
-      .flow-arrow {
-        transform: rotate(90deg);
-        padding: 0.25rem 0;
+      .nav-drawer.is-open { display: block; }
+      .nav-drawer .nav-links { flex-direction: column; gap: 0; padding: 0.25rem 0; }
+      .nav-drawer .nav-links {
+        display: none; flex-direction: column; gap: 0;
+        list-style: none; margin: 0; padding: 0.25rem 0;
       }
+      .nav-drawer.is-open .nav-links { display: flex; }
+    }
+    @media (min-width: 768px) {
+      .nav-hamburger { display: none !important; }
+      .nav-drawer { display: contents; }
+      .nav-drawer .nav-links { display: flex !important; flex-direction: row; }
     }
 
-    .flow-wrap {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr;
-      align-items: stretch;
-      gap: 0.5rem;
+    /* Hero */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: calc(var(--nav-h) + 2rem) 0 0;
+      overflow: hidden; color: var(--color-text);
+      background: var(--hero-photo) center top / cover no-repeat;
     }
-
-    @media (max-width: 768px) {
-      .flow-wrap {
-        grid-template-columns: 1fr;
-      }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(13, 26, 15, 0.72) 0%, rgba(13, 26, 15, 0.92) 55%, var(--color-bg) 100%);
+      pointer-events: none;
     }
-
-    /* —— Chart —— */
-    .viz-section .chart-panel {
-      background: var(--surface-strong);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      box-shadow: var(--shadow);
+    .hero-bg-leaves {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
     }
-
-    .chart-canvas-wrap {
-      position: relative;
-      height: min(380px, 55vw);
-      margin-top: 0.5rem;
+    .hero-leaf {
+      position: absolute; top: -40px; opacity: 0;
+      animation: leafFall linear infinite;
     }
-
-    .viz-caption {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-top: 1rem;
-      max-width: 52ch;
+    @keyframes leafFall {
+      0% { opacity: 0; transform: translateY(0) translateX(0) rotate(0deg); }
+      10% { opacity: 0.35; }
+      90% { opacity: 0.2; }
+      100% { opacity: 0; transform: translateY(120vh) translateX(var(--drift)) rotate(360deg); }
     }
-
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1.25rem;
-      align-items: center;
+    .hero-content { position: relative; z-index: 1; max-width: 52rem; }
+    .hero-eyebrow {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--color-accent-warm); margin-bottom: 1rem;
     }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      font-family: var(--font-body);
-      font-size: 0.88rem;
-      font-weight: 600;
-      padding: 0.65rem 1.35rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
-
+    .hero-sub { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--color-text-muted); max-width: 40rem; margin-bottom: 1.75rem; }
     .btn-primary {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
-      color: #fff;
-      box-shadow: 0 4px 16px rgba(15, 39, 68, 0.25);
+      display: inline-block; padding: 0.75rem 1.5rem;
+      background: var(--color-accent); color: var(--color-bg);
+      text-decoration: none; font-weight: 700; font-size: 0.9rem;
+      border-radius: 999px; border: none; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--color-hero-glow); color: var(--color-bg); }
+    .hero-stat-strip {
+      position: relative; z-index: 1; margin-top: auto; width: 100%;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--color-border);
+      background: rgba(19, 41, 24, 0.75);
+      backdrop-filter: blur(8px);
+    }
+    .hero-stat-strip .stat {
+      padding: 1.25rem 1.5rem; border-right: 1px solid var(--color-border);
+    }
+    .hero-stat-strip .stat:last-child { border-right: none; }
+    .stat-num {
+      display: block; font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700;
+      color: var(--color-accent-warm); line-height: 1.1;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--color-text-muted); line-height: 1.4; margin: 0; }
+    @media (max-width: 767px) {
+      .hero-stat-strip { grid-template-columns: 1fr; }
+      .hero-stat-strip .stat { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .hero-stat-strip .stat:last-child { border-bottom: none; }
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(15, 39, 68, 0.3);
+    /* Argument */
+    #argument {
+      padding: 4.5rem 0;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+    }
+    #argument h2 { text-align: center; margin-bottom: 2rem; }
+    .argument-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+    }
+    .arg-card {
+      background: var(--color-card); border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-accent);
+      border-radius: var(--radius-sm); padding: 1.5rem 1.35rem;
+    }
+    .arg-num {
+      display: block; font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700;
+      color: var(--color-accent-warm); line-height: 1; margin-bottom: 0.5rem;
+    }
+    .arg-card p { margin: 0 0 0.75rem; font-size: 0.95rem; }
+    .arg-card cite { font-size: 0.78rem; font-style: normal; color: var(--color-accent); font-weight: 600; }
+    @media (max-width: 767px) { .argument-cards { grid-template-columns: 1fr; } }
+
+    /* Sections */
+    section { padding: 5rem 0; border-bottom: 1px solid var(--color-border); }
+
+    /* Story */
+    .story-tension { max-width: 42rem; font-size: 1.08rem; color: var(--color-text); }
+    .story-layout {
+      display: grid; grid-template-columns: 1fr min(380px, 42%);
+      gap: 2rem; align-items: start; margin-top: 2rem;
+    }
+    @media (max-width: 900px) {
+      .story-layout { grid-template-columns: 1fr; }
+      .story-figure { order: -1; max-width: 480px; margin: 0 auto; }
+    }
+    .story-figure { margin: 0; }
+    .story-figure img {
+      width: 100%; height: auto; border-radius: var(--radius);
+      border: 2px solid var(--color-border); object-fit: cover;
+      aspect-ratio: 4/5; background: var(--color-card);
+    }
+    .story-figure img.is-loading {
+      background: linear-gradient(110deg, var(--color-card) 25%, var(--color-surface) 50%, var(--color-card) 75%);
+      background-size: 200% 100%; animation: shimmer 1.2s infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+    .story-figure figcaption { margin-top: 0.6rem; font-size: 0.82rem; color: var(--color-text-muted); }
+    .pull-quote {
+      margin: 2.5rem 0 0; padding: 0 0 0 2rem;
+      border-left: 4px solid var(--color-accent);
+      font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem);
+      font-style: italic; color: var(--color-accent-warm); line-height: 1.35;
+    }
+    .pull-quote cite {
+      display: block; margin-top: 0.75rem; font-size: 0.85rem;
+      font-style: normal; color: var(--color-text-muted);
     }
 
-    .btn-ghost {
-      background: transparent;
-      color: var(--navy);
-      border: 1px solid var(--line);
+    /* Timeline */
+    #history { background: var(--color-surface); }
+    .timeline-wrap { margin-top: 2rem; overflow-x: auto; padding-bottom: 0.5rem; }
+    .timeline-track {
+      display: flex; gap: 1.5rem; min-width: min(100%, 900px);
+      padding: 1rem 0 2rem;
     }
-
-    .btn-ghost:hover {
-      border-color: var(--green);
-      color: var(--green);
-      transform: translateY(-2px);
+    .timeline-node {
+      flex: 1; min-width: 200px; text-align: center; cursor: pointer;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.5s, transform 0.5s, filter 0.3s;
     }
-
-    /* —— Expanded panel —— */
-    .explore-panel {
-      margin-top: 1rem;
-      padding: 1.25rem 1.5rem;
-      border-radius: var(--radius-sm);
-      background: rgba(22, 64, 46, 0.06);
-      border: 1px solid rgba(22, 64, 46, 0.15);
-      display: none;
+    .timeline-node.visible { opacity: 1; transform: translateY(0); }
+    .timeline-dot {
+      width: 56px; height: 56px; margin: 0 auto 0.75rem;
+      border-radius: 50%; border: 2px solid var(--color-border);
+      background: var(--color-card); display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 0.75rem; font-weight: 700;
+      color: var(--color-accent-warm); transition: box-shadow 0.3s, border-color 0.3s;
     }
-
-    .explore-panel.is-open {
-      display: block;
-      animation: fadeIn 0.35s ease;
+    .timeline-node.is-active .timeline-dot {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 24px var(--color-hero-glow), 0 0 0 4px rgba(90, 158, 75, 0.2);
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* —— Findings metrics —— */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 768px) {
-      .metrics-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .metric-card {
-      text-align: left;
-      padding: 2rem 1.5rem;
-      border-top: 3px solid var(--green);
-    }
-
-    .metric-value {
-      font-family: var(--font-display);
-      font-size: clamp(2.2rem, 4vw, 2.85rem);
-      color: var(--navy);
-      line-height: 1.1;
-      margin-bottom: 0.35rem;
-    }
-
-    .metric-unit {
-      font-size: 1.1rem;
-      color: var(--green);
-      font-weight: 600;
-    }
-
-    .metric-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .metric-note {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 0.75rem;
-    }
-
-    /* —— Conclusion —— */
-    .conclusion-block {
+    .timeline-year { font-weight: 700; color: var(--color-text); font-size: 0.95rem; }
+    .timeline-label { font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.25rem; }
+    .timeline-detail {
+      display: none; margin-top: 2rem; padding: 1.25rem 1.5rem;
+      background: var(--color-card); border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm); text-align: left; font-size: 0.95rem;
       max-width: 52rem;
-      padding: 2.5rem 2.25rem;
-      border-radius: var(--radius);
-      background: linear-gradient(120deg, rgba(15, 39, 68, 0.04), rgba(22, 64, 46, 0.05));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
+    }
+    .timeline-detail.is-open { display: block; animation: fadeIn 0.35s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @media (max-width: 767px) {
+      .timeline-track { flex-direction: column; min-width: 0; }
+      .timeline-node { text-align: left; display: grid; grid-template-columns: 56px 1fr; gap: 1rem; align-items: center; }
+      .timeline-dot { margin: 0; }
     }
 
-    .conclusion-block p:last-child {
-      margin-bottom: 0;
-    }
+    /* Transition */
+    #transition p { max-width: 42rem; }
 
-    .conclusion-block .lead {
-      font-size: 1.2rem;
-      color: var(--navy);
-      font-weight: 500;
+    /* Charts */
+    #viz { background: var(--color-bg); }
+    .charts-grid {
+      display: grid; gap: 1.5rem;
+      grid-template-columns: repeat(2, 1fr); margin-top: 1.5rem;
     }
+    @media (max-width: 900px) { .charts-grid { grid-template-columns: 1fr; } }
+    .chart-panel {
+      background: var(--color-card); border: 1px solid var(--color-border);
+      border-radius: var(--radius); padding: 1.5rem;
+    }
+    .chart-panel h3 {
+      font-family: var(--font-display); font-size: 1.1rem;
+      color: var(--color-text); margin: 0 0 0.35rem;
+    }
+    .chart-panel .chart-source {
+      font-size: 0.78rem; color: var(--color-accent); font-weight: 600; margin-bottom: 1rem;
+    }
+    .chart-canvas-wrap { position: relative; height: 260px; }
+    .chart-panel--stat { grid-column: 1 / -1; text-align: center; padding: 2.5rem 1.5rem; }
+    .bpl-counter {
+      font-family: var(--font-display); font-size: clamp(4rem, 12vw, 7rem);
+      font-weight: 700; color: var(--color-accent-warm); line-height: 1;
+    }
+    .bpl-label { max-width: 36rem; margin: 1rem auto 0; font-size: 1.05rem; color: var(--color-text); }
 
-    /* —— Footer —— */
-    footer {
-      padding: 3rem 0 4rem;
-      border-top: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(15, 39, 68, 0.03) 0%, transparent);
-    }
-
-    .footer-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1.5rem;
-      align-items: flex-start;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      color: var(--navy);
-    }
-
-    .footer-links a:hover {
-      color: var(--green);
-    }
-
-    /* —— Dialog —— */
-    dialog {
-      max-width: 480px;
-      width: calc(100% - 2rem);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 0;
-      box-shadow: var(--shadow-hover);
-      font-family: var(--font-body);
-    }
-
-    dialog::backdrop {
-      background: rgba(15, 39, 68, 0.35);
-      backdrop-filter: blur(4px);
-    }
-
-    .dialog-inner {
-      padding: 1.75rem;
-    }
-
-    .dialog-inner h3 {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      color: var(--navy);
-      margin-bottom: 0.75rem;
-    }
-
-    .dialog-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1.25rem;
-    }
-
-    .mobile-nav {
-      display: none;
-      padding: 1rem 0 0;
-      border-top: 1px solid var(--line);
-      margin-top: 1rem;
-    }
-
-    .mobile-nav a {
-      display: block;
-      padding: 0.35rem 0;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-decoration: none;
-      color: var(--muted);
-    }
-
-    @media (max-width: 720px) {
-      .mobile-nav {
-        display: block;
-      }
-    }
-
-    .skip-link {
-      position: absolute;
-      left: -9999px;
-      top: auto;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-    }
-
-    .skip-link:focus {
-      left: 1rem;
-      top: 1rem;
-      width: auto;
-      height: auto;
-      padding: 0.5rem 1rem;
-      z-index: 200;
-      background: var(--navy);
-      color: #fff;
-      border-radius: 8px;
-      outline: 2px solid var(--green);
-    }
-
-    /* —— Research story (plan chapters) —— */
-    .callout {
-      margin-top: 1.25rem;
-      padding: 1rem 1.15rem;
-      border-radius: var(--radius-sm);
-      background: rgba(15, 39, 68, 0.05);
-      border: 1px solid var(--line);
-      font-size: 0.92rem;
-    }
-    .callout strong { color: var(--navy); }
-    .cite-inline {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-top: 0.75rem;
-    }
-    .dim-list {
-      list-style: none;
-      margin: 1.25rem 0 0;
-      padding: 0;
-      display: grid;
-      gap: 0.65rem;
-    }
-    .dim-list li {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.5rem 0.75rem;
-      font-size: 0.88rem;
-      padding: 0.65rem 0.85rem;
-      border-radius: 10px;
-      background: rgba(22, 64, 46, 0.05);
-      border: 1px solid rgba(22, 64, 46, 0.12);
-    }
-    .dim-tag {
-      font-size: 0.62rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.45rem;
-      border-radius: 4px;
-      white-space: nowrap;
-    }
-    .dim-tag-p { background: rgba(92, 45, 45, 0.12); color: #5c2d2d; }
-    .dim-tag-i { background: rgba(74, 68, 42, 0.15); color: #5a5428; }
-    .dim-tag-g { background: rgba(42, 61, 74, 0.12); color: #2a4a5c; }
-
-    .era-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
+    /* Map */
+    #mapSection { background: var(--color-surface); }
+    .era-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
     .era-tab {
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.55rem 1rem;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--surface-strong);
-      color: var(--muted);
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      cursor: pointer; border: 1px solid var(--color-border);
+      background: var(--color-card); color: var(--color-text);
+      padding: 0.5rem 1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
     }
-    .era-tab:hover { color: var(--navy); border-color: rgba(15, 39, 68, 0.25); transform: translateY(-1px); }
     .era-tab[aria-pressed="true"] {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
-      color: #fff;
-      border-color: transparent;
+      background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent);
     }
     #storyMap {
-      height: min(440px, 62vw);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--line);
-      z-index: 1;
+      width: 100%; height: 420px; border-radius: var(--radius);
+      border: 1px solid var(--color-border); margin-bottom: 1.5rem;
     }
-    .leaflet-popup-content-wrapper { border-radius: 12px !important; }
-    .leaflet-popup-content { margin: 12px 14px !important; font-family: var(--font-body) !important; font-size: 0.88rem !important; line-height: 1.5 !important; }
-    .map-popup-metric { font-weight: 700; color: var(--green); margin: 0.35rem 0; }
-    .map-popup-cite { font-size: 0.75rem; color: var(--muted); margin-top: 0.5rem; }
-    .map-popup-sim-link {
-      display: inline-block;
-      margin-top: 0.65rem;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--green-soft);
+    .leaflet-popup-content-wrapper {
+      background: var(--color-card); color: var(--color-text);
+      border-radius: var(--radius-sm); box-shadow: var(--shadow);
     }
+    .leaflet-popup-tip { background: var(--color-card); }
+    .map-popup strong { color: var(--color-accent-warm); }
+    .map-popup-metric { font-size: 0.8rem; color: var(--color-accent); font-style: italic; }
+    .map-popup-cite { font-size: 0.72rem; color: var(--color-text-muted); margin-top: 0.5rem; }
 
-    /* —— Quota & penalties simulator (contemporary era) —— */
+    /* Quota sim */
     .quota-sim {
-      margin-top: 1.75rem;
-      padding: 1.5rem 1.6rem;
+      margin-top: 1.5rem; padding: 1.5rem;
+      background: var(--color-card); border: 1px solid var(--color-accent);
       border-radius: var(--radius);
-      border: 2px solid rgba(166, 124, 82, 0.45);
-      background: linear-gradient(165deg, rgba(255, 253, 248, 0.98) 0%, rgba(232, 242, 234, 0.65) 100%);
-      box-shadow: var(--shadow-hover);
-      position: relative;
-      overflow: hidden;
     }
-
-    .quota-sim[hidden] {
-      display: none !important;
+    .quota-sim[hidden] { display: none !important; }
+    .quota-sim h3 { color: var(--color-text); margin-bottom: 0.5rem; }
+    .quota-sim-lead { font-size: 0.95rem; margin-bottom: 1.25rem; }
+    .quota-briefing, .quota-outcome {
+      padding: 1.15rem 1.25rem; margin-bottom: 1rem;
+      border-radius: var(--radius-sm); border: 1px solid var(--color-border);
+      background: rgba(90, 158, 75, 0.08);
     }
-
-    .quota-sim h3 {
-      font-family: var(--font-display);
-      font-size: 1.45rem;
-      color: var(--navy);
-      margin: 0 0 0.35rem;
+    .quota-briefing h4, .quota-outcome h4 {
+      margin: 0 0 0.65rem; font-size: 0.9rem; color: var(--color-accent-warm);
+      text-transform: uppercase; letter-spacing: 0.08em;
     }
-
-    .quota-sim-lead {
-      font-size: 0.95rem;
-      color: var(--muted);
-      max-width: 52rem;
-      margin: 0 0 1.25rem;
+    .quota-briefing ul { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; }
+    .quota-outcome.is-penalty { border-color: var(--color-accent-rust); background: rgba(184, 92, 42, 0.12); }
+    .quota-outcome.is-ok { border-color: var(--color-accent); background: rgba(90, 158, 75, 0.12); }
+    .quota-outcome[hidden], .quota-briefing[hidden] { display: none !important; }
+    .quota-outcome pre {
+      margin: 0; white-space: pre-wrap; font-family: var(--font-body);
+      font-size: 0.9rem; color: var(--color-text); line-height: 1.55;
     }
-
-    .quota-sim-grid {
-      display: grid;
-      grid-template-columns: 1fr min(280px, 38%);
-      gap: 1.5rem;
-      align-items: start;
+    .btn-copy {
+      margin-top: 0.75rem; padding: 0.5rem 1rem;
+      background: transparent; border: 1px solid var(--color-border);
+      color: var(--color-accent); border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
     }
-
-    @media (max-width: 800px) {
-      .quota-sim-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
+    .btn-copy:hover { border-color: var(--color-accent); color: var(--color-accent-warm); }
+    .quota-sim-grid { display: grid; grid-template-columns: 1.4fr 0.9fr; gap: 1.25rem; }
+    @media (max-width: 900px) { .quota-sim-grid { grid-template-columns: 1fr; } }
     .quota-hud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem 2rem;
-      margin-bottom: 0.85rem;
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--navy);
+      display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem;
+      font-size: 0.88rem; margin-bottom: 0.75rem;
     }
-
-    .quota-hud strong {
-      font-variant-numeric: tabular-nums;
-      color: var(--green);
-    }
-
+    .quota-hud strong { color: var(--color-accent-warm); }
     .quota-progress-wrap {
-      height: 12px;
-      background: rgba(20, 46, 36, 0.1);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-bottom: 1rem;
+      height: 8px; background: rgba(45, 92, 56, 0.4);
+      border-radius: 999px; overflow: hidden; margin-bottom: 0.75rem;
     }
-
     .quota-progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--green-soft), var(--gold));
-      border-radius: 999px;
-      transition: width 0.15s ease;
+      height: 100%; width: 0%; background: var(--color-accent);
+      transition: width 0.15s, background 0.3s;
     }
-
-    .quota-progress-bar.is-behind {
-      background: linear-gradient(90deg, #8b4518, #c45c26);
-    }
-
-    .quota-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
-      margin-bottom: 0.65rem;
-    }
-
+    .quota-progress-bar.is-behind { background: var(--color-accent-rust); }
     .quota-chase-arena {
-      position: relative;
-      min-height: 152px;
-      margin-bottom: 0.75rem;
-      border-radius: var(--radius-sm);
-      background:
-        linear-gradient(180deg, rgba(232, 242, 234, 0.9) 0%, rgba(243, 239, 230, 0.95) 100%);
-      border: 2px dashed rgba(26, 77, 50, 0.22);
-      overflow: hidden;
+      position: relative; min-height: 200px; margin: 1rem 0;
+      border: 1px dashed var(--color-border); border-radius: var(--radius-sm);
+      background: rgba(13, 26, 15, 0.5);
     }
-
-    .quota-chase-arena.is-shake {
-      animation: quotaArenaShake 0.35s ease;
-    }
-
-    @keyframes quotaArenaShake {
+    .quota-chase-arena.is-shake { animation: shake 0.4s ease; }
+    @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-4px); }
-      75% { transform: translateX(4px); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
     }
-
     .quota-difficulty-msg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 2;
-      margin: 0;
-      padding: 0.55rem 0.75rem;
-      font-size: 0.86rem;
-      font-weight: 600;
-      line-height: 1.4;
-      color: #6b3a1f;
-      background: rgba(255, 248, 240, 0.94);
-      border-bottom: 1px solid rgba(196, 92, 38, 0.25);
-      min-height: 2.75rem;
-      opacity: 0;
-      transform: translateY(-6px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      pointer-events: none;
+      position: absolute; top: 8px; left: 8px; right: 8px;
+      font-size: 0.8rem; color: var(--color-accent-rust); opacity: 0;
+      transition: opacity 0.25s; pointer-events: none; z-index: 2;
     }
-
-    .quota-difficulty-msg.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .quota-chase-arena .quota-pluck-btn {
-      position: absolute;
-      left: 50%;
-      top: 62%;
-      z-index: 3;
-      transform: translate(-50%, -50%);
-      transition: left 0.22s cubic-bezier(0.34, 1.2, 0.64, 1), top 0.22s cubic-bezier(0.34, 1.2, 0.64, 1),
-        box-shadow 0.15s ease, opacity 0.15s ease;
-    }
-
-    .quota-chase-arena .quota-pluck-btn.is-dodging {
-      transform: none;
-      box-shadow: 0 10px 28px rgba(139, 69, 19, 0.35);
-    }
-
+    .quota-difficulty-msg.is-visible { opacity: 1; }
     .quota-pluck-btn {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 700;
-      padding: 0.85rem 2rem;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      color: #fff;
-      background: linear-gradient(135deg, var(--green) 0%, var(--green-soft) 100%);
-      box-shadow: 0 8px 24px rgba(26, 77, 50, 0.35);
-      user-select: none;
-      touch-action: manipulation;
+      position: absolute; left: 50%; top: 62%;
+      transform: translate(-50%, -50%);
+      min-height: 48px; min-width: 140px;
+      padding: 0.65rem 1.25rem; border: none; border-radius: 999px;
+      background: var(--color-accent); color: var(--color-bg);
+      font-weight: 700; cursor: pointer; z-index: 1;
+      transition: left 0.35s ease, top 0.35s ease, transform 0.2s;
     }
-
-    .quota-chase-arena .quota-pluck-btn:hover:not(:disabled) {
-      filter: brightness(1.05);
-    }
-
-    .quota-chase-arena .quota-pluck-btn:active:not(:disabled) {
-      transform: scale(0.96);
-    }
-
-    .quota-chase-arena .quota-pluck-btn.is-dodging:active:not(:disabled) {
-      transform: scale(0.96);
-    }
-
-    .quota-pluck-btn:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
+    .quota-pluck-btn:hover:not(:disabled) { background: var(--green-soft); }
+    .quota-pluck-btn:disabled { opacity: 0.45; cursor: not-allowed; }
     .quota-chase-label {
-      position: absolute;
-      bottom: 6px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      pointer-events: none;
+      position: absolute; bottom: 8px; left: 0; right: 0;
+      text-align: center; font-size: 0.75rem; color: var(--color-text-muted);
     }
-
     .quota-start-btn {
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 0.65rem 1.15rem;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--surface-strong);
-      color: var(--navy);
-      cursor: pointer;
+      min-height: 48px; padding: 0.6rem 1.25rem;
+      background: var(--color-accent-warm); color: var(--color-bg);
+      border: none; border-radius: 999px; font-weight: 700; cursor: pointer;
     }
-
-    .quota-start-btn:hover {
-      border-color: var(--gold);
-      color: var(--green);
-    }
-
-    .quota-hazard {
-      min-height: 2.2rem;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: #8b4518;
-      margin-bottom: 0.5rem;
-    }
-
-    .quota-hazard:empty {
-      min-height: 0;
-      margin: 0;
-    }
-
+    .quota-start-btn:hover { filter: brightness(1.08); }
+    .quota-start-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .quota-hazard { min-height: 1.25rem; font-size: 0.85rem; color: var(--color-accent-rust); font-weight: 600; }
     .quota-wage-panel {
-      background: var(--surface-strong);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-      padding: 1rem 1.15rem;
-      font-size: 0.88rem;
+      padding: 1rem; background: rgba(13, 26, 15, 0.6);
+      border: 1px solid var(--color-border); border-radius: var(--radius-sm);
     }
-
-    .quota-wage-panel h4 {
-      margin: 0 0 0.65rem;
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      color: var(--navy);
-    }
-
+    .quota-wage-panel h4 { margin: 0 0 0.75rem; font-size: 0.9rem; color: var(--color-text); }
     .quota-wage-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.35rem 0;
-      border-bottom: 1px dashed var(--line);
-      color: var(--muted);
+      display: flex; justify-content: space-between; padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(45, 92, 56, 0.5); font-size: 0.88rem;
     }
-
-    .quota-wage-row:last-child {
-      border-bottom: none;
-      font-weight: 700;
-      color: var(--navy);
-      font-size: 1rem;
-    }
-
-    .quota-wage-row.penalized {
-      color: #8b2e2e;
-    }
-
-    .wage-amount {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.12rem;
-      text-align: right;
-    }
-
-    .wage-inr {
-      font-weight: 600;
-      color: var(--navy);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .wage-usd {
-      font-size: 0.76rem;
-      font-weight: 500;
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .quota-wage-row.penalized .wage-inr,
-    .quota-wage-row.penalized .wage-usd {
-      color: #8b2e2e;
-    }
-
-    .quota-fx-note {
-      margin: 0.65rem 0 0;
-      font-size: 0.72rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
-    .quota-penalty-flash {
-      position: absolute;
-      inset: 0;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      background: rgba(139, 46, 46, 0.92);
-      color: #fff;
-      text-align: center;
-      animation: quotaFlashIn 0.35s ease;
-    }
-
-    .quota-penalty-flash[hidden] {
-      display: none !important;
-    }
-
-    .quota-penalty-flash p {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      line-height: 1.35;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .quota-penalty-flash .flash-sub {
-      display: block;
-      margin-top: 0.65rem;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      font-weight: 500;
-      opacity: 0.92;
-    }
-
-    @keyframes quotaFlashIn {
-      from {
-        opacity: 0;
-        transform: scale(1.02);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .quota-insight {
-      margin-top: 1.25rem;
-      padding: 1rem 1.15rem;
-      border-left: 4px solid var(--gold);
-      background: rgba(255, 255, 255, 0.75);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      font-size: 0.92rem;
-      color: var(--text);
-    }
-
-    .quota-insight strong {
-      color: var(--navy);
-    }
-
+    .quota-wage-row:last-child { border-bottom: none; font-weight: 700; color: var(--color-text); }
+    .wage-inr { color: var(--color-accent-warm); font-weight: 600; }
     .quota-leaf-burst {
-      position: absolute;
-      pointer-events: none;
-      font-size: 1.1rem;
-      opacity: 0;
-      animation: leafPop 0.55s ease forwards;
+      position: absolute; font-size: 1.25rem; pointer-events: none;
+      animation: burst 0.6s ease forwards;
+    }
+    @keyframes burst { to { opacity: 0; transform: translateY(-30px); } }
+
+    /* Sources */
+  .source-filters {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;
+    }
+    .filter-chip {
+      padding: 0.4rem 0.9rem; border-radius: 999px; border: 1px solid var(--color-border);
+      background: var(--color-card); color: var(--color-text-muted);
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    }
+    .filter-chip.is-active {
+      background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent);
+    }
+    .source-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem;
+    }
+    @media (max-width: 767px) { .source-grid { grid-template-columns: 1fr; } }
+    .source-card {
+      background: var(--color-card); border: 1px solid var(--color-border);
+      border-radius: var(--radius); padding: 1.35rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .source-card:hover {
+      transform: translateY(-4px); border-color: var(--color-accent);
+      box-shadow: var(--shadow);
+    }
+    .source-card[hidden] { display: none !important; }
+    .source-tag {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.2rem 0.5rem; border-radius: 4px; margin-bottom: 0.65rem;
+    }
+    .source-tag--ngo { background: rgba(90, 158, 75, 0.2); color: var(--color-accent); }
+    .source-tag--peer { background: rgba(200, 169, 81, 0.2); color: var(--color-accent-warm); }
+    .source-tag--press { background: rgba(184, 92, 42, 0.2); color: var(--color-accent-rust); }
+    .source-tag--gov { background: rgba(138, 171, 128, 0.15); color: var(--color-text-muted); }
+    .source-card h3 { font-size: 1.05rem; color: var(--color-text); margin-bottom: 0.5rem; line-height: 1.3; }
+    .source-card p { font-size: 0.9rem; margin-bottom: 1rem; }
+    .source-link {
+      display: inline-block; font-size: 0.82rem; font-weight: 600;
+      text-decoration: none; color: var(--color-accent);
     }
 
-    @keyframes leafPop {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-28px) scale(0.6);
-      }
+    /* Conclusion */
+    #conclusion {
+      padding: 5rem 0 6rem;
+      background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg) 100%);
     }
+    .conclusion-inner { max-width: 44rem; margin: 0 auto; text-align: center; }
+    .conclusion-inner p { color: var(--color-text); font-size: 1.05rem; }
+    .takeaway-line {
+      font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-style: italic; color: var(--color-accent-warm);
+      padding: 3rem 0; margin: 1rem 0; line-height: 1.35;
+    }
+    .conclusion-sub { font-size: 0.9rem !important; color: var(--color-text-muted) !important; }
+    .conclusion-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .conclusion-links a { font-weight: 600; text-decoration: none; }
 
-    .voices-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
+    footer {
+      padding: 2rem 0 3rem; border-top: 1px solid var(--color-border);
+      text-align: center; font-size: 0.9rem;
     }
-    .voice-card {
-      padding: 1.25rem 1.35rem;
-    }
-    .voice-card blockquote {
-      margin: 0 0 0.65rem;
-      padding-left: 0.85rem;
-      border-left: 3px solid var(--navy);
-      font-style: italic;
-      color: var(--navy);
-      font-size: 0.95rem;
-    }
-    .voice-card .cite-inline { margin: 0; font-size: 0.78rem; }
-
-    /* —— Timeline & source insight cards —— */
-    .timeline {
-      position: relative;
-      margin: 2rem 0 0;
-      padding-left: 1.25rem;
-      border-left: 2px solid rgba(15, 39, 68, 0.15);
-    }
-    .timeline-item {
-      position: relative;
-      padding: 0 0 1.35rem 1.25rem;
-    }
-    .timeline-item::before {
-      content: "";
-      position: absolute;
-      left: -1.4rem;
-      top: 0.35rem;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--green);
-      border: 2px solid var(--bg);
-      box-shadow: 0 0 0 2px rgba(22, 64, 46, 0.25);
-    }
-    .timeline-item time {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--navy-soft);
-    }
-    .timeline-item h3 {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      color: var(--navy);
-      margin: 0.25rem 0 0.35rem;
-    }
-    .timeline-item p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-    .insight-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .insight-card {
-      padding: 1.35rem 1.4rem;
-      border-top: 3px solid var(--navy);
-    }
-    .insight-card h3 {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      color: var(--navy);
-      margin: 0 0 0.5rem;
-    }
-    .insight-card .src {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--green);
-      margin-top: 0.75rem;
-    }
+    footer a { color: var(--color-accent); }
   </style>
 </head>
 <body>
@@ -1629,993 +549,586 @@
 
   <nav class="site-nav" id="siteNav" aria-label="Primary">
     <div class="wrap">
-      <a class="nav-brand" href="#top">Assam Tea Economics</a>
-      <div class="nav-menu">
-        <button
-          type="button"
-          class="nav-toggle"
-          id="navToggle"
-          aria-expanded="false"
-          aria-controls="navDropdown"
-          aria-haspopup="true"
-        >
-          Sections
-        </button>
-        <div class="nav-dropdown" id="navDropdown" role="menu" aria-label="Page sections">
-          <ul class="nav-dropdown-list">
-            <li role="none"><a href="#story" role="menuitem">The story</a></li>
-            <li role="none"><a href="#history" role="menuitem">History</a></li>
-            <li role="none"><a href="#transition" role="menuitem">Today</a></li>
-            <li role="none"><a href="#empirical" role="menuitem">My project</a></li>
-            <li role="none"><a href="#literature" role="menuitem">Sources</a></li>
-            <li role="none"><a href="#viz" role="menuitem">Inequality</a></li>
-            <li role="none"><a href="#mapSection" role="menuitem">Map</a></li>
-            <li role="none"><a href="#quotaSimulator" role="menuitem">Quota simulator</a></li>
-            <li role="none"><a href="#insights" role="menuitem">Insights</a></li>
-            <li role="none"><a href="#conclusion" role="menuitem">Conclusion</a></li>
-          </ul>
-        </div>
+      <a class="nav-brand" href="#top">Assam Tea</a>
+      <button type="button" class="nav-hamburger" id="navHamburger" aria-expanded="false" aria-controls="navDrawer">☰</button>
+      <div class="nav-drawer" id="navDrawer">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#story" data-nav="story">Story</a></li>
+          <li><a href="#history" data-nav="history">History</a></li>
+          <li><a href="#transition" data-nav="transition">Today</a></li>
+          <li><a href="#viz" data-nav="viz">Data</a></li>
+          <li><a href="#literature" data-nav="literature">Sources</a></li>
+          <li><a href="#quotaSimulator" data-nav="quotaSimulator">Simulator</a></li>
+          <li><a href="#conclusion" data-nav="conclusion">Conclusion</a></li>
+        </ul>
       </div>
     </div>
   </nav>
 
   <header class="hero" id="top">
-    <div class="hero-bg" aria-hidden="true">
-      <div class="hero-grid"></div>
+    <div class="hero-bg-leaves" id="heroBgLeaves" aria-hidden="true"></div>
+    <div class="wrap hero-content fade-up">
+      <p class="hero-eyebrow">Assam · Stanford · 2025</p>
+      <h1>You drink it every morning.<br>She earns ₹250 for the whole day.</h1>
+      <p class="hero-sub">A research story about who actually benefits when Assam tea travels from garden to cup — and why four decades of labor law haven't changed that math.</p>
+      <a href="#story" class="btn-primary">See the evidence ↓</a>
     </div>
-    <div class="wrap hero-inner reveal">
-      <p class="hero-kicker">Assam tea gardens · economic research</p>
-      <h1>When the world drinks Assam tea, who actually benefits?</h1>
-      <p class="hero-sub">
-        A capstone story about plantation labor, global markets, and inequality that did not end with independence — told from Assam, with room for my own data next.
-      </p>
-      <div class="hero-cta">
-        <a href="#story">Start with the puzzle</a>
-      </div>
-      <div class="hero-meta">
-        <span><strong>Author</strong> Aaira Goswami</span>
-        <span><strong>Affiliation</strong> Stanford University</span>
-      </div>
+    <div class="hero-stat-strip">
+      <div class="stat fade-up"><span class="stat-num">95%</span><span class="stat-label">of tea price captured by brands &amp; supermarkets</span></div>
+      <div class="stat fade-up"><span class="stat-num">₹250</span><span class="stat-label">daily wage — less than $3 USD</span></div>
+      <div class="stat fade-up"><span class="stat-num">50%</span><span class="stat-label">of visited households held BPL ration cards</span></div>
     </div>
   </header>
 
   <main id="main">
-    <section id="story" class="reveal">
+    <section id="argument" class="argument-strip fade-up">
+      <div class="wrap">
+        <h2>The argument, stripped to three numbers</h2>
+        <div class="argument-cards">
+          <article class="arg-card fade-up">
+            <span class="arg-num">95%</span>
+            <p>of the consumer price of packaged Assam tea is captured by brands and retailers — not the estate</p>
+            <cite>Oxfam, 2019</cite>
+          </article>
+          <article class="arg-card fade-up">
+            <span class="arg-num">49%</span>
+            <p>gap between reported daily wages and the Assam legal minimum — law exists; enforcement does not</p>
+            <cite>ETI / Sachdev &amp; Satpute</cite>
+          </article>
+          <article class="arg-card fade-up">
+            <span class="arg-num">1951</span>
+            <p>the year India passed the Plantations Labour Act — 74 years of statutory rights, and poverty-level wages persist</p>
+            <cite>PLA; Saikia &amp; Parida, 2026</cite>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="fade-up">
       <div class="wrap">
         <p class="section-label">The puzzle</p>
         <h2>Why this matters</h2>
-
-        <div class="story-intro">
-          <div class="story-intro-text">
-            <p style="font-size:1.08rem;">
-              Assam produces a huge share of India’s tea. You can buy it in supermarkets and breakfast blends around the world.
-              On the estates, many families still live in housing tied to their employer, depend on estate clinics and water systems,
-              and earn wages that investigators and journalists describe as hard to live on — while women do most of the leaf plucking and much unpaid care work at home.
-            </p>
-            <p>
-              That gap is the puzzle: <strong>tea is celebrated; plantation labor is often invisible</strong> in national economic debate.
-              Laws and welfare boards exist, yet reports of poor health, weak bargaining power, and uneven enforcement keep appearing.
-              I am from Assam, and I built this site to make that tension legible — not as a reading-list summary, but as a research project I am still growing.
-            </p>
-          </div>
-          <figure class="story-figure">
-            <img
-              src="assets/images/tea-workers-why-it-matters.jpg"
-              alt="Women tea pluckers on a lush green plantation — a central worker in a red and orange sari with a plucking strap, others working among the tea rows behind her"
-              width="800"
-              height="1000"
-              loading="lazy"
-              decoding="async" />
-            <figcaption>
-              <strong>Who bears the quota.</strong> Women do most of Assam’s leaf plucking — the work behind daily targets, penalties, and global tea prices.
-              <em>Add photo credit here before publishing.</em>
-            </figcaption>
-          </figure>
-        </div>
-
-        <div class="puzzle-callout" role="note">
-          <p class="lead">
-            Named tension: <em>legal progress without economic security on the estate</em> — rights on paper meet a plantation system built to keep workers dependent.
-          </p>
-        </div>
-
-        <h3 style="font-family:var(--font-display);font-size:1.35rem;color:var(--navy);margin:2rem 0 0.75rem;">Questions I am pursuing (in plain language)</h3>
-        <div class="rq-grid">
-          <article class="rq-card">
-            <h3>1. Who gets the money?</h3>
-            <p>When tea is sold at a high price in shops or export markets, how much reaches workers and estates versus brands and middlemen?</p>
-          </article>
-          <article class="rq-card">
-            <h3>2. Do protections work in real life?</h3>
-            <p>Plantation labor laws promise housing, health care, and fair treatment — but do outcomes for women workers match those promises?</p>
-          </article>
-          <article class="rq-card">
-            <h3>3. What never left?</h3>
-            <p>Which parts of the colonial plantation system — tied housing, weak voice, gendered plucking — still shape work today?</p>
-          </article>
-        </div>
-
-        <h3 style="font-family:var(--font-display);font-size:1.1rem;color:var(--green);margin:1.5rem 0 0.5rem;">Terms I use (quick definitions)</h3>
-        <dl class="term-grid">
-          <div class="term-card">
-            <dt>Value chain</dt>
-            <dd>Everyone who touches tea from garden to cup — workers, estates, processors, brands, retailers — and who keeps profit at each step.</dd>
-          </div>
-          <div class="term-card">
-            <dt>Statutory labor protections</dt>
-            <dd>Worker rights written in law (minimum wages, housing, health services on estates) — not the same as what happens day to day.</dd>
-          </div>
-          <div class="term-card">
-            <dt>Governance gaps</dt>
-            <dd>When audits, courts, unions, or company policies fail to enforce standards — even after public investigations.</dd>
-          </div>
-        </dl>
+        <p class="story-tension">
+          Assam produces a huge share of India's tea — sold in supermarkets and breakfast blends worldwide. On the estates, families live in employer-tied housing, depend on estate clinics, and earn wages that investigators describe as hard to live on. Women do most of the plucking and much unpaid care at home. <strong>Tea is celebrated; plantation labor stays invisible</strong> in national economic debate.
+        </p>
+        <figure class="story-figure fade-up" style="max-width:520px;margin:2rem 0;">
+          <img
+            id="storyHeroImg"
+            class="is-loading"
+            src="assets/images/tea-workers-why-it-matters.jpg"
+            data-local-base="assets/images/tea-workers-why-it-matters"
+            alt="Women tea pluckers on a lush green plantation"
+            width="800"
+            height="1000"
+            loading="eager"
+            decoding="async" />
+          <figcaption id="storyHeroCaption"><strong>Who bears the quota.</strong> Women do most of Assam's leaf plucking.</figcaption>
+        </figure>
+        <blockquote class="pull-quote fade-up">
+          "Tea is celebrated. Plantation labor is often invisible."
+          <cite>— The gap this project is trying to close</cite>
+        </blockquote>
       </div>
     </section>
 
-    <section id="history" class="reveal section-theme-history">
+    <section id="history" class="fade-up">
       <div class="wrap">
         <p class="section-label">Historical foundations</p>
         <h2>How the plantation system was built</h2>
-        <p style="max-width:42rem;">
-          British-era expansion turned forest land into tea gardens and brought workers — often migrants — under tight estate control.
-          Historians describe penal contracts that made leaving punishable, heavy recruitment of women and children for plucking,
-          and wage gaps justified by calling women’s work “lighter.” Estates were more than farms: they were enclosed worlds of work, housing, and discipline.
-        </p>
-        <p style="max-width:42rem;">
-          Independence and new labor laws changed the formal rules. My question is what <strong>stuck</strong>: estate-bound life, gendered plucking,
-          and thin bargaining power when global buyers still capture most of the price.
-        </p>
-
-        <a
-          class="press-card"
-          href="https://indianexpress.com/article/research/women-in-assams-tea-industry-forced-to-pluck-or-left-to-perish-9880666/"
-          target="_blank"
-          rel="noopener noreferrer">
-          <img
-            src="https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
-            alt="Tea harvest — visual stand-in; open article for the newspaper piece"
-            width="280"
-            height="220"
-            loading="lazy" />
-          <div class="press-card-body">
-            <p class="press-masthead">The Indian Express · Research · 2025</p>
-            <p class="press-headline">Women in Assam’s tea industry: forced to pluck or left to perish</p>
-            <p class="press-dek">
-              Journalism synthesizing historians on penal labor, gendered wages, and legacies of the plantation — click to read.
-              <em>(Replace side image with your own article screenshot before publishing if your instructor requires it.)</em>
-            </p>
-          </div>
-        </a>
-        <p class="cite-inline" style="margin-top:0.5rem;">
-          Source: <a href="https://indianexpress.com/article/research/women-in-assams-tea-industry-forced-to-pluck-or-left-to-perish-9880666/">Indian Express</a> (2025).
-          Claims inside the piece are attributed by the newspaper to named scholars — verify in the article before citing in your thesis.
-        </p>
+        <div class="timeline-wrap">
+          <div class="timeline-track" id="timelineTrack" role="list"></div>
+        </div>
+        <div class="timeline-detail fade-up" id="timelineDetail" hidden></div>
       </div>
     </section>
 
-    <section id="transition" class="reveal section-theme-labor">
+    <section id="transition" class="fade-up">
       <div class="wrap">
         <p class="section-label">Today on the estates</p>
         <h2>Laws on paper, life in the garden</h2>
-        <p style="max-width:42rem;">
-          Today’s organized tea sector is supposed to provide minimum wages, housing, water, and health services on the estate.
-          Yet investigators, peer-reviewed reviews, and worker advocates still document poverty instruments (like ration cards),
-          reported health burdens among women pluckers, and disputes over whether audits and certifications actually change conditions.
-        </p>
-        <p style="max-width:42rem;">
-          That is why “more law” alone is not the whole story: we also need to ask <strong>who enforces</strong> standards and <strong>who captures value</strong> in the supply chain.
-        </p>
-        <p class="cite-inline" style="margin-top:1.25rem;">
-          Evidence drawn later on this site from Saikia &amp; Parida (2026), Oxfam (2019), and ETI/CAO commentary — see <a href="#literature">sources</a> and <a href="#insights">insights</a>.
-          Primary law: <a href="https://www.teaboard.gov.in/pdf/policy/Plantations%20Labour%20Act_amended.pdf">Plantations Labour Act (Tea Board PDF)</a>.
-        </p>
+        <p>Today's organized tea sector is supposed to provide minimum wages, housing, water, and health services on the estate. Yet Oxfam (2019), Saikia &amp; Parida (2026), and worker advocates still document poverty instruments, health burdens among women pluckers, and weak enforcement.</p>
+        <p>"More law" alone is not the whole story: we also need to ask <strong>who enforces</strong> standards and <strong>who captures value</strong> in the supply chain.</p>
       </div>
     </section>
 
-    <section id="empirical" class="reveal section-theme-project">
+    <section id="viz" class="fade-up">
       <div class="wrap">
-        <p class="section-label">My project — next step</p>
-        <h2>What I am adding (beyond the reading list)</h2>
-
-        <div class="contribution-box">
-          <h3>My contribution</h3>
-          <p style="margin:0;max-width:46rem;">
-            Others have documented pieces of this story — NGO field visits, a health review, journalism, governance investigations.
-            <strong>I am not trying to replace them.</strong> I am building an economics-facing narrative from Assam that connects
-            <strong>money in the supply chain</strong>, <strong>estate institutions</strong>, and <strong>women’s labor</strong>,
-            then testing that story with <strong>data I collect and analyze myself</strong>. This site’s charts are placeholders until that work is done.
-          </p>
-        </div>
-
-        <p style="max-width:42rem;color:var(--muted);">
-          <strong>Current status:</strong> evidence synthesis and communication design. <strong>Next:</strong> stop expanding the literature summary and start the empirical core below.
-        </p>
-
-        <div class="empirical-grid">
-          <article class="card empirical-card">
-            <span class="status-pill">Planned</span>
-            <h3>Data I am targeting</h3>
-            <ul style="margin:0;padding-left:1.1rem;font-size:0.92rem;color:var(--muted);">
-              <li>Official wage notifications &amp; production/export series (Tea Board / labour dept.)</li>
-              <li>Selected PLA sections after reading the Tea Board PDF</li>
-              <li>Health or utilization statistics where publicly available</li>
-              <li>Documented NGO or CAO figures only with clear source rows</li>
-            </ul>
+        <p class="section-label">Documented data</p>
+        <h2>What the sources measure</h2>
+        <div class="charts-grid">
+          <article class="chart-panel fade-up" data-chart-panel>
+            <h3>For every ₹100 of packaged Assam tea — who keeps what?</h3>
+            <p class="chart-source">Source: Oxfam (2019)</p>
+            <div class="chart-canvas-wrap"><canvas id="supplyChainChart" aria-label="Donut chart of value chain shares"></canvas></div>
           </article>
-          <article class="card empirical-card">
-            <span class="status-pill">Planned</span>
-            <h3>Empirical strategy</h3>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">
-              Descriptive indices first (wages, housing, health access, voice) comparing colonial vs present <em>only where I can cite numerators and denominators</em>.
-              Then narrow to one defensible question — e.g. wage levels vs statutory minima, or consumer price shares — shaped by what data actually exist.
-            </p>
+          <article class="chart-panel fade-up" data-chart-panel>
+            <h3>₹126 reported vs ₹250 legal minimum — a 49% gap</h3>
+            <p class="chart-source">Source: ETI / Sachdev &amp; Satpute</p>
+            <div class="chart-canvas-wrap"><canvas id="wageGapChart" aria-label="Horizontal bar chart of reported wage versus legal minimum"></canvas></div>
           </article>
-          <article class="card empirical-card">
-            <span class="status-pill">Planned</span>
-            <h3>How the story will evolve</h3>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">
-              Let available data refine the question, not the other way around. Replace illustrative charts with observed or officially published numbers;
-              keep journalism and advocacy claims labelled as such.
-            </p>
-          </article>
-        </div>
-        <p class="viz-caption" style="margin-top:1.25rem;">
-          Working notes: <a href="docs/RESEARCH_QUESTIONS.md">research questions</a> ·
-          <a href="docs/READING_LIST_EXTRACTION.md">reading-list extraction</a> (for citation boundaries only).
-        </p>
-      </div>
-    </section>
-
-    <section id="literature" class="reveal">
-      <div class="wrap">
-        <p class="section-label">Sources (compact)</p>
-        <h2>What others have documented — one line each</h2>
-        <p class="viz-caption" style="margin-bottom:1.25rem;">
-          Full extraction with citation boundaries: <a href="docs/READING_LIST_EXTRACTION.md">docs/READING_LIST_EXTRACTION.md</a>.
-          I use these to triangulate; my own analysis will sit in <a href="#empirical">My project</a>.
-        </p>
-        <div class="sources-compact">
-          <div class="source-row">
-            <span class="source-type source-type--ngo">NGO · 2019</span>
-            <div>
-              <strong>Oxfam — <em>Addressing the Human Cost of Assam Tea</em></strong><br />
-              Household visits; value-chain price shares; BPL ration cards; reform agenda. <a href="https://policy-practice.oxfam.org/resources/addressing-the-human-cost-of-assam-tea-620945/">Resource page</a>
-            </div>
-          </div>
-          <div class="source-row">
-            <span class="source-type source-type--peer">Peer review · 2026</span>
-            <div>
-              <strong>Saikia &amp; Parida — health burdens among women workers</strong><br />
-              Review linking social disparities to health; questions gaps vs Tea Plantation Act promises. <a href="https://pubmed.ncbi.nlm.nih.gov/40920342/">PubMed</a>
-            </div>
-          </div>
-          <div class="source-row">
-            <span class="source-type source-type--press">Press · 2025</span>
-            <div>
-              <strong><em>Indian Express</em> — women, plucking, colonial legacies</strong><br />
-              See visual link in <a href="#history">History</a>. <a href="https://indianexpress.com/article/research/women-in-assams-tea-industry-forced-to-pluck-or-left-to-perish-9880666/">Article</a>
-            </div>
-          </div>
-          <div class="source-row">
-            <span class="source-type source-type--ngo">Governance · ETI</span>
-            <div>
-              <strong>Sachdev &amp; Satpute — IFC / CAO / APPL commentary</strong><br />
-              Wages vs reported minima; certification limits; freedom of association. ETI guest blog (verify figures against CAO primary report).
-            </div>
-          </div>
-          <div class="source-row">
-            <span class="source-type source-type--press">Essay · 2025</span>
-            <div>
-              <strong>Avtans — languages on Assam &amp; Darjeeling estates</strong><br />
-              Migration, lingua francas, mother-tongue loss. <a href="https://www.himalmag.com/culture/india-tea-estate-workers">Himal</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="viz" class="viz-section reveal">
-      <div class="wrap">
-        <p class="section-label">Illustrative chart</p>
-        <h2>Labor conditions then and now (placeholder)</h2>
-        <div class="chart-panel">
-          <p style="margin-top:0;max-width:52ch;color:var(--muted);font-size:0.95rem;">
-            The main interactive on this site is the <a href="#quotaSimulator"><strong>Quotas &amp; Penalties simulator</strong></a> (Contemporary map era).
-            This chart is a secondary scaffold until I add real data in <a href="#empirical">My project</a>.
-          </p>
-          <div class="btn-row" style="margin-top:0.75rem;">
-            <button type="button" class="btn btn-ghost" id="chartModeIndexed" aria-pressed="true">Indexed (0–10)</button>
-            <button type="button" class="btn btn-ghost" id="chartModeAbsolute" aria-pressed="false">Illustrative 0–100 scale</button>
-          </div>
-          <div class="chart-canvas-wrap">
-            <canvas id="laborChart" aria-label="Bar chart comparing illustrative labor condition indices"></canvas>
-          </div>
-          <p class="viz-caption" id="chartCaption">
-            Dimensions: wages and purchasing power, housing quality, healthcare access, geographic and occupational mobility, and collective bargaining space.
-            Higher bars indicate better outcomes on this illustrative index.
-          </p>
-          <ul class="dim-list" aria-label="Themes linked to reading-list evidence">
-            <li><span class="dim-tag dim-tag-p">Value chain</span><span><strong>Consumer price vs estate share</strong> — Oxfam (2019) overview states brands/supermarkets may capture up to ~95% of packaged Assam tea consumer price in some cases, with under ~5% remaining on estates for workers.</span></li>
-            <li><span class="dim-tag dim-tag-p">Wages</span><span><strong>Legal minimum vs reported pay</strong> — ETI blog cites Rs 126/day vs Rs 250 Assam legal minimum (time-stamped claim; verify current law and wages).</span></li>
-            <li><span class="dim-tag dim-tag-i">Health</span><span><strong>Statute vs reported morbidity</strong> — Saikia &amp; Parida (2026) abstract asks why disease reports rise despite Tea Plantation Act of 1951 health assurances.</span></li>
-            <li><span class="dim-tag dim-tag-i">Governance</span><span><strong>IFC / CAO findings</strong> — ETI blog enumerates CAO concerns (housing, health indicators, wages vs poverty goals, child labour diligence, freedom of association, pesticides, Indigenous classification, grievance mechanisms).</span></li>
-            <li><span class="dim-tag dim-tag-g">Culture</span><span><strong>Language &amp; migration</strong> — Avtans (2025) visible lede: migration fostered lingua francas and mother-tongue erosion among marginalised estate communities.</span></li>
-          </ul>
-          <div class="btn-row">
-            <button type="button" class="btn btn-primary" id="btnExplore" aria-expanded="false" aria-controls="explorePanel" title="Show or hide interpretation of the chart">
-              Explore results
-            </button>
-            <button type="button" class="btn btn-ghost" id="btnScrollFindings">Jump to key insights</button>
-            <button type="button" class="btn btn-ghost" id="btnOpenDialog">Open modal summary</button>
-          </div>
-          <div class="explore-panel" id="explorePanel" role="region" aria-label="Expanded chart interpretation" hidden>
-            <p style="margin:0 0 0.75rem;font-weight:600;color:var(--navy);">How to read this visualization</p>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">
-              Use the chart as a communication scaffold only. Map each dimension to a measurable indicator and citation row in
-              <a href="docs/READING_LIST_EXTRACTION.md">docs/READING_LIST_EXTRACTION.md</a> before defending any causal claim in your capstone.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="policy" class="reveal">
-      <div class="wrap">
-        <p class="section-label">Policy directions</p>
-        <h2>Where evidence points (not my final recommendations yet)</h2>
-        <p style="max-width:42rem;">
-          Across sources, three threads recur: <strong>share consumer price more fairly</strong>, <strong>enforce plantation law and health obligations</strong>, and <strong>strengthen worker voice</strong> rather than rely on certification alone.
-          Advocacy pieces warn that boycotts can hurt workers if gardens close — pressure on buyers and public institutions is framed as an alternative.
-        </p>
-        <div class="callout" role="note">
-          <strong>Legal text:</strong> Operational implications of the Plantations Labour Act require line-by-line reading of the Tea Board PDF and any case compilation you trust (e.g. Indian Kanoon after manual access)—this site does not interpret sections not yet excerpted.
-        </div>
-        <p class="cite-inline">Oxfam resource page; PubMed 40920342; ETI blog; Tea Board PDF.</p>
-      </div>
-    </section>
-
-    <section id="insights" class="reveal">
-      <div class="wrap">
-        <p class="section-label">Evidence snapshot</p>
-        <h2>Patterns that show up across sources</h2>
-        <div class="insight-grid">
-          <article class="card insight-card">
-            <h3>Poverty instruments on estates</h3>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">Oxfam’s overview states that half of households visited by its researchers held Government of Assam “below poverty line” ration cards, with eligibility described as 5 kg rice per month per family member.</p>
-            <p class="src">Banerji &amp; Willoughby (2019) — Oxfam overview</p>
-          </article>
-          <article class="card insight-card">
-            <h3>Health policy puzzle</h3>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">Peer-reviewed abstract frames rising reported disease among female laborers alongside statutory health assurances under the Tea Plantation Act of 1951—motivating deeper primary data work.</p>
-            <p class="src">Saikia &amp; Parida (2026), PMID 40920342</p>
-          </article>
-          <article class="card insight-card">
-            <h3>Development finance due diligence</h3>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">Guest authors summarise CAO findings on wages, services, freedom of association, pesticides, Indigenous classification, and grievance mechanisms for IFC-linked plantations.</p>
-            <p class="src">Sachdev &amp; Satpute — ETI blog</p>
-          </article>
-          <article class="card insight-card">
-            <h3>Colonial labour regime (secondary route)</h3>
-            <p style="margin:0;font-size:0.92rem;color:var(--muted);">Use <em>Indian Express</em> as a map to historian scholarship on penal contracts and gendered recruitment—not as a replacement for reading Sharma, Sen, Liu, Chakravarty, Behal, and others in the original.</p>
-            <p class="src"><em>Indian Express</em> (2025)</p>
+          <article class="chart-panel chart-panel--stat fade-up" data-chart-panel id="bplCounterPanel">
+            <p class="chart-source">Source: Oxfam (2019) household visits</p>
+            <p class="bpl-counter"><span id="bplCount">0</span>%</p>
+            <p class="bpl-label">of estate households visited by Oxfam researchers held Below Poverty Line ration cards</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="mapSection" class="reveal">
+    <section id="mapSection" class="fade-up">
       <div class="wrap">
         <p class="section-label">Interactive map</p>
-        <h2>From estate to cup: journey stages across three eras</h2>
-        <p class="viz-caption" style="margin-bottom:1rem;">
-          Select an era, then open markers for narrative and citations. For the <strong>Contemporary</strong> era, try the
-          <a href="#quotaSimulator">Quotas &amp; Penalties simulator</a> below — the main hands-on activity on this site.
-        </p>
-        <div class="chart-panel" style="padding-bottom:1.25rem;">
-          <div class="era-tabs" role="tablist" aria-label="Map era">
-            <button type="button" class="era-tab" data-era="colonial" aria-pressed="true" id="eraBtnColonial">Colonial period</button>
-            <button type="button" class="era-tab" data-era="transition" aria-pressed="false" id="eraBtnTransition">Post-independence transition</button>
-            <button type="button" class="era-tab" data-era="contemporary" aria-pressed="false" id="eraBtnContemporary">Contemporary · quota sim</button>
+        <h2>From estate to cup across three eras</h2>
+        <div class="era-tabs" role="tablist" aria-label="Map era">
+          <button type="button" class="era-tab" data-era="colonial" aria-pressed="true" id="eraBtnColonial">Colonial period</button>
+          <button type="button" class="era-tab" data-era="transition" aria-pressed="false" id="eraBtnTransition">Post-independence</button>
+          <button type="button" class="era-tab" data-era="contemporary" aria-pressed="false" id="eraBtnContemporary">Contemporary · simulator</button>
+        </div>
+        <div id="storyMap" role="region" aria-label="Map of Assam tea journey"></div>
+
+        <div id="quotaSimulator" class="quota-sim" hidden aria-hidden="true">
+          <p class="section-label" style="margin-bottom:0.35rem;">Contemporary era · interactive</p>
+          <h3 id="quotaSimTitle">Quotas &amp; Penalties Simulator</h3>
+          <p class="quota-sim-lead">Chase the <strong>Pluck leaves</strong> button — it jumps when rain, poor yield, or exhaustion hit. The quota often does not move. Missing it can mean wages cut.</p>
+
+          <div id="quotaBriefing" class="quota-briefing" hidden>
+            <h4>Shift briefing</h4>
+            <ul>
+              <li>Today's shift: 6:00 AM — 5:00 PM</li>
+              <li>Target: 26 kg of green leaf</li>
+              <li>Rain today: moderate</li>
+              <li>Your status: 3rd trimester (many pluckers work through pregnancy)</li>
+              <li>Penalty if you miss quota: wages docked proportionally</li>
+            </ul>
           </div>
-          <div id="storyMap" role="region" aria-label="Map of Assam tea journey"></div>
 
-          <div id="quotaSimulator" class="quota-sim" hidden aria-hidden="true">
-            <div id="quotaPenaltyFlash" class="quota-penalty-flash" hidden role="alert">
-              <div>
-                <p>Quota Not Met.<br />Wage Penalized by 50%.</p>
-                <span class="flash-sub">Illustrative — shows how piece-rate quotas claw back pay when yield, rain, or exhaustion make targets unreachable.</span>
+          <div id="quotaOutcome" class="quota-outcome" hidden>
+            <h4>Shift result</h4>
+            <pre id="quotaOutcomeText"></pre>
+            <button type="button" class="btn-copy" id="quotaCopyBtn">Copy my result</button>
+          </div>
+
+          <div class="quota-sim-grid">
+            <div class="quota-play-area">
+              <div class="quota-hud" aria-live="polite">
+                <span>Time left: <strong id="quotaTimer">15</strong>s</span>
+                <span>Plucked: <strong id="quotaCount">0</strong> / <strong id="quotaTarget">26</strong> kg</span>
+                <span>Status: <strong id="quotaStatus">Ready</strong></span>
+              </div>
+              <div class="quota-progress-wrap" aria-hidden="true"><div class="quota-progress-bar" id="quotaProgressBar"></div></div>
+              <p class="quota-hazard" id="quotaHazard" aria-live="assertive"></p>
+              <div class="quota-actions">
+                <button type="button" class="quota-start-btn" id="quotaStartBtn">Start shift</button>
+              </div>
+              <div class="quota-chase-arena" id="quotaChaseArena" aria-label="Plucking area">
+                <p class="quota-difficulty-msg" id="quotaDifficultyMsg"></p>
+                <button type="button" class="quota-pluck-btn" id="quotaPluckBtn" disabled>Pluck leaves</button>
+                <span class="quota-chase-label">Catch the button before the shift ends</span>
               </div>
             </div>
-
-            <p class="section-label" style="margin-bottom:0.35rem;">Contemporary era · interactive</p>
-            <h3 id="quotaSimTitle">Quotas &amp; Penalties Simulator</h3>
-            <p class="quota-sim-lead">
-              You are on a plucking shift. Chase the <strong>Pluck leaves</strong> button — it will jump away when rain, poor yield, or exhaustion hit.
-              That is the point: the work itself gets harder, but the <strong>quota often does not move</strong>. Missing it can mean <strong>wages cut</strong>.
-            </p>
-
-            <div class="quota-sim-grid">
-              <div class="quota-play-area">
-                <div class="quota-hud" aria-live="polite">
-                  <span>Time left: <strong id="quotaTimer">15</strong>s</span>
-                  <span>Plucked: <strong id="quotaCount">0</strong> / <strong id="quotaTarget">26</strong> kg (illustrative units)</span>
-                  <span>Status: <strong id="quotaStatus">Ready</strong></span>
-                </div>
-                <div class="quota-progress-wrap" aria-hidden="true">
-                  <div class="quota-progress-bar" id="quotaProgressBar"></div>
-                </div>
-                <p class="quota-hazard" id="quotaHazard" aria-live="assertive"></p>
-                <div class="quota-actions">
-                  <button type="button" class="quota-start-btn" id="quotaStartBtn">Start shift</button>
-                </div>
-                <div class="quota-chase-arena" id="quotaChaseArena" aria-label="Plucking area — button may move when conditions worsen">
-                  <p class="quota-difficulty-msg" id="quotaDifficultyMsg"></p>
-                  <button type="button" class="quota-pluck-btn" id="quotaPluckBtn" disabled>Pluck leaves</button>
-                  <span class="quota-chase-label">Catch the button before the shift ends</span>
-                </div>
-                <p class="viz-caption" style="margin:0;">
-                  When the button dodges, read why — then notice if your count still falls short. Teaching simulation only.
-                </p>
-              </div>
-              <aside class="quota-wage-panel" aria-live="polite">
-                <h4>Today’s pay (illustrative)</h4>
-                <div class="quota-wage-row">
-                  <span>Stated daily wage</span>
-                  <span class="wage-amount" id="wageBase">
-                    <span class="wage-inr">₹250</span>
-                    <span class="wage-usd">≈ $2.98 USD</span>
-                  </span>
-                </div>
-                <div class="quota-wage-row penalized" id="wagePenaltyRow" hidden>
-                  <span>Quota penalty (−50%)</span>
-                  <span class="wage-amount" id="wagePenalty">
-                    <span class="wage-inr">−₹125</span>
-                    <span class="wage-usd">≈ −$1.49 USD</span>
-                  </span>
-                </div>
-                <div class="quota-wage-row">
-                  <span>You take home</span>
-                  <span class="wage-amount" id="wageFinal">
-                    <span class="wage-inr">₹250</span>
-                    <span class="wage-usd">≈ $2.98 USD</span>
-                  </span>
-                </div>
-                <p class="quota-fx-note">
-                  USD shown at an illustrative <strong>₹84 = $1</strong> (for comparison only — not a live rate; verify before citing).
-                </p>
-              </aside>
-            </div>
-
-            <div class="quota-insight">
-              <strong>Insight:</strong> Low wages are not only “low bargaining power.” Quota-and-penalty rules can
-              <em>actively extract</em> value from vulnerable workers — especially women on piece rates — by designing targets
-              that are hard to meet when rain, yield, or malnutrition slow plucking. The mechanism turns missed targets into
-              employer savings. That is structural, not accidental pity.
-            </div>
+            <aside class="quota-wage-panel" aria-live="polite">
+              <h4>Live wage panel</h4>
+              <div class="quota-wage-row"><span>Stated daily wage</span><span class="wage-amount" id="wageBase"><span class="wage-inr">₹250</span></span></div>
+              <div class="quota-wage-row penalized" id="wagePenaltyRow" hidden><span>Quota penalty</span><span class="wage-amount" id="wagePenalty"><span class="wage-inr">−₹0</span></span></div>
+              <div class="quota-wage-row"><span>You take home</span><span class="wage-amount" id="wageFinal"><span class="wage-inr">₹250</span></span></div>
+            </aside>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="voices" class="reveal">
+    <section id="literature" class="fade-up">
       <div class="wrap">
-        <p class="section-label">Documented quotations</p>
-        <h2>Verbatim or close paraphrase from your uploaded sources</h2>
-        <p class="viz-caption" style="margin-bottom:1.25rem;">
-          These blocks quote or tightly paraphrase public text so readers can trace language to the original document. They are <strong>not</strong> anonymous field interviews.
-        </p>
-        <div class="voices-grid">
-          <article class="card voice-card">
-            <blockquote>“Workers on tea plantations in the Assam region of India are systematically denied their rights to a living wage and decent working and living conditions.”</blockquote>
-            <p class="cite-inline">Oxfam Policy &amp; Practice resource overview (Banerji &amp; Willoughby, 2019).</p>
-          </article>
-          <article class="card voice-card">
-            <blockquote>“For every kilogram of packaged Assam tea that is sold, tea brands and supermarkets take a sizable cut – up to 95% in some cases – while a marginal proportion – less than 5% – remains on tea estates to pay workers.”</blockquote>
-            <p class="cite-inline">Same Oxfam overview page (verify numbers against underlying Oxfam research annex when publishing).</p>
-          </article>
-          <article class="card voice-card">
-            <blockquote>“Despite being one of the largest organized industries in India, the tea plantation sector faces a significant crisis, especially in Assam. The workers, especially women, are some of the most underpaid, exacerbating their marginalization.”</blockquote>
-            <p class="cite-inline">Saikia &amp; Parida (2026), PubMed abstract PMID 40920342.</p>
-          </article>
-          <article class="card voice-card">
-            <blockquote>“Between the 1860s and 1900, what prevailed in Assam was a ‘Planters’ Raj,’ where planters held virtually unchecked power, backed by penal provisions.”</blockquote>
-            <p class="cite-inline">Historian Jayeeta Sharma, quoted by <em>Indian Express</em> (2025); consult Sharma’s original work for full context.</p>
-          </article>
+        <p class="section-label">Sources</p>
+        <h2>Sources</h2>
+        <div class="source-filters" role="group" aria-label="Filter sources">
+          <button type="button" class="filter-chip is-active" data-filter="all">All</button>
+          <button type="button" class="filter-chip" data-filter="NGO">NGO</button>
+          <button type="button" class="filter-chip" data-filter="Peer Review">Peer Review</button>
+          <button type="button" class="filter-chip" data-filter="Press">Press</button>
+          <button type="button" class="filter-chip" data-filter="Governance">Governance</button>
         </div>
-        <div class="callout" style="margin-top:1.25rem;" role="note">
-          <strong>Triangulation:</strong> pair NGO and journalistic claims with administrative statistics and peer-reviewed quantitative estimates as you build the capstone appendix, and record claim–evidence pairs so each major figure can be audited.
-        </div>
-      </div>
-    </section>
-
-    <section id="findings" class="reveal">
-      <div class="wrap">
-        <p class="section-label">Source-linked metrics</p>
-        <h2>Numbers that appear explicitly in your reading list</h2>
-        <p class="viz-caption" style="margin-bottom:1.5rem;">
-          Animated counters restate figures already printed in Oxfam’s overview or the ETI guest blog—update if newer official statistics supersede them.
-        </p>
-        <div class="metrics-grid">
-          <article class="card metric-card" data-metric>
-            <p class="metric-label">BPL ration cards (Oxfam visited households)</p>
-            <p class="metric-value"><span class="count" data-target="50" data-suffix="%">0</span></p>
-            <p class="metric-note">Oxfam (2019) overview: 50% of households visited held Government of Assam “below poverty line” ration cards.</p>
+        <div class="source-grid" id="sourceGrid">
+          <article class="source-card fade-up" data-type="NGO">
+            <span class="source-tag source-tag--ngo">NGO · 2019</span>
+            <h3>Oxfam — Addressing the Human Cost of Assam Tea</h3>
+            <p>Up to 95% of consumer price captured by brands; 50% of visited households held BPL ration cards; reform agenda on price sharing and gender policy.</p>
+            <a class="source-link" href="https://policy-practice.oxfam.org/resources/addressing-the-human-cost-of-assam-tea-an-agenda-for-change-to-respect-protect-620876/" target="_blank" rel="noopener noreferrer">Open resource →</a>
           </article>
-          <article class="card metric-card" data-metric>
-            <p class="metric-label">IFC investment in APPL (ETI blog)</p>
-            <p class="metric-value"><span class="count" data-target="7.8" data-suffix="">0</span><span class="metric-unit">M USD</span></p>
-            <p class="metric-note">ETI guest blog reports US $7.8 million for a 19.9% IFC stake — verify against IFC primary disclosure.</p>
+          <article class="source-card fade-up" data-type="Peer Review">
+            <span class="source-tag source-tag--peer">Peer Review · 2026</span>
+            <h3>Saikia &amp; Parida — Health challenges of women tea workers</h3>
+            <p>Review links social disparities to rising reported disease despite Tea Plantation Act of 1951 health assurances.</p>
+            <a class="source-link" href="https://pubmed.ncbi.nlm.nih.gov/40920342/" target="_blank" rel="noopener noreferrer">PubMed →</a>
           </article>
-          <article class="card metric-card" data-metric>
-            <p class="metric-label">Permanent workers at APPL (blog estimate)</p>
-            <p class="metric-value"><span class="count" data-target="30000" data-suffix="">0</span></p>
-            <p class="metric-note">ETI guest blog states ~30,000 permanently employed plantation workers at APPL, affecting ~155,000 people including families.</p>
+          <article class="source-card fade-up" data-type="Press">
+            <span class="source-tag source-tag--press">Press · 2025</span>
+            <h3>Indian Express — Women in Assam's tea industry</h3>
+            <p>Journalism on penal labor, gendered wages, and colonial legacies via named historians.</p>
+            <a class="source-link" href="https://indianexpress.com/article/research/women-in-assams-tea-industry-forced-to-pluck-or-left-to-perish-9880666/" target="_blank" rel="noopener noreferrer">Read article →</a>
+          </article>
+          <article class="source-card fade-up" data-type="Governance">
+            <span class="source-tag source-tag--gov">Governance · ETI</span>
+            <h3>Sachdev &amp; Satpute — IFC / CAO / APPL</h3>
+            <p>Rs 126/day vs Rs 250 legal minimum cited; CAO findings on housing, health, freedom of association, and certification limits.</p>
+            <a class="source-link" href="https://www.ethicaltrade.org/resources/blog/life-dignity-long-overdue-assams-tea-workers" target="_blank" rel="noopener noreferrer">ETI blog →</a>
+          </article>
+          <article class="source-card fade-up" data-type="Press">
+            <span class="source-tag source-tag--press">Essay · 2025</span>
+            <h3>Avtans — Languages of tea-estate workers</h3>
+            <p>Migration fostered lingua francas and mother-tongue erosion among marginalised estate communities.</p>
+            <a class="source-link" href="https://www.himalmag.com/culture/india-tea-estate-workers" target="_blank" rel="noopener noreferrer">Himal →</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="conclusion" class="reveal">
-      <div class="wrap">
-        <p class="section-label">Conclusion</p>
-        <div class="conclusion-block">
-          <p class="lead">
-            Assam’s tea economy is a global success story and a local labor story at once. The puzzle — celebrated commodity, concealed labor regime — is still open.
-          </p>
-          <p>
-            This site started from real-world stakes in the gardens, not from abstracts. The reading list helped me see the landscape; <strong>my capstone still needs my own data and voice</strong> to answer the three plain questions on <a href="#story">the story page</a>.
-          </p>
-          <p style="margin-bottom:0;">
-            Next: build the empirical core in <a href="#empirical">My project</a>, swap illustrative charts for documented numbers, and keep Assam’s workers visible in how we teach Indian economics.
-          </p>
+    <section id="conclusion" class="conclusion fade-up">
+      <div class="wrap conclusion-inner">
+        <h2>The answer to the question</h2>
+        <p>Assam's tea workers are not poor <em>despite</em> the law. The quota system, tied housing, and estate dependency make poverty a structural feature — not a policy failure waiting to be fixed. The law is real. So is the enforcement gap. And the consumer price never reaches the garden.</p>
+        <div class="takeaway-line">"The leaf is picked. The price is kept. The law is silent."</div>
+        <p class="conclusion-sub">— Aaira Goswami, Stanford University, 2025</p>
+        <div class="conclusion-links">
+          <a href="mailto:aaira@stanford.edu">Contact</a>
+          <a href="#top">Back to top</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer id="contact" class="reveal">
-    <div class="wrap footer-row">
-      <div>
-        <p style="margin:0 0 0.35rem;font-family:var(--font-display);font-size:1.15rem;color:var(--navy);">Aaira Goswami</p>
-        <p style="margin:0;font-size:0.9rem;color:var(--muted);">Stanford University · Economic research &amp; writing</p>
-      </div>
-      <div class="footer-links">
-        <a href="mailto:aaira@example.edu">aaira@example.edu</a>
-        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="docs/RESEARCH_QUESTIONS.md">Research questions</a>
-        <a href="docs/MAP_SPEC.md">Map spec</a>
-        <a href="docs/READING_LIST_EXTRACTION.md">Reading-list extraction</a>
-      </div>
-    </div>
-    <div class="wrap mobile-nav" aria-label="Section links">
-      <a href="#story">Story</a>
-      <a href="#history">History</a>
-      <a href="#transition">Today</a>
-      <a href="#empirical">My project</a>
-      <a href="#literature">Sources</a>
-      <a href="#viz">Chart</a>
-      <a href="#mapSection">Map</a>
-      <a href="#quotaSimulator">Quota</a>
-      <a href="#conclusion">Close</a>
+  <footer class="fade-up">
+    <div class="wrap">
+      <p style="margin:0;"><a href="mailto:aaira@stanford.edu">aaira@stanford.edu</a> · Stanford University</p>
     </div>
   </footer>
 
-  <dialog id="resultsDialog" aria-labelledby="dialogTitle">
-    <div class="dialog-inner">
-      <h3 id="dialogTitle">Results snapshot</h3>
-      <p style="margin:0;font-size:0.95rem;color:var(--muted);">
-        This dialog mirrors the expandable panel: use it for quick reading or presentation mode. The substantive economic
-        claim is that <strong>partial modernization</strong> — better services alongside constrained mobility and bargaining —
-        is consistent with both competitive export markets and historically specific labor institutions.
-      </p>
-      <div class="dialog-actions">
-        <button type="button" class="btn btn-primary" id="dialogGoFindings">Go to key insights</button>
-        <button type="button" class="btn btn-ghost" id="dialogClose">Close</button>
-      </div>
-    </div>
-  </dialog>
-
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
     (function () {
       "use strict";
 
-      /* Nav shadow on scroll */
+      var chartText = "#8aab80";
+      var chartGrid = "rgba(45, 92, 56, 0.35)";
+
+      /* Fade-up observer */
+      var fadeObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) e.target.classList.add("visible");
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll(".fade-up").forEach(function (el) { fadeObs.observe(el); });
+
+      /* Nav scroll + active */
       var nav = document.getElementById("siteNav");
+      var navLinks = document.querySelectorAll("#navLinks a[data-nav]");
       function onScrollNav() {
-        if (!nav) return;
-        nav.classList.toggle("is-scrolled", window.scrollY > 8);
+        var hero = document.getElementById("top");
+        var pastHero = hero ? window.scrollY > hero.offsetHeight - (nav ? nav.offsetHeight : 48) : window.scrollY > 8;
+        if (nav) {
+          nav.classList.toggle("is-scrolled", pastHero);
+          nav.classList.toggle("scrolled", pastHero);
+        }
       }
       window.addEventListener("scroll", onScrollNav, { passive: true });
       onScrollNav();
 
-      /* Nav dropdown (sections menu) */
-      var navToggle = document.getElementById("navToggle");
-      var navDropdown = document.getElementById("navDropdown");
-      var navMenu = navToggle ? navToggle.closest(".nav-menu") : null;
-
-      function closeNavDropdown() {
-        if (!navToggle || !navDropdown) return;
-        navToggle.setAttribute("aria-expanded", "false");
-        navDropdown.classList.remove("is-open");
-      }
-
-      function toggleNavDropdown() {
-        if (!navToggle || !navDropdown) return;
-        var open = !navDropdown.classList.contains("is-open");
-        navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-        navDropdown.classList.toggle("is-open", open);
-      }
-
-      if (navToggle && navDropdown) {
-        navToggle.addEventListener("click", function (e) {
-          e.stopPropagation();
-          toggleNavDropdown();
+      var sectionIds = ["story", "history", "transition", "viz", "literature", "quotaSimulator", "conclusion"];
+      if ("IntersectionObserver" in window) {
+        var navObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            var id = en.target.id;
+            navLinks.forEach(function (a) {
+              a.classList.toggle("active", a.getAttribute("data-nav") === id);
+            });
+          });
+        }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+        sectionIds.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) navObs.observe(el);
         });
-        navDropdown.querySelectorAll("a").forEach(function (a) {
+      }
+
+      /* Mobile nav */
+      var ham = document.getElementById("navHamburger");
+      var drawer = document.getElementById("navDrawer");
+      if (ham && drawer) {
+        ham.addEventListener("click", function () {
+          var open = drawer.classList.toggle("is-open");
+          ham.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        drawer.querySelectorAll("a").forEach(function (a) {
           a.addEventListener("click", function () {
-            closeNavDropdown();
+            drawer.classList.remove("is-open");
+            ham.setAttribute("aria-expanded", "false");
           });
         });
       }
 
-      document.addEventListener("click", function (e) {
-        if (navMenu && navDropdown && navDropdown.classList.contains("is-open") && !navMenu.contains(e.target)) {
-          closeNavDropdown();
+      /* Falling leaves */
+      (function initLeaves() {
+        var container = document.getElementById("heroBgLeaves");
+        if (!container) return;
+        var leafSvg = '<svg width="18" height="22" viewBox="0 0 18 22" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M9 0C4 6 0 12 2 18c2 4 5 4 7 4s5 0 7-4c2-6-2-12-7-18z"/></svg>';
+        for (var i = 0; i < 12; i++) {
+          var leaf = document.createElement("div");
+          leaf.className = "hero-leaf";
+          leaf.innerHTML = leafSvg;
+          leaf.style.color = "var(--color-accent)";
+          leaf.style.left = Math.random() * 100 + "%";
+          leaf.style.setProperty("--drift", (Math.random() * 80 - 40) + "px");
+          var dur = 8 + Math.random() * 7;
+          leaf.style.animationDuration = dur + "s";
+          leaf.style.animationDelay = Math.random() * 8 + "s";
+          container.appendChild(leaf);
         }
-      });
+      })();
 
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") closeNavDropdown();
-      });
+      /* Story image loader */
+      (function loadStoryHeroImage() {
+        var img = document.getElementById("storyHeroImg");
+        if (!img) return;
+        var localBase = img.getAttribute("data-local-base") || "assets/images/tea-workers-why-it-matters";
+        var exts = [".jpg", ".jpeg", ".png", ".webp"];
+        var idx = 0;
+        function onLoaded() { img.classList.remove("is-loading"); }
+        function tryLocal() {
+          if (idx >= exts.length) { onLoaded(); return; }
+          var probe = new Image();
+          var path = localBase + exts[idx];
+          probe.onload = function () { img.src = path; onLoaded(); };
+          probe.onerror = function () { idx++; tryLocal(); };
+          probe.src = path;
+        }
+        img.addEventListener("error", function () {
+          img.src = "https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=1200&q=85";
+          onLoaded();
+        });
+        tryLocal();
+      })();
 
-      /* Legacy anchor: #about → #story */
-      if (window.location.hash === "#about") {
-        window.location.replace("#story");
-      }
-
-      /* IntersectionObserver: reveal */
-      var revealEls = document.querySelectorAll(".reveal");
-      if ("IntersectionObserver" in window) {
-        var revObs = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (e) {
-              if (e.isIntersecting) {
-                e.target.classList.add("is-visible");
-                revObs.unobserve(e.target);
-              }
+      /* Timeline */
+      var timelineEvents = [
+        { year: "1840s", label: "Plantation system begins", detail: "British expand into Assam forest land. Penal contracts bind workers — leaving is punishable. Women recruited for plucking, wages called 'lighter work'." },
+        { year: "1882", label: "Inland Emigration Act", detail: "Formalizes worker immobility. Historians call this era the 'Planters' Raj' — planters hold near-unchecked power over labor." },
+        { year: "1951", label: "Plantations Labour Act", detail: "Independence brings statutory housing, healthcare, and wage rights. Rules on paper — but enforcement mechanisms remain weak." },
+        { year: "Today", label: "Same structure, new labels", detail: "Tied housing, quota penalties, gendered plucking persist. Certifications and audits exist — yet Oxfam (2019) and Saikia & Parida (2026) document continued poverty-level outcomes." }
+      ];
+      var track = document.getElementById("timelineTrack");
+      var detailEl = document.getElementById("timelineDetail");
+      var activeIdx = 0;
+      if (track) {
+        timelineEvents.forEach(function (ev, i) {
+          var node = document.createElement("button");
+          node.type = "button";
+          node.className = "timeline-node" + (i === 0 ? " is-active" : "");
+          node.setAttribute("role", "listitem");
+          node.innerHTML = '<div class="timeline-dot">' + ev.year + '</div><div class="timeline-year">' + ev.year + '</div><div class="timeline-label">' + ev.label + '</div>';
+          node.addEventListener("click", function () {
+            activeIdx = i;
+            track.querySelectorAll(".timeline-node").forEach(function (n, j) {
+              n.classList.toggle("is-active", j === i);
             });
-          },
-          { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
-        );
-        revealEls.forEach(function (el) {
-          revObs.observe(el);
+            if (detailEl) {
+              detailEl.hidden = false;
+              detailEl.classList.add("is-open");
+              detailEl.innerHTML = "<strong>" + ev.year + " — " + ev.label + "</strong><p style=\"margin:0.75rem 0 0\">" + ev.detail + "</p>";
+            }
+          });
+          track.appendChild(node);
+          if ("IntersectionObserver" in window) {
+            var tObs = new IntersectionObserver(function (entries, obs) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting) { en.target.classList.add("visible"); obs.unobserve(en.target); }
+              });
+            }, { threshold: 0.2 });
+            tObs.observe(node);
+          } else node.classList.add("visible");
         });
-      } else {
-        revealEls.forEach(function (el) {
-          el.classList.add("is-visible");
-        });
+        if (detailEl && timelineEvents[0]) {
+          detailEl.hidden = false;
+          detailEl.classList.add("is-open");
+          detailEl.innerHTML = "<strong>" + timelineEvents[0].year + " — " + timelineEvents[0].label + "</strong><p style=\"margin:0.75rem 0 0\">" + timelineEvents[0].detail + "</p>";
+        }
       }
 
-      /* Chart.js — indexed vs illustrative alternate scale (plan toggle) */
-      var ctx = document.getElementById("laborChart");
-      var laborChartInstance = null;
-      var chartModeIndexed = document.getElementById("chartModeIndexed");
-      var chartModeAbsolute = document.getElementById("chartModeAbsolute");
-      if (ctx && typeof Chart !== "undefined") {
-        var navy = "rgba(15, 39, 68, 0.85)";
-        var navyLight = "rgba(15, 39, 68, 0.45)";
-        var green = "rgba(22, 64, 46, 0.88)";
-        var greenLight = "rgba(22, 64, 46, 0.45)";
-        var dataIndexed = {
-          col: [2.2, 3.0, 2.1, 1.2, 1.0],
-          pres: [4.1, 5.2, 4.4, 3.2, 3.0],
-          yMax: 10,
-          yTitle: "Indexed condition score (0–10)"
-        };
-        var dataAlt = {
-          col: [22, 30, 21, 12, 10],
-          pres: [41, 52, 44, 32, 30],
-          yMax: 100,
-          yTitle: "Illustrative score (0–100) — not observed units"
-        };
-        laborChartInstance = new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: ["Wages", "Housing", "Healthcare", "Mobility", "Bargaining"],
-            datasets: [
-              {
-                label: "Colonial period (illustrative)",
-                data: dataIndexed.col.slice(),
-                backgroundColor: navy,
-                hoverBackgroundColor: navyLight,
-                borderRadius: 6,
-                borderSkipped: false
-              },
-              {
-                label: "Present (illustrative)",
-                data: dataIndexed.pres.slice(),
-                backgroundColor: green,
-                hoverBackgroundColor: greenLight,
-                borderRadius: 6,
-                borderSkipped: false
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: { mode: "index", intersect: false },
-            plugins: {
-              legend: {
-                position: "bottom",
-                labels: {
-                  font: { family: "'Inter', sans-serif", size: 12 },
-                  color: "#5a5a54",
-                  usePointStyle: true,
-                  padding: 16
-                }
-              },
-              tooltip: {
-                backgroundColor: "rgba(15, 39, 68, 0.92)",
-                titleFont: { family: "'Inter', sans-serif", size: 13 },
-                bodyFont: { family: "'Inter', sans-serif", size: 12 },
-                padding: 12,
-                cornerRadius: 8
-              }
-            },
-            scales: {
-              x: {
-                grid: { display: false },
-                ticks: { font: { family: "'Inter', sans-serif", size: 11 }, color: "#5a5a54" }
-              },
-              y: {
-                beginAtZero: true,
-                max: 10,
-                title: {
-                  display: true,
-                  text: dataIndexed.yTitle,
-                  font: { family: "'Inter', sans-serif", size: 12, weight: "600" },
-                  color: "#0f2744"
-                },
-                ticks: { font: { family: "'Inter', sans-serif", size: 11 }, color: "#5a5a54" },
-                grid: { color: "rgba(15, 39, 68, 0.06)" }
+      /* Charts on scroll */
+      var supplyChainChartInst = null;
+      var wageGapChartInst = null;
+      var chartsInited = false;
+      var supplyChainData = {
+        labels: ["Brands & supermarkets", "Estate operations & profit", "Worker wages"],
+        datasets: [{ data: [95, 3.5, 1.5], backgroundColor: ["#b85c2a", "#c8a951", "#5a9e4b"], borderWidth: 0 }]
+      };
+      var wageData = {
+        labels: ["Reported daily wage (ETI blog)", "Assam legal minimum wage"],
+        datasets: [{ data: [126, 250], backgroundColor: ["#b85c2a", "#5a9e4b"], borderRadius: 6, borderSkipped: false }]
+      };
+
+      function initCharts() {
+        if (chartsInited || typeof Chart === "undefined") return;
+        chartsInited = true;
+        var sc = document.getElementById("supplyChainChart");
+        if (sc) {
+          supplyChainChartInst = new Chart(sc, {
+            type: "doughnut",
+            data: supplyChainData,
+            options: {
+              responsive: true, maintainAspectRatio: false,
+              plugins: {
+                legend: { position: "bottom", labels: { color: chartText, font: { family: "'Inter', sans-serif" } } }
               }
             }
-          }
-        });
-
-        function setChartMode(useIndexed) {
-          if (!laborChartInstance) return;
-          var pack = useIndexed ? dataIndexed : dataAlt;
-          laborChartInstance.data.datasets[0].data = pack.col.slice();
-          laborChartInstance.data.datasets[1].data = pack.pres.slice();
-          laborChartInstance.options.scales.y.max = pack.yMax;
-          laborChartInstance.options.scales.y.title.text = pack.yTitle;
-          laborChartInstance.update();
-          if (chartModeIndexed) chartModeIndexed.setAttribute("aria-pressed", useIndexed ? "true" : "false");
-          if (chartModeAbsolute) chartModeAbsolute.setAttribute("aria-pressed", useIndexed ? "false" : "true");
-        }
-        if (chartModeIndexed) {
-          chartModeIndexed.addEventListener("click", function () {
-            setChartMode(true);
           });
         }
-        if (chartModeAbsolute) {
-          chartModeAbsolute.addEventListener("click", function () {
-            setChartMode(false);
+        var wc = document.getElementById("wageGapChart");
+        if (wc) {
+          wageGapChartInst = new Chart(wc, {
+            type: "bar",
+            data: wageData,
+            options: {
+              indexAxis: "y", responsive: true, maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { beginAtZero: true, max: 280, grid: { color: chartGrid }, ticks: { color: chartText } },
+                y: { grid: { display: false }, ticks: { color: chartText, font: { size: 11 } } }
+              }
+            },
+            plugins: [{
+              id: "wageGapAnnotation",
+              afterDatasetsDraw: function (chart) {
+                var ctx = chart.ctx;
+                var meta = chart.getDatasetMeta(0);
+                if (!meta || !meta.data[0] || !meta.data[1]) return;
+                var xScale = chart.scales.x;
+                var y = meta.data[1].y;
+                var x126 = xScale.getPixelForValue(126);
+                var x250 = xScale.getPixelForValue(250);
+                var xMid = (x126 + x250) / 2;
+                ctx.save();
+                ctx.strokeStyle = "#d45a4a";
+                ctx.fillStyle = "#d45a4a";
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 4]);
+                ctx.beginPath();
+                ctx.moveTo(x126, y - 14);
+                ctx.lineTo(x126, y - 6);
+                ctx.lineTo(x250, y - 6);
+                ctx.lineTo(x250, y - 14);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.font = "600 12px Inter, sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("49% gap", xMid, y - 20);
+                ctx.restore();
+              }
+            }]
           });
         }
       }
 
-      var exploreBtn = document.getElementById("btnExplore");
-      var explorePanel = document.getElementById("explorePanel");
-      var dialog = document.getElementById("resultsDialog");
-      var dialogClose = document.getElementById("dialogClose");
-      var dialogGoFindings = document.getElementById("dialogGoFindings");
-      var btnScrollFindings = document.getElementById("btnScrollFindings");
-      var btnOpenDialog = document.getElementById("btnOpenDialog");
-
-      function setPanelOpen(open) {
-        if (!explorePanel || !exploreBtn) return;
-        explorePanel.classList.toggle("is-open", open);
-        explorePanel.hidden = !open;
-        exploreBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      function animateCount(el, target, suffix, duration) {
+        var startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var p = Math.min((ts - startTime) / duration, 1);
+          var ease = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * ease) + (suffix || "");
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
       }
 
-      if (exploreBtn && explorePanel) {
-        exploreBtn.addEventListener("click", function () {
-          var isOpen = explorePanel.classList.contains("is-open");
-          setPanelOpen(!isOpen);
+      var bplDone = false;
+      if ("IntersectionObserver" in window) {
+        var chartObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            initCharts();
+            if (supplyChainChartInst) supplyChainChartInst.update();
+            if (wageGapChartInst) wageGapChartInst.update();
+            if (!bplDone && en.target.id === "bplCounterPanel") {
+              bplDone = true;
+              var bpl = document.getElementById("bplCount");
+              if (bpl) animateCount(bpl, 50, "", 1600);
+            }
+          });
+        }, { threshold: 0.2 });
+        document.querySelectorAll("[data-chart-panel]").forEach(function (p) { chartObs.observe(p); });
+      } else {
+        initCharts();
+        var bpl = document.getElementById("bplCount");
+        if (bpl) bpl.textContent = "50";
+      }
+
+      /* Source filter */
+      document.querySelectorAll(".filter-chip").forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          document.querySelectorAll(".filter-chip").forEach(function (c) { c.classList.remove("is-active"); });
+          chip.classList.add("is-active");
+          var f = chip.getAttribute("data-filter");
+          document.querySelectorAll(".source-card").forEach(function (card) {
+            var show = f === "all" || card.getAttribute("data-type") === f;
+            card.hidden = !show;
+          });
         });
-      }
+      });
 
-      if (btnScrollFindings) {
-        btnScrollFindings.addEventListener("click", function () {
-          var el = document.getElementById("insights");
-          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      }
-
-      if (btnOpenDialog && dialog) {
-        btnOpenDialog.addEventListener("click", function () {
-          try {
-            dialog.showModal();
-          } catch (e0) {}
-        });
-      }
-
-      if (dialogClose && dialog) {
-        dialogClose.addEventListener("click", function () {
-          dialog.close();
-        });
-      }
-      if (dialogGoFindings && dialog) {
-        dialogGoFindings.addEventListener("click", function () {
-          dialog.close();
-          var el = document.getElementById("insights");
-          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      }
-
-      /* Leaflet: Assam tea journey (see docs/MAP_SPEC.md) */
+      /* Leaflet map */
       var mapEl = document.getElementById("storyMap");
       if (mapEl && typeof L !== "undefined") {
         function escHtml(t) {
-          return String(t)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;");
+          return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
         }
         var mapNodes = [
           {
             coords: [26.75, 94.2],
             eras: {
-              colonial: {
-                title: "Upper Assam estates",
-                story: "Company-managed gardens linked leaf output to London auctions; labor recruitment tied households to estate discipline.",
-                metric: "Illustrative: export growth concentrated in a few agency houses.",
-                image: "https://images.unsplash.com/photo-1452251889946-8ff5ea7b27ab?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — cite plantation archive or regional history monograph."
-              },
-              transition: {
-                title: "National regulation of estates",
-                story: "Labor law and welfare ideas entered statute books; implementation depended on state inspection capacity and union presence.",
-                metric: "Indicative trend: formal wage boards introduced; verify with gazette notifications.",
-                image: "https://images.unsplash.com/photo-1593691509543-c55fb32e5f82?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — labor department circulars + secondary synthesis."
-              },
-              contemporary: {
-                title: "Quotas, piece rates & wage penalties",
-                story: "Many women still pluck on piece-rate or quota-linked pay. Missing a daily leaf target can trigger wage cuts — a pricing mechanism that shifts risk to the worker when rain, yield, or exhaustion slow output.",
-                metric: "Try the Quotas & Penalties simulator below this map (Contemporary era).",
-                image: "https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=640&q=70",
-                citation: "Illustrative simulation for teaching; pair with Oxfam (2019), ETI/CAO accounts, and field studies on piece rates.",
-                simulatorAnchor: true
-              }
+              colonial: { title: "Upper Assam estates", story: "Company-managed gardens linked leaf output to London auctions; labor recruitment tied households to estate discipline.", metric: "Export growth concentrated in agency houses (colonial-era documentation).", image: "https://images.unsplash.com/photo-1452251889946-8ff5ea7b27ab?auto=format&fit=crop&w=640&q=70", citation: "Griffiths, P.J. The History of the Indian Tea Industry (1967); regional economic histories." },
+              transition: { title: "National regulation of estates", story: "Labor law and welfare entered statute; implementation depended on inspection capacity and union presence.", metric: "Formal wage boards introduced — verify with gazette notifications.", image: "https://images.unsplash.com/photo-1593691509543-c55fb32e5f82?auto=format&fit=crop&w=640&q=70", citation: "Gazette of India / state labour department circulars." },
+              contemporary: { title: "Quotas, piece rates & wage penalties", story: "Many women pluck on quota-linked pay. Missing a daily leaf target can trigger wage cuts when rain, yield, or exhaustion slow output.", metric: "Open the Quotas & Penalties simulator below.", image: "https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=640&q=70", citation: "Oxfam (2019); ETI/CAO accounts; field studies on piece rates.", simulatorAnchor: true }
             }
           },
           {
             coords: [26.18, 91.74],
             eras: {
-              colonial: {
-                title: "Inland sorting and railheads",
-                story: "Leaf moved toward river and rail corridors under merchant and company coordination; information asymmetry favored buyers.",
-                metric: "Illustrative: declining leaf price volatility vs rising throughput.",
-                image: "https://images.unsplash.com/photo-1564890369478-c89afe326b2d?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — trade route history."
-              },
-              transition: {
-                title: "Guwahati as processing hub",
-                story: "Grading and blending adapted to national market institutions while estates retained social reproduction costs.",
-                metric: "Indicative: rising share of packaged tea — verify definition.",
-                image: "https://images.unsplash.com/photo-1544787219-7d08887928fc?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — industry association reports."
-              },
-              contemporary: {
-                title: "Logistics and standards",
-                story: "Certification, food safety, and retailer specifications reshape factory-floor incentives upstream.",
-                metric: "Illustrative: compliance costs passed through price schedules.",
-                image: "https://images.unsplash.com/photo-1564890369478-c89afe326b2d?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — standards docs + firm interviews."
-              }
+              colonial: { title: "Inland sorting and railheads", story: "Leaf moved toward river and rail under merchant coordination; information asymmetry favored buyers.", metric: "Throughput on rail links to auction centers rose.", image: "https://images.unsplash.com/photo-1564890369478-c89afe326b2d?auto=format&fit=crop&w=640&q=70", citation: "Transport history of Assam tea corridors." },
+              transition: { title: "Guwahati as processing hub", story: "Grading and blending adapted to national institutions while estates retained social reproduction costs.", metric: "Rising share of packaged tea — verify definitions.", image: "https://images.unsplash.com/photo-1544787219-7d08887928fc?auto=format&fit=crop&w=640&q=70", citation: "Tea Board industry reports." },
+              contemporary: { title: "Logistics and standards", story: "Certification and retailer specifications reshape factory-floor incentives upstream.", metric: "Compliance costs passed through price schedules.", image: "https://images.unsplash.com/photo-1564890369478-c89afe326b2d?auto=format&fit=crop&w=640&q=70", citation: "Trade journals; firm sustainability reports." }
             }
           },
           {
             coords: [22.57, 88.36],
             eras: {
-              colonial: {
-                title: "Calcutta auctions",
-                story: "Colonial auction culture set reference prices that rippled back to estate managers as production targets.",
-                metric: "Illustrative: share of Indian tea re-exported via imperial ports.",
-                image: "https://images.unsplash.com/photo-1447933601403-0c6688cb99c1?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — auction house records."
-              },
-              transition: {
-                title: "National auctions & export",
-                story: "Institutional shift toward domestic auction platforms; export composition diversified but power asymmetries remained.",
-                metric: "Indicative: export volume vs unit value — cite customs definitions.",
-                image: "https://images.unsplash.com/photo-1447933601403-0c6688cb99c1?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — DGFT / tea board statistics."
-              },
-              contemporary: {
-                title: "Global price transmission",
-                story: "Retail blend competition compresses margins; workers face rigid wages when leaf prices swing.",
-                metric: "Illustrative: correlation auction price ↔ wage revisions (model-dependent).",
-                image: "https://images.unsplash.com/photo-1447933601403-0c6688cb99c1?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — econometrics appendix."
-              }
+              colonial: { title: "Calcutta auctions", story: "Colonial auction culture set reference prices rippling back to estates as production targets.", metric: "Share of Indian tea re-exported via imperial ports.", image: "https://images.unsplash.com/photo-1447933601403-0c6688cb99c1?auto=format&fit=crop&w=640&q=70", citation: "Auction house records; economic history monographs." },
+              transition: { title: "National auctions & export", story: "Domestic auction platforms evolved; power asymmetries remained.", metric: "Export volume vs unit value — cite customs definitions.", image: "https://images.unsplash.com/photo-1447933601403-0c6688cb99c1?auto=format&fit=crop&w=640&q=70", citation: "Tea Board statistical compilations." },
+              contemporary: { title: "Global price transmission", story: "Electronic auctions transmit volatility quickly; wage debates reference distant price dips.", metric: "Auction price ↔ wage revisions (model-dependent).", image: "https://images.unsplash.com/photo-1447933601403-0c6688cb99c1?auto=format&fit=crop&w=640&q=70", citation: "FAO / UN Comtrade export statistics." }
             }
           },
           {
             coords: [51.51, -0.13],
             eras: {
-              colonial: {
-                title: "Imperial consumption pole",
-                story: "Marketing framed Assam as strong and reliable for breakfast blends; distance obscured plantation labor conditions.",
-                metric: "Illustrative: per capita tea imports UK — historical series.",
-                image: "https://images.unsplash.com/photo-1513553404607-988651450dc4?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — advertising archives."
-              },
-              transition: {
-                title: "Supermarket brands",
-                story: "Branded blends scaled; ethical labeling mostly post-dates core plantation restructuring debates.",
-                metric: "Indicative: private-label share growth.",
-                image: "https://images.unsplash.com/photo-1513553404607-988651450dc4?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — retail industry reports."
-              },
-              contemporary: {
-                title: "Global cup, local burden",
-                story: "Certification and ESG narratives compete with wage politics; consumers rarely see estate-level balance sheets.",
-                metric: "Illustrative: certified volume vs certified wage premium — define carefully.",
-                image: "https://images.unsplash.com/photo-1513553404607-988651450dc4?auto=format&fit=crop&w=640&q=70",
-                citation: "Placeholder — certification studies + worker interviews."
-              }
+              colonial: { title: "Imperial consumption pole", story: "Assam bulk became backbone of mass blends; distance obscured plantation labor.", metric: "Per capita tea imports UK — historical series.", image: "https://images.unsplash.com/photo-1513553404607-988651450dc4?auto=format&fit=crop&w=640&q=70", citation: "UK trade statistics; cultural history of tea." },
+              transition: { title: "Supermarket brands", story: "Branded blends scaled; packaging obscured plantation origins.", metric: "Private-label share growth in retail.", image: "https://images.unsplash.com/photo-1513553404607-988651450dc4?auto=format&fit=crop&w=640&q=70", citation: "Company archives; business press." },
+              contemporary: { title: "Global cup, local burden", story: "ESG narratives coexist with low shelf prices; advocates ask how much margin returns to estates.", metric: "Shelf price vs farmgate spread studies.", image: "https://images.unsplash.com/photo-1513553404607-988651450dc4?auto=format&fit=crop&w=640&q=70", citation: "NGO supply-chain reports; academic papers." }
             }
           }
         ];
 
         var teaMap = L.map("storyMap", { scrollWheelZoom: false }).setView([24.5, 88.5], 5);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
           maxZoom: 18,
-          attribution: "&copy; OpenStreetMap contributors"
+          attribution: "&copy; OpenStreetMap &copy; CARTO"
         }).addTo(teaMap);
         var markersLayer = L.layerGroup().addTo(teaMap);
 
         function buildPopup(node, eraKey) {
           var d = node.eras[eraKey];
           if (!d) return "";
-          var img = d.image
-            ? '<img src="' +
-              d.image +
-              '" alt="" style="max-width:220px;width:100%;border-radius:8px;margin-bottom:8px;border:1px solid rgba(15,39,68,0.12);"/>'
-            : "";
-          var simLink = d.simulatorAnchor
-            ? '<p style="margin:0.5rem 0 0;"><a class="map-popup-sim-link" href="#quotaSimulator">→ Open Quotas &amp; Penalties simulator</a></p>'
-            : "";
-          return (
-            '<div class="map-popup">' +
-            img +
-            "<strong>" +
-            escHtml(d.title) +
-            "</strong>" +
-            '<p class="map-popup-metric">' +
-            escHtml(d.metric) +
-            "</p>" +
-            '<p style="margin:0 0 6px 0;">' +
-            escHtml(d.story) +
-            "</p>" +
-            simLink +
-            '<p class="map-popup-cite">' +
-            escHtml(d.citation) +
-            "</p></div>"
-          );
+          var img = d.image ? '<img src="' + d.image + '" alt="" style="max-width:220px;width:100%;border-radius:8px;margin-bottom:8px;border:1px solid var(--color-border);"/>' : "";
+          var simLink = d.simulatorAnchor ? '<p style="margin:0.5rem 0 0;"><a href="#quotaSimulator">→ Open Quotas &amp; Penalties simulator</a></p>' : "";
+          return '<div class="map-popup">' + img + "<strong>" + escHtml(d.title) + "</strong><p class=\"map-popup-metric\">" + escHtml(d.metric) + "</p><p style=\"margin:0 0 6px\">" + escHtml(d.story) + "</p>" + simLink + '<p class="map-popup-cite">' + escHtml(d.citation) + "</p></div>";
         }
 
         function setQuotaSimVisible(show) {
@@ -2628,46 +1141,32 @@
         function setMapEra(era) {
           markersLayer.clearLayers();
           mapNodes.forEach(function (node) {
-            L.marker(node.coords)
-              .addTo(markersLayer)
-              .bindPopup(buildPopup(node, era), { maxWidth: 300 });
+            L.marker(node.coords).addTo(markersLayer).bindPopup(buildPopup(node, era), { maxWidth: 300 });
           });
           document.querySelectorAll(".era-tab").forEach(function (btn) {
-            var on = btn.getAttribute("data-era") === era;
-            btn.setAttribute("aria-pressed", on ? "true" : "false");
+            btn.setAttribute("aria-pressed", btn.getAttribute("data-era") === era ? "true" : "false");
           });
           setQuotaSimVisible(era === "contemporary");
-          setTimeout(function () {
-            teaMap.invalidateSize();
-          }, 120);
+          setTimeout(function () { teaMap.invalidateSize(); }, 120);
         }
 
         document.querySelectorAll(".era-tab").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            setMapEra(btn.getAttribute("data-era"));
-          });
+          btn.addEventListener("click", function () { setMapEra(btn.getAttribute("data-era")); });
         });
-
         setMapEra("colonial");
 
         var mapSection = document.getElementById("mapSection");
         if (mapSection && "IntersectionObserver" in window) {
-          var mapObs = new IntersectionObserver(
-            function (entries) {
-              entries.forEach(function (en) {
-                if (en.isIntersecting) {
-                  teaMap.invalidateSize();
-                  mapObs.disconnect();
-                }
-              });
-            },
-            { threshold: 0.12 }
-          );
+          var mapObs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              if (en.isIntersecting) { teaMap.invalidateSize(); mapObs.disconnect(); }
+            });
+          }, { threshold: 0.12 });
           mapObs.observe(mapSection);
         }
       }
 
-      /* Quotas & penalties simulator */
+      /* Quota simulator */
       (function initQuotaSimulator() {
         var sim = document.getElementById("quotaSimulator");
         var startBtn = document.getElementById("quotaStartBtn");
@@ -2678,23 +1177,27 @@
         var statusEl = document.getElementById("quotaStatus");
         var hazardEl = document.getElementById("quotaHazard");
         var progressBar = document.getElementById("quotaProgressBar");
-        var flashEl = document.getElementById("quotaPenaltyFlash");
-        var wagePenaltyRow = document.getElementById("wagePenaltyRow");
-        var wageFinal = document.getElementById("wageFinal");
+        var briefingEl = document.getElementById("quotaBriefing");
+        var outcomeEl = document.getElementById("quotaOutcome");
+        var outcomeText = document.getElementById("quotaOutcomeText");
+        var copyBtn = document.getElementById("quotaCopyBtn");
         var playArea = sim ? sim.querySelector(".quota-play-area") : null;
         var chaseArena = document.getElementById("quotaChaseArena");
         var difficultyMsg = document.getElementById("quotaDifficultyMsg");
-
+        var wagePenaltyRow = document.getElementById("wagePenaltyRow");
+        var wagePenalty = document.getElementById("wagePenalty");
+        var wageFinal = document.getElementById("wageFinal");
+        var wageBase = document.getElementById("wageBase");
         if (!sim || !startBtn || !pluckBtn) return;
 
         var SHIFT_SEC = 15;
         var BASE_QUOTA = 26;
         var BASE_WAGE = 250;
         var INR_PER_USD = 84;
-        var wageBase = document.getElementById("wageBase");
-        var wagePenalty = document.getElementById("wagePenalty");
+        var US_MIN_COMPARE = 58;
         var tickId = null;
         var dodgeTimer = null;
+        var briefingTimer = null;
         var timeLeft = SHIFT_SEC;
         var plucked = 0;
         var quota = BASE_QUOTA;
@@ -2702,50 +1205,29 @@
         var clicksDisabledUntil = 0;
         var clickWeight = 1;
         var lastClickAt = 0;
+        var lastOutcomeText = "";
 
         var DIFFICULTY_LINES = {
-          rain: [
-            "Ooh — heavy rain. Wet leaves tear; your grip keeps slipping.",
-            "Ooh — downpour. You wait for a break the supervisor does not grant."
-          ],
-          yield: [
-            "Ooh — poor flush after pruning. You walk twice the row for the same kilos.",
-            "Ooh — thin tips today — but the quota is still yesterday's number."
-          ],
-          exhaustion: [
-            "Ooh — no proper meal, long walk in. Your arms will not keep pace.",
-            "Ooh — malnutrition slows your hands. The timer does not slow down."
-          ],
-          dodge: [
-            "Ooh — blistered fingers. Each sprig is harder to snap.",
-            "Ooh — steep bend. Balance and speed do not mix.",
-            "Ooh — spray drift from yesterday. Nausea hits mid-row.",
-            "Ooh — basket strap digs in. You lose a second adjusting it.",
-            "Ooh — cold morning mist. Stiff joints, slower hands."
-          ]
+          rain: ["Ooh — heavy rain. Wet leaves tear; your grip keeps slipping.", "Ooh — downpour. You wait for a break the supervisor does not grant."],
+          yield: ["Ooh — poor flush after pruning. You walk twice the row for the same kilos.", "Ooh — thin tips today — but the quota is still yesterday's number."],
+          exhaustion: ["Ooh — no proper meal, long walk in. Your arms will not keep pace.", "Ooh — malnutrition slows your hands. The timer does not slow down."],
+          dodge: ["Ooh — blistered fingers.", "Ooh — steep bend.", "Ooh — spray drift from yesterday.", "Ooh — basket strap digs in.", "Ooh — cold morning mist."]
         };
 
-        function formatUsd(inr) {
-          return (inr / INR_PER_USD).toFixed(2);
-        }
-
+        function formatUsd(inr) { return (inr / INR_PER_USD).toFixed(2); }
         function setDualWage(container, inr, negative) {
           if (!container) return;
           var inrEl = container.querySelector(".wage-inr");
-          var usdEl = container.querySelector(".wage-usd");
           var abs = Math.abs(inr);
           var sign = negative ? "−" : "";
           if (inrEl) inrEl.textContent = sign + "₹" + abs;
-          if (usdEl) usdEl.textContent = "≈ " + sign + "$" + formatUsd(abs) + " USD";
         }
-
-        function setWageDisplay(penalized) {
-          if (wagePenaltyRow) wagePenaltyRow.hidden = !penalized;
+        function setWageDisplay(penaltyAmt, takehome) {
+          if (wagePenaltyRow) wagePenaltyRow.hidden = penaltyAmt <= 0;
           setDualWage(wageBase, BASE_WAGE, false);
-          setDualWage(wagePenalty, 125, true);
-          setDualWage(wageFinal, penalized ? 125 : BASE_WAGE, false);
+          setDualWage(wagePenalty, penaltyAmt, true);
+          setDualWage(wageFinal, takehome, false);
         }
-
         function updateHud() {
           if (timerEl) timerEl.textContent = String(Math.max(0, Math.ceil(timeLeft)));
           if (countEl) countEl.textContent = String(Math.floor(plucked));
@@ -2753,75 +1235,45 @@
           var pct = Math.min(100, (plucked / quota) * 100);
           if (progressBar) {
             progressBar.style.width = pct + "%";
-            progressBar.classList.toggle(
-              "is-behind",
-              playing && plucked / Math.max(1, quota) < timeLeft / SHIFT_SEC
-            );
+            progressBar.classList.toggle("is-behind", playing && plucked / Math.max(1, quota) < timeLeft / SHIFT_SEC);
           }
         }
-
-        function showHazard(msg) {
-          if (hazardEl) hazardEl.textContent = msg;
-        }
-
+        function showHazard(msg) { if (hazardEl) hazardEl.textContent = msg; }
         function pickLine(kind) {
           var list = DIFFICULTY_LINES[kind] || DIFFICULTY_LINES.dodge;
           return list[Math.floor(Math.random() * list.length)];
         }
-
         function showDifficulty(kind) {
           if (!difficultyMsg) return;
           difficultyMsg.textContent = pickLine(kind);
           difficultyMsg.classList.add("is-visible");
         }
-
         function hideDifficulty() {
-          if (difficultyMsg) {
-            difficultyMsg.classList.remove("is-visible");
-            difficultyMsg.textContent = "";
-          }
+          if (difficultyMsg) { difficultyMsg.classList.remove("is-visible"); difficultyMsg.textContent = ""; }
         }
-
         function centerPluckButton() {
           pluckBtn.classList.remove("is-dodging");
           pluckBtn.style.left = "50%";
           pluckBtn.style.top = "62%";
           pluckBtn.style.transform = "translate(-50%, -50%)";
         }
-
         function dodgePluckButton(kind) {
           if (!playing || !chaseArena || pluckBtn.disabled) return;
-          var w = chaseArena.clientWidth;
-          var h = chaseArena.clientHeight;
-          var bw = pluckBtn.offsetWidth || 160;
-          var bh = pluckBtn.offsetHeight || 48;
-          var topBand = 52;
-          var pad = 10;
+          var w = chaseArena.clientWidth, h = chaseArena.clientHeight;
+          var bw = pluckBtn.offsetWidth || 160, bh = pluckBtn.offsetHeight || 48;
+          var topBand = 52, pad = 10;
           var maxX = Math.max(pad, w - bw - pad);
           var maxY = Math.max(topBand + pad, h - bh - pad - 22);
-          var x = pad + Math.random() * Math.max(0, maxX - pad);
-          var y = topBand + pad + Math.random() * Math.max(0, maxY - topBand - pad);
-
-          pluckBtn.style.left = x + "px";
-          pluckBtn.style.top = y + "px";
+          pluckBtn.style.left = pad + Math.random() * Math.max(0, maxX - pad) + "px";
+          pluckBtn.style.top = topBand + pad + Math.random() * Math.max(0, maxY - topBand - pad) + "px";
           pluckBtn.style.transform = "none";
           pluckBtn.classList.add("is-dodging");
           showDifficulty(kind);
-
-          if (chaseArena) {
-            chaseArena.classList.remove("is-shake");
-            void chaseArena.offsetWidth;
-            chaseArena.classList.add("is-shake");
-          }
+          chaseArena.classList.remove("is-shake");
+          void chaseArena.offsetWidth;
+          chaseArena.classList.add("is-shake");
         }
-
-        function stopDodgeLoop() {
-          if (dodgeTimer) {
-            clearInterval(dodgeTimer);
-            dodgeTimer = null;
-          }
-        }
-
+        function stopDodgeLoop() { if (dodgeTimer) { clearInterval(dodgeTimer); dodgeTimer = null; } }
         function startDodgeLoop() {
           stopDodgeLoop();
           dodgeTimer = setInterval(function () {
@@ -2829,21 +1281,16 @@
             if (Math.random() < 0.5) dodgePluckButton("dodge");
           }, 2600);
         }
-
         function leafBurst() {
           if (!playArea) return;
           var span = document.createElement("span");
           span.className = "quota-leaf-burst";
           span.textContent = "🍃";
           span.style.left = 40 + Math.random() * 50 + "%";
-          span.style.top = "45%";
           playArea.style.position = "relative";
           playArea.appendChild(span);
-          setTimeout(function () {
-            span.remove();
-          }, 600);
+          setTimeout(function () { span.remove(); }, 600);
         }
-
         function triggerHazard() {
           if (!playing) return;
           var roll = Math.random();
@@ -2858,42 +1305,45 @@
             updateHud();
           } else {
             clickWeight = 0.5;
-            showHazard("😓 Exhaustion / malnutrition — each pluck counts half for 3 seconds.");
+            showHazard("😓 Exhaustion — each pluck counts half for 3 seconds.");
             dodgePluckButton("exhaustion");
-            setTimeout(function () {
-              if (playing) clickWeight = 1;
-            }, 3000);
+            setTimeout(function () { if (playing) clickWeight = 1; }, 3000);
           }
         }
-
+        function calcOutcome() {
+          var kg = Math.floor(plucked);
+          var penalty = kg < quota ? Math.round((quota - kg) / quota * BASE_WAGE) : 0;
+          var takehome = BASE_WAGE - penalty;
+          var usd = formatUsd(takehome);
+          return { kg: kg, penalty: penalty, takehome: takehome, usd: usd };
+        }
+        function showOutcome() {
+          var o = calcOutcome();
+          lastOutcomeText =
+            "You plucked " + o.kg + " kg. Quota: " + quota + " kg.\n" +
+            "Penalty deducted: ₹" + o.penalty + "\n" +
+            "Take-home today: ₹" + o.takehome + " (~$" + o.usd + " USD)\n" +
+            "US federal minimum wage for same hours: ~$" + US_MIN_COMPARE;
+          if (outcomeText) outcomeText.textContent = lastOutcomeText;
+          if (outcomeEl) {
+            outcomeEl.hidden = false;
+            outcomeEl.classList.toggle("is-penalty", o.penalty > 0);
+            outcomeEl.classList.toggle("is-ok", o.penalty === 0);
+          }
+          setWageDisplay(o.penalty, o.takehome);
+          if (statusEl) statusEl.textContent = o.penalty > 0 ? "Penalty applied" : "Quota met";
+        }
         function endShift() {
           playing = false;
           pluckBtn.disabled = true;
           stopDodgeLoop();
-          if (tickId) {
-            clearInterval(tickId);
-            tickId = null;
-          }
-          var met = plucked >= quota;
-          if (!met) {
-            if (statusEl) statusEl.textContent = "Penalty applied";
-            setWageDisplay(true);
-            if (flashEl) {
-              flashEl.hidden = false;
-              setTimeout(function () {
-                flashEl.hidden = true;
-              }, 3200);
-            }
-          } else {
-            if (statusEl) statusEl.textContent = "Quota met";
-            setWageDisplay(false);
-            showHazard("Quota met — but piece-rate pressure still caps total earnings (illustrative).");
-          }
+          if (tickId) { clearInterval(tickId); tickId = null; }
+          showOutcome();
           updateHud();
         }
-
         function resetShift() {
           if (tickId) clearInterval(tickId);
+          if (briefingTimer) clearTimeout(briefingTimer);
           tickId = null;
           stopDodgeLoop();
           playing = false;
@@ -2902,44 +1352,45 @@
           quota = BASE_QUOTA;
           clicksDisabledUntil = 0;
           clickWeight = 1;
-          if (flashEl) flashEl.hidden = true;
+          if (briefingEl) briefingEl.hidden = true;
+          if (outcomeEl) outcomeEl.hidden = true;
           if (statusEl) statusEl.textContent = "Ready";
           showHazard("");
           hideDifficulty();
           centerPluckButton();
           if (chaseArena) chaseArena.classList.remove("is-shake");
-          setWageDisplay(false);
+          setWageDisplay(0, BASE_WAGE);
           pluckBtn.disabled = true;
+          startBtn.disabled = false;
           updateHud();
         }
-
-        function startShift() {
-          resetShift();
+        function runShift() {
           playing = true;
           if (statusEl) statusEl.textContent = "Plucking…";
           pluckBtn.disabled = false;
           centerPluckButton();
-          pluckBtn.focus();
           startDodgeLoop();
-          setTimeout(function () {
-            if (playing) dodgePluckButton("dodge");
-          }, 1200);
-          var hazardAt = [4, 9, 13];
-          var hazardIdx = 0;
+          setTimeout(function () { if (playing) dodgePluckButton("dodge"); }, 1200);
+          var hazardAt = [4, 9, 13], hazardIdx = 0;
           tickId = setInterval(function () {
             timeLeft -= 0.1;
             if (hazardIdx < hazardAt.length && timeLeft <= SHIFT_SEC - hazardAt[hazardIdx]) {
               triggerHazard();
-              hazardIdx += 1;
+              hazardIdx++;
             }
             updateHud();
-            if (timeLeft <= 0) {
-              timeLeft = 0;
-              endShift();
-            }
+            if (timeLeft <= 0) { timeLeft = 0; endShift(); }
           }, 100);
         }
-
+        function startShift() {
+          resetShift();
+          startBtn.disabled = true;
+          if (briefingEl) briefingEl.hidden = false;
+          briefingTimer = setTimeout(function () {
+            if (briefingEl) briefingEl.hidden = true;
+            runShift();
+          }, 3000);
+        }
         function registerPluck() {
           if (!playing || Date.now() < clicksDisabledUntil) return;
           var now = Date.now();
@@ -2950,10 +1401,17 @@
           updateHud();
           if (Math.random() < 0.18) dodgePluckButton("dodge");
         }
-
         startBtn.addEventListener("click", startShift);
         pluckBtn.addEventListener("click", registerPluck);
-
+        if (copyBtn) {
+          copyBtn.addEventListener("click", function () {
+            if (!lastOutcomeText) return;
+            navigator.clipboard.writeText(lastOutcomeText).then(function () {
+              copyBtn.textContent = "Copied!";
+              setTimeout(function () { copyBtn.textContent = "Copy my result"; }, 2000);
+            });
+          });
+        }
         document.querySelectorAll(".era-tab").forEach(function (btn) {
           btn.addEventListener("click", function () {
             if (btn.getAttribute("data-era") === "contemporary") {
@@ -2961,12 +1419,9 @@
                 var el = document.getElementById("quotaSimulator");
                 if (el && !el.hidden) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
               }, 200);
-            } else if (playing) {
-              resetShift();
-            }
+            } else if (playing) resetShift();
           });
         });
-
         function openQuotaFromHash() {
           if (location.hash !== "#quotaSimulator") return;
           sim.hidden = false;
@@ -2974,59 +1429,10 @@
           var contBtn = document.getElementById("eraBtnContemporary");
           if (contBtn) contBtn.click();
         }
-
         openQuotaFromHash();
         window.addEventListener("hashchange", openQuotaFromHash);
-
         resetShift();
       })();
-
-      /* Count-up */
-      function animateCount(el, target, suffix, duration) {
-        var start = 0;
-        var dec = String(target).indexOf(".") >= 0;
-        var startTime = null;
-        function step(ts) {
-          if (!startTime) startTime = ts;
-          var p = Math.min((ts - startTime) / duration, 1);
-          var ease = 1 - Math.pow(1 - p, 3);
-          var cur = start + (target - start) * ease;
-          if (dec) {
-            el.textContent = cur.toFixed(1) + suffix;
-          } else {
-            el.textContent = Math.round(cur) + suffix;
-          }
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-
-      var metricSection = document.querySelector("[data-metric]");
-      var counted = false;
-      if ("IntersectionObserver" in window && metricSection) {
-        var mObs = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (entry) {
-              if (!entry.isIntersecting || counted) return;
-              counted = true;
-              document.querySelectorAll(".count").forEach(function (c) {
-                var t = parseFloat(c.getAttribute("data-target"), 10);
-                var suf = c.getAttribute("data-suffix") || "";
-                animateCount(c, t, suf, 1600);
-              });
-              mObs.disconnect();
-            });
-          },
-          { threshold: 0.25 }
-        );
-        document.querySelectorAll("[data-metric]").forEach(function (node) {
-          mObs.observe(node);
-        });
-      } else {
-        document.querySelectorAll(".count").forEach(function (c) {
-          c.textContent = c.getAttribute("data-target") + (c.getAttribute("data-suffix") || "");
-        });
-      }
     })();
   </script>
 </body>
