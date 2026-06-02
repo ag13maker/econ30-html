@@ -1600,11 +1600,8 @@
         var BASE_WAGE = 280;
         var INR_PER_USD = 84;
         var US_MIN_COMPARE = 58;
-        var RESTART_DELAY_SEC = 6;
         var tickId = null;
         var dodgeTimer = null;
-        var restartCountdownId = null;
-        var restartIntervalId = null;
         var timeLeft = SHIFT_SEC;
         var plucked = 0;
         var quota = BASE_QUOTA;
@@ -1717,24 +1714,12 @@
             setTimeout(function () { if (playing) clickWeight = 1; }, 3000);
           }
         }
-        function clearRestartTimers() {
-          if (restartCountdownId) {
-            clearTimeout(restartCountdownId);
-            restartCountdownId = null;
-          }
-          if (restartIntervalId) {
-            clearInterval(restartIntervalId);
-            restartIntervalId = null;
-          }
-        }
-
         function clearGameTimers() {
           if (tickId) {
             clearInterval(tickId);
             tickId = null;
           }
           stopDodgeLoop();
-          clearRestartTimers();
         }
 
         function resetGameState() {
@@ -1843,7 +1828,6 @@
           var restartBtn = document.getElementById("restart-btn");
           if (restartBtn) {
             restartBtn.addEventListener("click", function () {
-              clearRestartTimers();
               enterBriefingState();
             });
           }
@@ -1882,9 +1866,6 @@
             '<div class="comparison-rows" id="comparison-rows"></div>' +
             '<p class="comparison-note">Exchange rates illustrative (₹84 = $1). US/UK/AU/DE minimum wage rates as of 2024–25. Silicon Valley intern: Glassdoor median.</p>' +
             "</div>" +
-            '<p id="restart-countdown" style="font-size:0.8rem;color:var(--color-text-muted);margin-top:0.75rem;text-align:center;">Restarting in ' +
-            RESTART_DELAY_SEC +
-            "...</p>" +
             '<button type="button" id="restart-btn" class="btn-restart">↺ Start New Shift</button>' +
             "</div>";
           simOutcomeEl.style.display = "block";
@@ -1897,26 +1878,6 @@
 
           setWageDisplay(penalty, takehome);
           if (statusEl) statusEl.textContent = penalty > 0 ? "Penalty applied" : "Quota met";
-          scheduleAutoRestart();
-        }
-
-        function scheduleAutoRestart() {
-          clearRestartTimers();
-          var countdownEl = document.getElementById("restart-countdown");
-          var secondsLeft = RESTART_DELAY_SEC;
-          function updateCountdownText() {
-            if (countdownEl) countdownEl.textContent = "Restarting in " + secondsLeft + "...";
-          }
-          updateCountdownText();
-          restartIntervalId = setInterval(function () {
-            secondsLeft -= 1;
-            if (secondsLeft <= 0) {
-              clearRestartTimers();
-              enterBriefingState();
-            } else {
-              updateCountdownText();
-            }
-          }, 1000);
         }
 
         function endShift() {
@@ -1955,7 +1916,6 @@
         }
 
         function confirmAndStartShift() {
-          clearRestartTimers();
           if (briefingEl) {
             briefingEl.hidden = true;
             briefingEl.setAttribute("aria-hidden", "true");
