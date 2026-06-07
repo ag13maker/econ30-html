@@ -11,7 +11,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <style>
     :root {
       --color-bg: #0d1a0f;
@@ -45,7 +44,7 @@
       --font-display: "Playfair Display", Georgia, serif;
       --nav-h: 48px;
       --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-      --hero-photo: url("assets/images/tea-workers-why-it-matters.jpg");
+      --hero-photo: url("https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=1600&q=80");
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -405,35 +404,97 @@
 
     /* Map */
     #mapSection { background: var(--color-surface); }
-    .era-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-    .era-tab {
-      cursor: pointer; border: 1px solid var(--color-border);
-      background: var(--color-card); color: var(--color-text);
-      padding: 0.5rem 1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+    .era-map-wrap { margin-top: 1.5rem; }
+    .era-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
     }
-    .era-tab[aria-pressed="true"] {
-      background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent);
+    .era-btn {
+      padding: 0.55rem 1.1rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
     }
-    #storyMap {
-      width: 100%; height: 420px; border-radius: var(--radius);
-      border: 1px solid var(--color-border); margin-bottom: 1.5rem;
+    .era-btn:hover { border-color: var(--color-accent); color: var(--color-text); }
+    .era-btn.active {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: #0d1a0f;
+      font-weight: 600;
     }
-    .leaflet-popup-content-wrapper {
-      background: var(--color-card); color: var(--color-text);
-      border-radius: var(--radius-sm); box-shadow: var(--shadow);
+    .era-content-wrap {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
     }
-    .leaflet-popup-tip { background: var(--color-card); }
-    .map-popup strong { color: var(--color-accent-warm); }
-    .map-popup-metric { font-size: 0.8rem; color: var(--color-accent); font-style: italic; }
-    .map-popup-cite { font-size: 0.72rem; color: var(--color-text-muted); margin-top: 0.5rem; }
+    @media (max-width: 768px) {
+      .era-content-wrap { grid-template-columns: 1fr; }
+      #era-svg { max-width: 220px; margin: 0 auto; display: block; }
+    }
+    .era-map-panel {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    #era-svg { width: 100%; height: auto; }
+    .era-tag {
+      display: inline-block;
+      padding: 0.3rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .era-fact-title {
+      color: var(--color-text);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      font-family: 'Playfair Display', serif;
+    }
+    .era-fact-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .era-fact-item {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+    .era-fact-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; }
+    .era-insight {
+      background: var(--color-surface);
+      border-left: 3px solid var(--color-accent-warm);
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--color-accent-warm);
+      border-radius: 0 6px 6px 0;
+      line-height: 1.6;
+    }
 
     /* Quota sim */
     .quota-sim {
-      margin-top: 1.5rem; padding: 1.5rem;
+      margin-top: 0; padding: 1.5rem;
       background: var(--color-card); border: 1px solid var(--color-accent);
       border-radius: var(--radius);
     }
-    .quota-sim[hidden] { display: none !important; }
+    #quotaSimulator .quota-sim-lead { margin-bottom: 1.25rem; max-width: 42rem; }
     .quota-sim h3 { color: var(--color-text); margin-bottom: 0.5rem; }
     .quota-sim-lead { font-size: 0.95rem; margin-bottom: 1.25rem; }
     .quota-briefing {
@@ -890,10 +951,11 @@
           <li><a href="#history" data-nav="history">History</a></li>
           <li><a href="#transition" data-nav="transition">Today</a></li>
           <li><a href="#viz" data-nav="viz">Data</a></li>
-          <li><a href="#literature" data-nav="literature">Sources</a></li>
+          <li><a href="#mapSection" data-nav="mapSection">Map</a></li>
           <li><a href="#quotaSimulator" data-nav="quotaSimulator">Simulator</a></li>
           <li><a href="#trackYourTea" data-nav="trackYourTea">Track Tea</a></li>
           <li><a href="#conclusion" data-nav="conclusion">Conclusion</a></li>
+          <li><a href="#literature" data-nav="literature">Sources</a></li>
         </ul>
       </div>
     </div>
@@ -905,7 +967,7 @@
       <p class="hero-eyebrow">Assam · Stanford · 2025</p>
       <h1>You drink it every morning.<br>She earns ₹280 on paper — rarely in hand.</h1>
       <p class="hero-sub">A research story about who actually benefits when Assam tea travels from garden to cup — and why seven decades of labor law haven't changed that math.</p>
-      <p class="hero-question"><strong>Central question:</strong> Why do Assam's tea workers — mostly women — remain near poverty thresholds despite 74 years of statutory wage and welfare law, while the tea they pick sells for up to 2,000× their wage per kilogram at retail?</p>
+      <p class="hero-question"><strong>Central question:</strong> Who benefits when Assam tea travels from garden to cup — and why isn't it the woman who picked it?</p>
       <a href="#story" class="btn-primary">See the evidence ↓</a>
     </div>
     <div class="hero-stat-strip">
@@ -950,8 +1012,9 @@
           <img
             id="storyHeroImg"
             class="is-loading"
-            src="assets/images/tea-workers-why-it-matters.jpg"
+            src="https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=1200&q=85"
             data-local-base="assets/images/tea-workers-why-it-matters"
+            data-fallback-src="https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=1200&q=85"
             alt="Women tea pluckers on a lush green plantation"
             width="800"
             height="1000"
@@ -1013,18 +1076,44 @@
       <div class="wrap">
         <p class="section-label">Interactive map</p>
         <h2>From estate to cup across three eras</h2>
-        <div class="era-tabs" role="tablist" aria-label="Map era">
-          <button type="button" class="era-tab" data-era="colonial" aria-pressed="true" id="eraBtnColonial">Colonial period</button>
-          <button type="button" class="era-tab" data-era="transition" aria-pressed="false" id="eraBtnTransition">Post-independence</button>
-          <button type="button" class="era-tab" data-era="contemporary" aria-pressed="false" id="eraBtnContemporary">Contemporary · simulator</button>
+        <div class="era-map-wrap">
+          <div class="era-tabs" id="era-tabs" role="tablist" aria-label="Map era">
+            <button type="button" class="era-btn active" data-era="colonial">🏴 Colonial (1840s–1947)</button>
+            <button type="button" class="era-btn" data-era="independence">🇮🇳 Post-Independence (1951–1990s)</button>
+            <button type="button" class="era-btn" data-era="today">🌍 Today (Global)</button>
+          </div>
+
+          <div class="era-content-wrap">
+            <div class="era-map-panel" role="region" aria-label="Map of Assam tea journey">
+              <svg id="era-svg" viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg">
+                <path id="india-shape" d="M120,30 L180,25 L220,40 L250,70 L260,110 L270,150 L265,190 L250,230 L230,265 L200,290 L175,320 L160,350 L145,320 L125,290 L100,260 L80,220 L75,180 L80,140 L90,100 L100,65 Z" fill="#1a3320" stroke="#2d5c38" stroke-width="1.5"/>
+                <ellipse id="assam-dot" cx="210" cy="95" rx="22" ry="14" fill="#5a9e4b" opacity="0.85"/>
+                <text x="210" y="99" text-anchor="middle" font-size="8" fill="#e8f0e2" font-family="Inter,sans-serif">ASSAM</text>
+                <circle id="dest-dot" cx="0" cy="0" r="8" fill="#b85c2a" opacity="0"/>
+                <text id="dest-label" x="0" y="0" text-anchor="middle" font-size="7" fill="#e8f0e2" font-family="Inter,sans-serif"></text>
+                <path id="flow-line" d="" fill="none" stroke="#c8a951" stroke-width="1.5" stroke-dasharray="4 3" opacity="0">
+                  <animate id="flow-anim" attributeName="stroke-dashoffset" from="200" to="0" dur="1.5s" repeatCount="indefinite"/>
+                </path>
+                <circle cx="210" cy="95" r="18" fill="none" stroke="#5a9e4b" stroke-width="1" opacity="0.4">
+                  <animate attributeName="r" values="14;24;14" dur="2s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite"/>
+                </circle>
+              </svg>
+            </div>
+
+            <div class="era-fact-panel" id="era-fact-panel"></div>
+          </div>
         </div>
-        <div id="storyMap" role="region" aria-label="Map of Assam tea journey"></div>
+      </div>
+    </section>
 
-        <div id="quotaSimulator" class="quota-sim" hidden aria-hidden="true">
-          <p class="section-label" style="margin-bottom:0.35rem;">Contemporary era · interactive</p>
-          <h3 id="quotaSimTitle">Quotas &amp; Penalties Simulator</h3>
-          <p class="quota-sim-lead">Chase the <strong>Pluck leaves</strong> button — it jumps when rain, poor yield, or exhaustion hit. The quota often does not move. Missing it can mean wages cut.</p>
+    <section id="quotaSimulator" class="fade-up">
+      <div class="wrap">
+        <p class="section-label">Interactive · contemporary era</p>
+        <h2>Quotas &amp; Penalties Simulator</h2>
+        <p class="quota-sim-lead">Chase the <strong>Pluck leaves</strong> button — it jumps when rain, poor yield, or exhaustion hit. The quota often does not move. Missing it can mean wages cut.</p>
 
+        <div class="quota-sim">
           <div id="quotaBriefing" class="quota-briefing">
             <h4>Shift briefing</h4>
             <ul>
@@ -1064,6 +1153,45 @@
           </div>
 
           <div id="sim-outcome" style="display:none;margin-top:1.5rem;" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="trackYourTea" class="fade-up">
+      <div class="wrap">
+        <p class="section-label">Your contribution</p>
+        <h2>Track Your Tea: Where does the money go?</h2>
+        <p class="section-intro">The numbers below come from Tea Board of India auction records (GTAC FY 2024–25), supermarket listings verified in June 2025, and the Assam government wage notification from April 2026. Retail price per kg is calculated from Tesco UK and Walmart US listings. Auction price: ₹227.70/kg average. Worker wage per kg: ₹280/day statutory minimum divided by the standard 26 kg daily quota = ₹10.77/kg. Currency conversions are illustrative (₹106 = £1, ₹84 = $1). The price decomposition is the author's own calculation.</p>
+        <div class="tyt-section fade-up">
+          <div class="brand-row" id="tyt-brands" role="tablist" aria-label="Tea brand"></div>
+          <div class="tyt-grid">
+            <div class="tyt-left">
+              <p class="tyt-sublabel">Price breakdown — per kg of tea, in rupees</p>
+              <div id="tyt-bars"></div>
+            </div>
+            <div class="tyt-right">
+              <div class="tyt-stat-stack" id="tyt-stats"></div>
+              <div class="tyt-insight" id="tyt-insight"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="conclusion" class="conclusion fade-up">
+      <div class="wrap conclusion-inner">
+        <h2>The answer to the question</h2>
+        <p>Assam's tea workers are not poor <em>despite</em> the law. The quota system, tied housing, and estate dependency make poverty a structural feature — not a policy failure waiting to be fixed. The law is real. So is the enforcement gap. And the consumer price never reaches the garden.</p>
+        <p class="conclusion-answer">The answer: because the quota system, tied housing, and buyer market power make underpayment structurally profitable — not an oversight. Enforcement would cost the brands. So it doesn't happen.</p>
+        <div class="progress-lens">
+          <h3>What this tells us about development</h3>
+          <p>Development economists distinguish between <em>legal formalization</em> and <em>real institutional change</em>. Assam is a clean case study: the formal rules arrived in 1951. Real wages, mobility, and bargaining power did not follow. The bottleneck is not law — it is the estate structure itself, which keeps workers geographically captive, ties welfare to employment, and lets global buyers extract value without accountability. Until buyer-side pressure or credible enforcement changes the cost calculus for brands, legal progress will keep outrunning economic progress. That gap is not unique to tea — it is the central problem of labor institutions in commodity export economies worldwide.</p>
+        </div>
+        <div class="takeaway-line">"The leaf is picked. The price is kept. The law is silent."</div>
+        <p class="conclusion-sub">— Aaira Goswami, Stanford University, 2025</p>
+        <div class="conclusion-links">
+          <a href="mailto:aaira@stanford.edu">Contact</a>
+          <a href="#top">Back to top</a>
         </div>
       </div>
     </section>
@@ -1113,46 +1241,6 @@
         </div>
       </div>
     </section>
-
-    <section id="trackYourTea" class="fade-up">
-      <div class="wrap">
-        <p class="section-label">Your contribution</p>
-        <h2>Track Your Tea: Where does the money go?</h2>
-        <p class="section-intro">Pick a brand you might have at home. Every number here comes from primary sources I verified myself: Tea Board of India auction data (GTAC FY 2024–25), current supermarket prices checked June 2025, and the Assam government wage notification from April 2026. The price decomposition and markup calculations are my own.</p>
-        <p class="method-note">Method: retail price per kg calculated from Tesco UK and Walmart US listings (verified June 2025). Auction price: GTAC average ₹227.70/kg (FY 2024–25, Tribune India / Tea Board of India). Worker wage per kg: ₹280/day statutory minimum ÷ 26 kg daily quota = ₹10.77/kg. Currency: ₹106 = £1, ₹84 = $1 (illustrative rate for comparison).</p>
-        <div class="tyt-section fade-up">
-          <div class="brand-row" id="tyt-brands" role="tablist" aria-label="Tea brand"></div>
-          <div class="tyt-grid">
-            <div class="tyt-left">
-              <p class="tyt-sublabel">Price breakdown — per kg of tea, in rupees</p>
-              <div id="tyt-bars"></div>
-            </div>
-            <div class="tyt-right">
-              <div class="tyt-stat-stack" id="tyt-stats"></div>
-              <div class="tyt-insight" id="tyt-insight"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="conclusion" class="conclusion fade-up">
-      <div class="wrap conclusion-inner">
-        <h2>The answer to the question</h2>
-        <p>Assam's tea workers are not poor <em>despite</em> the law. The quota system, tied housing, and estate dependency make poverty a structural feature — not a policy failure waiting to be fixed. The law is real. So is the enforcement gap. And the consumer price never reaches the garden.</p>
-        <p class="conclusion-answer">The answer: because the quota system, tied housing, and buyer market power make underpayment structurally profitable — not an oversight. Enforcement would cost the brands. So it doesn't happen.</p>
-        <div class="progress-lens">
-          <h3>What this tells us about development</h3>
-          <p>Development economists distinguish between <em>legal formalization</em> and <em>real institutional change</em>. Assam is a clean case study: the formal rules arrived in 1951. Real wages, mobility, and bargaining power did not follow. The bottleneck is not law — it is the estate structure itself, which keeps workers geographically captive, ties welfare to employment, and lets global buyers extract value without accountability. Until buyer-side pressure or credible enforcement changes the cost calculus for brands, legal progress will keep outrunning economic progress. That gap is not unique to tea — it is the central problem of labor institutions in commodity export economies worldwide.</p>
-        </div>
-        <div class="takeaway-line">"The leaf is picked. The price is kept. The law is silent."</div>
-        <p class="conclusion-sub">— Aaira Goswami, Stanford University, 2025</p>
-        <div class="conclusion-links">
-          <a href="mailto:aaira@stanford.edu">Contact</a>
-          <a href="#top">Back to top</a>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="fade-up">
@@ -1161,7 +1249,6 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
     (function () {
       "use strict";
@@ -1191,7 +1278,7 @@
       window.addEventListener("scroll", onScrollNav, { passive: true });
       onScrollNav();
 
-      var sectionIds = ["story", "history", "transition", "viz", "literature", "quotaSimulator", "trackYourTea", "conclusion"];
+      var sectionIds = ["story", "history", "transition", "viz", "mapSection", "quotaSimulator", "trackYourTea", "conclusion", "literature"];
       if ("IntersectionObserver" in window) {
         var navObs = new IntersectionObserver(function (entries) {
           entries.forEach(function (en) {
@@ -1247,21 +1334,35 @@
       (function loadStoryHeroImage() {
         var img = document.getElementById("storyHeroImg");
         if (!img) return;
+        var fallback =
+          img.getAttribute("data-fallback-src") ||
+          "https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=1200&q=85";
         var localBase = img.getAttribute("data-local-base") || "assets/images/tea-workers-why-it-matters";
         var exts = [".jpg", ".jpeg", ".png", ".webp"];
         var idx = 0;
         function onLoaded() { img.classList.remove("is-loading"); }
+        function useFallback() {
+          img.src = fallback;
+          onLoaded();
+        }
         function tryLocal() {
-          if (idx >= exts.length) { onLoaded(); return; }
+          if (idx >= exts.length) return;
           var probe = new Image();
           var path = localBase + exts[idx];
-          probe.onload = function () { img.src = path; onLoaded(); };
-          probe.onerror = function () { idx++; tryLocal(); };
+          probe.onload = function () {
+            img.src = path;
+            onLoaded();
+          };
+          probe.onerror = function () {
+            idx++;
+            if (idx >= exts.length) useFallback();
+            else tryLocal();
+          };
           probe.src = path;
         }
+        img.addEventListener("load", onLoaded);
         img.addEventListener("error", function () {
-          img.src = "https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=1200&q=85";
-          onLoaded();
+          if (img.src !== fallback) useFallback();
         });
         tryLocal();
       })();
@@ -1478,99 +1579,96 @@
         });
       });
 
-      /* Leaflet map */
-      var mapEl = document.getElementById("storyMap");
-      if (mapEl && typeof L !== "undefined") {
-        function escHtml(t) {
-          return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      /* Era map */
+      var eraData = {
+        colonial: {
+          label: "Colonial Era — 1840s to 1947",
+          dest: { x: 40, y: 30, label: "Britain" },
+          flowPath: "M210,95 Q100,20 40,30",
+          color: "#b85c2a",
+          tag: "Export to Empire",
+          tagColor: "#b85c2a",
+          facts: [
+            { icon: "⛓️", text: "Penal contracts — workers could not leave without employer permission" },
+            { icon: "🚂", text: "Tea shipped to British ports; India kept almost none of the value" },
+            { icon: "👩", text: "Women recruited specifically for plucking — framed as 'light work' to justify lower wages" },
+            { icon: "📜", text: "1882 Inland Emigration Act formalized worker immobility" }
+          ],
+          insight: "The estate structure — tied housing, captive labor, export extraction — was built for British profit. The architecture remained after Independence."
+        },
+        independence: {
+          label: "Post-Independence — 1951 to 1990s",
+          dest: { x: 175, y: 240, label: "Delhi / Domestic" },
+          flowPath: "M210,95 Q195,160 175,240",
+          color: "#c8a951",
+          tag: "Formal regulation begins",
+          tagColor: "#c8a951",
+          facts: [
+            { icon: "📋", text: "1951: Plantations Labour Act — statutory housing, healthcare, minimum wages" },
+            { icon: "🏛️", text: "Tea Board of India established — production data, auctions, oversight" },
+            { icon: "⚠️", text: "Enforcement weak — estate owners retain control of welfare delivery" },
+            { icon: "📉", text: "Workers remain geographically captive; union rights limited in practice" }
+          ],
+          insight: "Legal formalization arrived. Real institutional change did not. The same estate structure persisted under new legal language."
+        },
+        today: {
+          label: "Today — Global supply chains",
+          dest: { x: 300, y: 50, label: "Global" },
+          flowPath: "M210,95 Q280,30 300,50",
+          color: "#5a9e4b",
+          tag: "₹10.77 → ₹23,000/kg",
+          tagColor: "#5a9e4b",
+          facts: [
+            { icon: "🛒", text: "Assam tea in Tesco, Walmart, Starbucks — 50+ countries" },
+            { icon: "💰", text: "Worker earns ₹10.77/kg. Twinings retail: ₹23,000/kg. Markup: 2,135×" },
+            { icon: "📄", text: "Rainforest Alliance, Fairtrade certifications exist — wage floors not required" },
+            { icon: "⚖️", text: "₹280/day statutory minimum since Apr 2026 — still below demanded ₹351" }
+          ],
+          insight: "The colonial flow reversed direction but not logic. Tea now travels globally — the value still doesn't reach the garden."
         }
-        var mapNodes = [
-          {
-            coords: [26.75, 94.2],
-            eras: {
-              colonial: { title: "Upper Assam estates", story: "Company-managed gardens linked leaf output to London auctions; labor recruitment tied households to estate discipline.", metric: "Export growth concentrated in agency houses (colonial-era documentation).", image: "https://images.unsplash.com/photo-1452251889946-8ff5ea7b27ab?auto=format&fit=crop&w=640&q=70", citation: "Griffiths, P.J. The History of the Indian Tea Industry (1967); regional economic histories." },
-              transition: { title: "National regulation of estates", story: "Labor law and welfare entered statute; implementation depended on inspection capacity and union presence.", metric: "Formal wage boards introduced — verify with gazette notifications.", image: "https://images.unsplash.com/photo-1593691509543-c55fb32e5f82?auto=format&fit=crop&w=640&q=70", citation: "Gazette of India / state labour department circulars." },
-              contemporary: { title: "Quotas, piece rates & wage penalties", story: "Many women pluck on quota-linked pay. Missing a daily leaf target can trigger wage cuts when rain, yield, or exhaustion slow output.", metric: "Open the Quotas & Penalties simulator below.", image: "https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=640&q=70", citation: "Oxfam (2019); ETI/CAO accounts; field studies on piece rates.", simulatorAnchor: true }
-            }
-          },
-          {
-            coords: [26.18, 91.74],
-            eras: {
-              colonial: { title: "Inland sorting and railheads", story: "Leaf moved toward river and rail under merchant coordination; information asymmetry favored buyers.", metric: "Throughput on rail links to auction centers rose.", image: "https://images.unsplash.com/photo-1564890369478-c89afe326b2d?auto=format&fit=crop&w=640&q=70", citation: "Transport history of Assam tea corridors." },
-              transition: { title: "Guwahati as processing hub", story: "Grading and blending adapted to national institutions while estates retained social reproduction costs.", metric: "Rising share of packaged tea — verify definitions.", image: "https://images.unsplash.com/photo-1544787219-7d08887928fc?auto=format&fit=crop&w=640&q=70", citation: "Tea Board industry reports." },
-              contemporary: { title: "Logistics and standards", story: "Certification and retailer specifications reshape factory-floor incentives upstream.", metric: "Compliance costs passed through price schedules.", image: "https://images.unsplash.com/photo-1564890369478-c89afe326b2d?auto=format&fit=crop&w=640&q=70", citation: "Trade journals; firm sustainability reports." }
-            }
-          },
-          {
-            coords: [22.57, 88.36],
-            eras: {
-              colonial: { title: "Calcutta auctions", story: "Colonial auction culture set reference prices rippling back to estates as production targets.", metric: "Share of Indian tea re-exported via imperial ports.", image: "https://images.unsplash.com/photo-1447933601403-0c6688cb99c1?auto=format&fit=crop&w=640&q=70", citation: "Auction house records; economic history monographs." },
-              transition: { title: "National auctions & export", story: "Domestic auction platforms evolved; power asymmetries remained.", metric: "Export volume vs unit value — cite customs definitions.", image: "https://images.unsplash.com/photo-1447933601403-0c6688cb99c1?auto=format&fit=crop&w=640&q=70", citation: "Tea Board statistical compilations." },
-              contemporary: { title: "Global price transmission", story: "Electronic auctions transmit volatility quickly; wage debates reference distant price dips.", metric: "Auction price ↔ wage revisions (model-dependent).", image: "https://images.unsplash.com/photo-1447933601403-0c6688cb99c1?auto=format&fit=crop&w=640&q=70", citation: "FAO / UN Comtrade export statistics." }
-            }
-          },
-          {
-            coords: [51.51, -0.13],
-            eras: {
-              colonial: { title: "Imperial consumption pole", story: "Assam bulk became backbone of mass blends; distance obscured plantation labor.", metric: "Per capita tea imports UK — historical series.", image: "https://images.unsplash.com/photo-1513553404607-988651450dc4?auto=format&fit=crop&w=640&q=70", citation: "UK trade statistics; cultural history of tea." },
-              transition: { title: "Supermarket brands", story: "Branded blends scaled; packaging obscured plantation origins.", metric: "Private-label share growth in retail.", image: "https://images.unsplash.com/photo-1513553404607-988651450dc4?auto=format&fit=crop&w=640&q=70", citation: "Company archives; business press." },
-              contemporary: { title: "Global cup, local burden", story: "ESG narratives coexist with low shelf prices; advocates ask how much margin returns to estates.", metric: "Shelf price vs farmgate spread studies.", image: "https://images.unsplash.com/photo-1513553404607-988651450dc4?auto=format&fit=crop&w=640&q=70", citation: "NGO supply-chain reports; academic papers." }
-            }
-          }
-        ];
+      };
 
-        var teaMap = L.map("storyMap", { scrollWheelZoom: false }).setView([24.5, 88.5], 5);
-        L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-          maxZoom: 18,
-          attribution: "&copy; OpenStreetMap &copy; CARTO"
-        }).addTo(teaMap);
-        var markersLayer = L.layerGroup().addTo(teaMap);
+      function renderEra(key) {
+        var d = eraData[key];
+        if (!d) return;
+        var line = document.getElementById("flow-line");
+        var dot = document.getElementById("dest-dot");
+        var label = document.getElementById("dest-label");
+        var panel = document.getElementById("era-fact-panel");
+        if (!line || !dot || !label || !panel) return;
 
-        function buildPopup(node, eraKey) {
-          var d = node.eras[eraKey];
-          if (!d) return "";
-          var img = d.image ? '<img src="' + d.image + '" alt="" style="max-width:220px;width:100%;border-radius:8px;margin-bottom:8px;border:1px solid var(--color-border);"/>' : "";
-          var simLink = d.simulatorAnchor ? '<p style="margin:0.5rem 0 0;"><a href="#quotaSimulator">→ Open Quotas &amp; Penalties simulator</a></p>' : "";
-          return '<div class="map-popup">' + img + "<strong>" + escHtml(d.title) + "</strong><p class=\"map-popup-metric\">" + escHtml(d.metric) + "</p><p style=\"margin:0 0 6px\">" + escHtml(d.story) + "</p>" + simLink + '<p class="map-popup-cite">' + escHtml(d.citation) + "</p></div>";
-        }
+        line.setAttribute("d", d.flowPath);
+        line.setAttribute("stroke", d.color);
+        line.style.opacity = "0.8";
 
-        function setQuotaSimVisible(show) {
-          var simEl = document.getElementById("quotaSimulator");
-          if (!simEl) return;
-          simEl.hidden = !show;
-          simEl.setAttribute("aria-hidden", show ? "false" : "true");
-          if (show && typeof window.__quotaEnterBriefing === "function") {
-            window.__quotaEnterBriefing();
-          }
-        }
+        dot.setAttribute("cx", d.dest.x);
+        dot.setAttribute("cy", d.dest.y);
+        dot.setAttribute("fill", d.color);
+        dot.style.opacity = "1";
+        label.setAttribute("x", d.dest.x);
+        label.setAttribute("y", d.dest.y - 12);
+        label.textContent = d.dest.label;
+        label.style.opacity = "1";
 
-        function setMapEra(era) {
-          markersLayer.clearLayers();
-          mapNodes.forEach(function (node) {
-            L.marker(node.coords).addTo(markersLayer).bindPopup(buildPopup(node, era), { maxWidth: 300 });
-          });
-          document.querySelectorAll(".era-tab").forEach(function (btn) {
-            btn.setAttribute("aria-pressed", btn.getAttribute("data-era") === era ? "true" : "false");
-          });
-          setQuotaSimVisible(era === "contemporary");
-          setTimeout(function () { teaMap.invalidateSize(); }, 120);
-        }
+        panel.innerHTML =
+          '<div class="era-tag" style="background:' + d.tagColor + '20;border:1px solid ' + d.tagColor + ';color:' + d.tagColor + '">' + d.tag + '</div>' +
+          '<h4 class="era-fact-title">' + d.label + '</h4>' +
+          '<ul class="era-fact-list">' +
+          d.facts.map(function (f) {
+            return '<li class="era-fact-item"><span class="era-fact-icon">' + f.icon + '</span><span>' + f.text + '</span></li>';
+          }).join("") +
+          '</ul>' +
+          '<div class="era-insight">' + d.insight + '</div>';
 
-        document.querySelectorAll(".era-tab").forEach(function (btn) {
-          btn.addEventListener("click", function () { setMapEra(btn.getAttribute("data-era")); });
+        document.querySelectorAll("#era-tabs .era-btn").forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-era") === key);
         });
-        setMapEra("colonial");
-
-        var mapSection = document.getElementById("mapSection");
-        if (mapSection && "IntersectionObserver" in window) {
-          var mapObs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) {
-              if (en.isIntersecting) { teaMap.invalidateSize(); mapObs.disconnect(); }
-            });
-          }, { threshold: 0.12 });
-          mapObs.observe(mapSection);
-        }
       }
+
+      document.querySelectorAll("#era-tabs .era-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () { renderEra(btn.getAttribute("data-era")); });
+      });
+      renderEra("colonial");
 
       /* Quota simulator */
       (function initQuotaSimulator() {
@@ -1947,14 +2045,16 @@
 
         window.__quotaEnterBriefing = enterBriefingState;
 
-        document.querySelectorAll(".era-tab").forEach(function (btn) {
+        document.querySelectorAll("#era-tabs .era-btn").forEach(function (btn) {
           btn.addEventListener("click", function () {
-            if (btn.getAttribute("data-era") === "contemporary") {
+            if (btn.getAttribute("data-era") === "today") {
               setTimeout(function () {
                 var el = document.getElementById("quotaSimulator");
-                if (el && !el.hidden) {
-                  enterBriefingState();
-                  el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                if (el) {
+                  if (typeof window.__quotaEnterBriefing === "function") {
+                    window.__quotaEnterBriefing();
+                  }
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
                 }
               }, 200);
             } else if (playing) {
@@ -1964,10 +2064,11 @@
         });
         function openQuotaFromHash() {
           if (location.hash !== "#quotaSimulator") return;
-          sim.hidden = false;
-          sim.setAttribute("aria-hidden", "false");
-          var contBtn = document.getElementById("eraBtnContemporary");
-          if (contBtn) contBtn.click();
+          if (typeof window.__quotaEnterBriefing === "function") {
+            window.__quotaEnterBriefing();
+          }
+          var el = document.getElementById("quotaSimulator");
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
         }
         openQuotaFromHash();
         window.addEventListener("hashchange", openQuotaFromHash);
@@ -2026,6 +2127,23 @@
           markup: "190",
           key_fact: "Walmart's lower shelf price makes the worker's share look higher at 0.53% — but she still earns the same ₹10.77 per kg regardless of what brand charges. The absolute wage never moves. Only the brand's take changes.",
           source: "Walmart US, June 2025 · GTAC FY2024–25 · Assam wage notification Mar 2026"
+        },
+        {
+          name: "Vahdam",
+          market: "India · VAHDAM.in",
+          retail_per_kg: 1998,
+          steps: [
+            { label: "Worker wage per kg picked", val: 10.77, color: "#5a9e4b", note: "₹280/day ÷ 26 kg quota — same regardless of brand" },
+            { label: "Estate auction price", val: 227.7, color: "#7aab6e", note: "GTAC average FY 2024–25 (Tea Board of India)" },
+            { label: "Processing & packaging", val: 180, color: "#c8a951", note: "Domestic blending, vacuum sealing, logistics" },
+            { label: "Brand margin (VAHDAM India)", val: 1200, color: "#d4883a", note: "Premium D2C positioning; sources from Assam gardens" },
+            { label: "Marketplace / D2C fees", val: 379, color: "#b85c2a", note: "Residual — vahdam.in / Amazon.in listing costs" }
+          ],
+          worker_share: "0.54",
+          auction_share: "11.4",
+          markup: "186",
+          key_fact: "VAHDAM India sells itself as garden-to-cup and \"empowering tea workers\" — yet even on their own site, Daily Assam at ₹999 for 500g works out to ₹1,998/kg. The plucker's ₹10.77/kg is still less than 0.6% of that price. Premium Indian branding adds margin without changing the quota floor.",
+          source: "VAHDAM India (vahdam.in), June 2025 · GTAC FY2024–25 · Assam wage notification Mar 2026"
         }
       ];
 
