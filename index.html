@@ -915,6 +915,42 @@
       color: var(--color-accent-warm);
       margin: 0 0 1rem;
     }
+    .method-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--color-accent-warm);
+      line-height: 1.35;
+    }
+    .method-toggle:hover,
+    .method-toggle:focus-visible {
+      color: var(--color-accent);
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+    }
+    .method-toggle-chevron {
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      opacity: 0.85;
+      transition: transform 0.25s ease;
+    }
+    .method-toggle[aria-expanded="true"] .method-toggle-chevron {
+      transform: rotate(180deg);
+    }
+    .method-panel { margin-top: 1rem; }
+    @media (prefers-reduced-motion: reduce) {
+      .method-toggle-chevron { transition: none; }
+    }
     .method-detail ol {
       margin: 0 0 1.25rem;
       padding-left: 1.25rem;
@@ -1242,16 +1278,17 @@
 
           <div class="era-content-wrap">
             <div class="era-map-panel" role="region" aria-label="Map of Assam tea journey">
-              <svg id="era-svg" viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg">
-                <path id="india-shape" d="M120,30 L180,25 L220,40 L250,70 L260,110 L270,150 L265,190 L250,230 L230,265 L200,290 L175,320 L160,350 L145,320 L125,290 L100,260 L80,220 L75,180 L80,140 L90,100 L100,65 Z" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-                <ellipse id="assam-dot" cx="210" cy="95" rx="22" ry="14" fill="#5a9e4b" opacity="0.85"/>
-                <text x="210" y="99" text-anchor="middle" font-size="8" fill="#e8f0e2" font-family="Inter,sans-serif">ASSAM</text>
-                <circle id="dest-dot" cx="0" cy="0" r="8" fill="#b85c2a" opacity="0"/>
-                <text id="dest-label" x="0" y="0" text-anchor="middle" font-size="7" fill="#e8f0e2" font-family="Inter,sans-serif"></text>
-                <path id="flow-line" d="" fill="none" stroke="#c8a951" stroke-width="1.5" stroke-dasharray="4 3" opacity="0">
+              <svg id="era-svg" viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="340" height="380" fill="#0f1f14" rx="6"/>
+                <path id="india-shape" fill="rgba(45,92,56,0.22)" stroke="#4a7c59" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" d="M159.7,71.3 L168.6,89.6 L167.9,107.9 L183.9,124.3 L189.3,136.4 L209.9,146.1 L227.8,152.0 L246.0,155.0 L254.7,151.2 L254.2,141.4 L260.8,148.6 L274.9,150.6 L290.8,145.3 L294.5,141.2 L321.2,130.8 L332.1,132.6 L339.6,141.3 L330.5,147.0 L313.3,170.8 L299.6,189.0 L296.0,195.1 L288.6,180.5 L282.1,181.6 L288.0,166.4 L265.5,158.4 L255.8,169.0 L259.4,174.8 L262.5,194.9 L254.9,198.1 L239.2,212.4 L215.6,229.4 L199.5,245.5 L186.7,251.0 L179.6,258.5 L181.5,270.5 L178.1,286.9 L169.1,310.0 L160.4,321.9 L148.0,316.0 L137.0,289.5 L129.8,269.1 L119.9,250.7 L113.3,221.1 L111.6,201.3 L84.1,191.2 L70.6,179.8 L97.0,173.7 L90.0,161.1 L93.1,140.3 L113.4,131.4 L128.1,112.8 L135.7,100.9 L125.1,90.1 L126.3,78.1 L150.5,79.0 Z"/>
+                <ellipse id="assam-dot" cx="310.2" cy="151.7" rx="20" ry="12" fill="#5a9e4b" opacity="0.85"/>
+                <text id="assam-label" x="310.2" y="154.7" text-anchor="middle" font-size="8" fill="#e8f0e2" font-family="Inter,sans-serif">ASSAM</text>
+                <circle id="dest-dot" r="7" fill="#b85c2a" opacity="0"/>
+                <text id="dest-label" text-anchor="middle" font-size="7" fill="#e8f0e2" font-family="Inter,sans-serif"></text>
+                <path id="flow-line" fill="none" stroke="#c8a951" stroke-width="1.5" stroke-dasharray="4 3" opacity="0">
                   <animate id="flow-anim" attributeName="stroke-dashoffset" from="200" to="0" dur="1.5s" repeatCount="indefinite"/>
                 </path>
-                <circle cx="210" cy="95" r="18" fill="none" stroke="#5a9e4b" stroke-width="1" opacity="0.4">
+                <circle id="assam-pulse" cx="310.2" cy="151.7" r="16" fill="none" stroke="#5a9e4b" stroke-width="1" opacity="0.4">
                   <animate attributeName="r" values="14;24;14" dur="2s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite"/>
                 </circle>
@@ -1334,7 +1371,11 @@
         </div>
 
         <div class="method-detail fade-up" id="tyt-methodology">
-          <h3>Methodology note — price decomposition (auditable)</h3>
+          <button type="button" class="method-toggle" id="tyt-methodology-toggle" aria-expanded="false" aria-controls="tyt-methodology-panel">
+            <span class="method-toggle-label">Methodology note — price decomposition (auditable)</span>
+            <span class="method-toggle-chevron" aria-hidden="true">▼</span>
+          </button>
+          <div class="method-panel" id="tyt-methodology-panel" hidden>
           <p class="section-intro" style="max-width:none;margin-bottom:1rem;">Every bar in Track Your Tea is calculated from primary inputs below. Brand and retailer slices are <strong>residuals</strong> — what remains of retail price after worker wage, auction, and processing are subtracted. All figures are per kg of finished tea, in rupees.</p>
           <ol>
             <li><strong>Worker wage per kg:</strong> ₹280 statutory daily minimum (Assam notification, Apr 2026) ÷ 26 kg standard daily plucking quota = <code>₹10.77/kg</code>. Fixed across all brands — the plucker does not share in retail markup.</li>
@@ -1370,6 +1411,7 @@
             </table>
           </div>
           <p class="method-note" style="margin-top:1rem;margin-bottom:0;max-width:none;">Rounding: bar labels round to whole rupees or one decimal; the check column shows components sum to retail within ₹0.50. Processing and split margins are author estimates — the worker, auction, and retail inputs are from cited primary sources.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -1992,12 +2034,106 @@
         });
       });
 
-      /* Era map */
+      /* Era map — equirectangular projection centered on India (Natural Earth outline, public domain) */
+      var eraMap = (function () {
+        var W = 340;
+        var H = 380;
+        var CENTER_LNG = 78.96;
+        var CENTER_LAT = 22.59;
+        var SCALE = 9.2;
+        var ASSAM = { lng: 94.2, lat: 26.75 };
+        /* Simplified outer ring: johan/world.geo.json IND, every 3rd vertex */
+        var INDIA_RING = [
+          [77.837451, 35.49401], [78.811086, 33.506198], [78.738894, 31.515906], [80.476721, 29.729865],
+          [81.057203, 28.416095], [83.304249, 27.364506], [85.251779, 26.726198], [87.227472, 26.397898],
+          [88.174804, 26.810405], [88.120441, 27.876542], [88.835643, 27.098966], [90.373275, 26.875724],
+          [92.103712, 27.452614], [92.503119, 27.896876], [95.404802, 29.031717], [96.586591, 28.83098],
+          [97.402561, 27.882536], [96.419366, 27.264589], [94.552658, 24.675238], [93.060294, 22.703111],
+          [92.672721, 22.041239], [91.869928, 23.624346], [91.158963, 23.503527], [91.799596, 25.147432],
+          [89.355094, 26.014407], [88.306373, 24.866079], [88.69994, 24.233715], [89.031961, 22.055708],
+          [88.208497, 21.703172], [86.499351, 20.151638], [83.941006, 18.30201], [82.191242, 16.556664],
+          [80.791999, 15.951972], [80.025069, 15.136415], [80.233274, 13.835771], [79.862547, 12.056215],
+          [78.885345, 9.546136], [77.941165, 8.252959], [76.592979, 8.899276], [75.396101, 11.781245],
+          [74.616717, 13.992583], [73.534199, 15.990652], [72.820909, 19.208234], [72.630533, 21.356009],
+          [69.644928, 22.450775], [68.176645, 23.691965], [71.04324, 24.356524], [70.282873, 25.722229],
+          [70.616496, 27.989196], [72.823752, 28.961592], [74.42138, 30.979815], [75.258642, 32.271105],
+          [74.104294, 33.441473], [74.240203, 34.748887], [76.871722, 34.653544]
+        ];
+
+        function project(lng, lat) {
+          return [
+            (lng - CENTER_LNG) * SCALE + W / 2,
+            (CENTER_LAT - lat) * SCALE + H / 2
+          ];
+        }
+
+        function ringToPath(ring) {
+          return ring.map(function (coord, i) {
+            var p = project(coord[0], coord[1]);
+            return (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1);
+          }).join(" ") + " Z";
+        }
+
+        function flowPath(from, to, bend, screenEnd) {
+          var o = project(from.lng, from.lat);
+          var d = screenEnd || project(to.lng, to.lat);
+          var cx = (o[0] + d[0]) / 2 + (bend && bend.dx ? bend.dx : 0);
+          var cy = (o[1] + d[1]) / 2 + (bend && bend.dy ? bend.dy : 0);
+          return "M" + o[0].toFixed(1) + "," + o[1].toFixed(1) +
+            " Q" + cx.toFixed(1) + "," + cy.toFixed(1) +
+            " " + d[0].toFixed(1) + "," + d[1].toFixed(1);
+        }
+
+        function destScreen(key, dest) {
+          if (key === "colonial") return [24, 30];
+          if (key === "today") {
+            var p = project(dest.lng, dest.lat);
+            return [Math.min(W - 18, Math.max(p[0], W - 44)), Math.min(70, Math.max(p[1], 36))];
+          }
+          return project(dest.lng, dest.lat);
+        }
+
+        function positionAssam() {
+          var assamDot = document.getElementById("assam-dot");
+          var assamLabel = document.getElementById("assam-label");
+          var pulse = document.getElementById("assam-pulse");
+          if (!assamDot) return;
+          var a = project(ASSAM.lng, ASSAM.lat);
+          assamDot.setAttribute("cx", a[0].toFixed(1));
+          assamDot.setAttribute("cy", a[1].toFixed(1));
+          if (assamLabel) {
+            assamLabel.setAttribute("x", a[0].toFixed(1));
+            assamLabel.setAttribute("y", (a[1] + 3).toFixed(1));
+          }
+          if (pulse) {
+            pulse.setAttribute("cx", a[0].toFixed(1));
+            pulse.setAttribute("cy", a[1].toFixed(1));
+            if (!pulse.getAttribute("r")) pulse.setAttribute("r", "16");
+          }
+        }
+
+        function initSvg() {
+          var shape = document.getElementById("india-shape");
+          if (!shape) return;
+          shape.setAttribute("d", ringToPath(INDIA_RING));
+          positionAssam();
+        }
+
+        return {
+          project: project,
+          flowPath: flowPath,
+          destScreen: destScreen,
+          initSvg: initSvg,
+          positionAssam: positionAssam,
+          ASSAM: ASSAM
+        };
+      })();
+
       var eraData = {
         colonial: {
           label: "Colonial Era — 1840s to 1947",
-          dest: { x: 40, y: 30, label: "Britain" },
-          flowPath: "M210,95 Q100,20 40,30",
+          dest: { lng: -2.5, lat: 54.5, label: "Britain" },
+          flowBend: { dx: -90, dy: -50 },
           color: "#b85c2a",
           tag: "Export to Empire",
           tagColor: "#b85c2a",
@@ -2011,8 +2147,8 @@
         },
         independence: {
           label: "Post-Independence — 1951 to 1990s",
-          dest: { x: 175, y: 240, label: "Delhi / Domestic" },
-          flowPath: "M210,95 Q195,160 175,240",
+          dest: { lng: 77.2, lat: 28.6, label: "Delhi / Domestic" },
+          flowBend: { dx: -20, dy: 30 },
           color: "#c8a951",
           tag: "Formal regulation begins",
           tagColor: "#c8a951",
@@ -2026,8 +2162,8 @@
         },
         today: {
           label: "Today — Global supply chains",
-          dest: { x: 300, y: 50, label: "Global" },
-          flowPath: "M210,95 Q280,30 300,50",
+          dest: { lng: 120, lat: 35, label: "Global" },
+          flowBend: { dx: 40, dy: -55 },
           color: "#5a9e4b",
           tag: "₹10.77 → ₹23,000/kg",
           tagColor: "#5a9e4b",
@@ -2043,23 +2179,24 @@
 
       function renderEra(key) {
         var d = eraData[key];
-        if (!d) return;
+        if (!d || !d.dest) return;
         var line = document.getElementById("flow-line");
         var dot = document.getElementById("dest-dot");
         var label = document.getElementById("dest-label");
         var panel = document.getElementById("era-fact-panel");
         if (!line || !dot || !label || !panel) return;
 
-        line.setAttribute("d", d.flowPath);
+        var screen = eraMap.destScreen(key, d.dest);
+        line.setAttribute("d", eraMap.flowPath(eraMap.ASSAM, d.dest, d.flowBend, screen));
         line.setAttribute("stroke", d.color);
-        line.style.opacity = "0.8";
+        line.style.opacity = "0.85";
 
-        dot.setAttribute("cx", d.dest.x);
-        dot.setAttribute("cy", d.dest.y);
+        dot.setAttribute("cx", screen[0].toFixed(1));
+        dot.setAttribute("cy", screen[1].toFixed(1));
         dot.setAttribute("fill", d.color);
         dot.style.opacity = "1";
-        label.setAttribute("x", d.dest.x);
-        label.setAttribute("y", d.dest.y - 12);
+        label.setAttribute("x", screen[0].toFixed(1));
+        label.setAttribute("y", (screen[1] - (key === "colonial" ? 9 : 11)).toFixed(1));
         label.textContent = d.dest.label;
         label.style.opacity = "1";
 
@@ -2078,10 +2215,14 @@
         });
       }
 
+      function initEraMap() {
+        eraMap.initSvg();
+        renderEra("colonial");
+      }
       document.querySelectorAll("#era-tabs .era-btn").forEach(function (btn) {
         btn.addEventListener("click", function () { renderEra(btn.getAttribute("data-era")); });
       });
-      renderEra("colonial");
+      initEraMap();
 
       /* Quota simulator */
       (function initQuotaSimulator() {
@@ -2661,6 +2802,16 @@
           setTYT(parseInt(btn.getAttribute("data-tyt-index"), 10));
         });
         renderTYT();
+
+        var methodToggle = document.getElementById("tyt-methodology-toggle");
+        var methodPanel = document.getElementById("tyt-methodology-panel");
+        if (methodToggle && methodPanel) {
+          methodToggle.addEventListener("click", function () {
+            var open = methodToggle.getAttribute("aria-expanded") !== "true";
+            methodToggle.setAttribute("aria-expanded", open ? "true" : "false");
+            methodPanel.hidden = !open;
+          });
+        }
       }
 
       var domReadyDone = false;
@@ -2670,6 +2821,7 @@
         buildTimeline();
         initCounters();
         initTrackYourTea();
+        if (typeof eraMap !== "undefined") eraMap.initSvg();
         setTimeout(checkCountersInView, 400);
       }
       document.addEventListener("DOMContentLoaded", onDomReady);
