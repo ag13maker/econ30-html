@@ -289,6 +289,26 @@
       display: block; margin-top: 0.75rem; font-size: 0.85rem;
       font-style: normal; color: var(--color-text-muted);
     }
+    .story-quote-wrap { margin-top: 2.5rem; }
+    .story-quote-wrap .pull-quote { margin-top: 0; }
+    .inequality-grow {
+      margin: 0 0 0.85rem; padding: 0 0 0 2rem;
+      max-width: 42rem;
+      font-family: var(--font-display);
+      font-size: clamp(0.92rem, 1.6vw, 1.05rem);
+      font-style: italic;
+      line-height: 1.45;
+      color: var(--color-accent-warm);
+      transform-origin: left center;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .inequality-grow {
+        transition: none;
+        will-change: auto;
+      }
+    }
 
     /* Timeline */
     #history { background: var(--color-surface); }
@@ -395,6 +415,15 @@
       font-size: 0.78rem; color: var(--color-accent); font-weight: 600; margin-bottom: 1rem;
     }
     .chart-canvas-wrap { position: relative; height: 260px; }
+    .chart-panel--wide { grid-column: 1 / -1; }
+    .chart-panel--wide .chart-canvas-wrap { height: 300px; }
+    .chart-note {
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      line-height: 1.55;
+      margin: 0.75rem 0 0;
+      max-width: 52rem;
+    }
     .chart-panel--stat { grid-column: 1 / -1; text-align: center; padding: 2.5rem 1.5rem; }
     .bpl-counter {
       font-family: var(--font-display); font-size: clamp(4rem, 12vw, 7rem);
@@ -838,14 +867,128 @@
       margin-bottom: 0.75rem;
     }
     .method-note {
-      font-size: 11px;
+      font-size: 0.82rem;
       color: var(--color-text-muted);
       border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem 1.5rem;
+      margin-top: 2rem;
+      line-height: 1.65;
+      background: var(--color-card);
+    }
+    .method-note h3 {
+      font-size: 0.95rem;
+      color: var(--color-accent-warm);
+      margin: 0 0 0.75rem;
+      font-family: var(--font-display);
+    }
+    .method-note p { margin: 0 0 0.75rem; font-size: 0.82rem; }
+    .method-note p:last-child { margin-bottom: 0; }
+    .method-formula {
+      font-family: ui-monospace, "Cascadia Code", monospace;
+      font-size: 0.78rem;
+      color: var(--color-text);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
       border-radius: 6px;
-      padding: 0.75rem 1rem;
-      margin-bottom: 1.5rem;
+      padding: 0.5rem 0.75rem;
+      margin: 0.35rem 0 0.75rem;
+      overflow-x: auto;
+    }
+    .method-list {
+      margin: 0.5rem 0 0.75rem;
+      padding-left: 1.25rem;
+      font-size: 0.82rem;
+    }
+    .method-list li { margin-bottom: 0.35rem; }
+
+    .method-detail {
+      margin-top: 2rem;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .method-detail h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--color-accent-warm);
+      margin: 0 0 1rem;
+    }
+    .method-detail ol {
+      margin: 0 0 1.25rem;
+      padding-left: 1.25rem;
+      color: var(--color-text-muted);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+    .method-detail li { margin-bottom: 0.5rem; }
+    .method-detail li strong { color: var(--color-text); }
+    .method-table-wrap { overflow-x: auto; margin-top: 1rem; }
+    .method-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .method-table th,
+    .method-table td {
+      border: 1px solid var(--color-border);
+      padding: 0.5rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .method-table th {
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-weight: 600;
+    }
+    .method-table td { color: var(--color-text-muted); }
+    .method-table code {
+      font-size: 0.8rem;
+      color: var(--color-accent-warm);
+    }
+
+    /* Policy */
+    #policy { background: var(--color-bg); }
+    #policy .section-intro { max-width: 44rem; margin-bottom: 1.5rem; }
+    .policy-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 767px) { .policy-cards { grid-template-columns: 1fr; } }
+    .policy-card {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-accent);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem 1.2rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .policy-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow);
+    }
+    .policy-card h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--color-text);
+      margin: 0 0 0.5rem;
+    }
+    .policy-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
       line-height: 1.6;
-      max-width: 680px;
+    }
+    .policy-card cite {
+      display: block;
+      margin-top: 0.65rem;
+      font-size: 0.75rem;
+      font-style: normal;
+      color: var(--color-accent);
+      font-weight: 600;
     }
     .tyt-section { margin-top: 2rem; }
     .brand-row {
@@ -954,6 +1097,7 @@
           <li><a href="#mapSection" data-nav="mapSection">Map</a></li>
           <li><a href="#quotaSimulator" data-nav="quotaSimulator">Simulator</a></li>
           <li><a href="#trackYourTea" data-nav="trackYourTea">Track Tea</a></li>
+          <li><a href="#policy" data-nav="policy">Policy</a></li>
           <li><a href="#conclusion" data-nav="conclusion">Conclusion</a></li>
           <li><a href="#literature" data-nav="literature">Sources</a></li>
         </ul>
@@ -1005,10 +1149,11 @@
       <div class="wrap">
         <p class="section-label">The puzzle</p>
         <h2>Why this matters</h2>
-        <p class="story-tension">
-          Assam produces a huge share of India's tea — sold in supermarkets and breakfast blends worldwide. On the estates, families live in employer-tied housing, depend on estate clinics, and earn wages that investigators describe as hard to live on. Women do most of the plucking and much unpaid care at home. <strong>Tea is celebrated; plantation labor stays invisible</strong> in national economic debate.
-        </p>
-        <figure class="story-figure fade-up" style="max-width:520px;margin:2rem 0;">
+        <div class="story-layout">
+          <p class="story-tension">
+            Assam produces a huge share of India's tea — sold in supermarkets and breakfast blends worldwide. On the estates, families live in employer-tied housing, depend on estate clinics, and earn wages that investigators describe as hard to live on. Women do most of the plucking and much unpaid care at home. <strong>Tea is celebrated; plantation labor stays invisible</strong> in national economic debate.
+          </p>
+          <figure class="story-figure fade-up">
           <img
             id="storyHeroImg"
             class="is-loading"
@@ -1022,10 +1167,16 @@
             decoding="async" />
           <figcaption id="storyHeroCaption"><strong>Who bears the quota.</strong> Women do most of Assam's leaf plucking.</figcaption>
         </figure>
-        <blockquote class="pull-quote fade-up">
-          "Tea is celebrated. Plantation labor is often invisible."
-          <cite>— The gap this project is trying to close</cite>
-        </blockquote>
+        </div>
+        <div class="story-quote-wrap fade-up">
+          <p id="inequality-scroll-line" class="inequality-grow" aria-live="polite">
+            Behind every celebrated cup lies a stubborn inequality — and this project is built to make that gap visible.
+          </p>
+          <blockquote class="pull-quote">
+            "Tea is celebrated. Plantation labor is often invisible."
+            <cite>— The gap this project is trying to close</cite>
+          </blockquote>
+        </div>
       </div>
     </section>
 
@@ -1063,6 +1214,12 @@
             <p class="chart-source">Source: ETI / Sachdev &amp; Satpute; Assam govt notification March 2026</p>
             <div class="chart-canvas-wrap"><canvas id="wageGapChart" aria-label="Horizontal bar chart of reported wage versus legal minimum"></canvas></div>
           </article>
+          <article class="chart-panel chart-panel--wide fade-up" data-chart-panel id="wageTimelinePanel">
+            <h3>Wage timeline (2016–2026)</h3>
+            <p class="chart-source">Sources: Hindustan Times (Feb 2021); Workers Rights / govt notification (Aug 2022); NE News (Oct 2023); Business Standard (Mar 2026); Assam Chah Mazdoor Sangha; ETI / Sachdev &amp; Satpute (reported ₹167)</p>
+            <div class="chart-canvas-wrap"><canvas id="wageTimelineChart" aria-label="Line chart of Assam tea plantation daily wages 2016 to 2026"></canvas></div>
+            <p class="chart-note">Statutory series is a <strong>step chart</strong> at notification dates: Feb 2021 (₹217), Aug 2022 (₹232), Oct 2023 (₹250), Apr 2026 (₹280). The 2016 BJP election promise (₹351, star marker — not statutory) matches the dashed ACMS worker-demand reference line. ETI/CAO reported ₹167/day on estates is annotated as a horizontal reference; the gap to the Apr 2026 statutory minimum is the 40% bar chart above.</p>
+          </article>
           <article class="chart-panel chart-panel--stat fade-up" data-chart-panel id="bplCounterPanel">
             <p class="chart-source">Source: Oxfam (2019) household visits</p>
             <p class="bpl-counter"><span id="bplCount" class="counter" data-counter data-target="50" data-suffix="%">0%</span></p>
@@ -1086,7 +1243,7 @@
           <div class="era-content-wrap">
             <div class="era-map-panel" role="region" aria-label="Map of Assam tea journey">
               <svg id="era-svg" viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg">
-                <path id="india-shape" d="M120,30 L180,25 L220,40 L250,70 L260,110 L270,150 L265,190 L250,230 L230,265 L200,290 L175,320 L160,350 L145,320 L125,290 L100,260 L80,220 L75,180 L80,140 L90,100 L100,65 Z" fill="#1a3320" stroke="#2d5c38" stroke-width="1.5"/>
+                <path id="india-shape" d="M120,30 L180,25 L220,40 L250,70 L260,110 L270,150 L265,190 L250,230 L230,265 L200,290 L175,320 L160,350 L145,320 L125,290 L100,260 L80,220 L75,180 L80,140 L90,100 L100,65 Z" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
                 <ellipse id="assam-dot" cx="210" cy="95" rx="22" ry="14" fill="#5a9e4b" opacity="0.85"/>
                 <text x="210" y="99" text-anchor="middle" font-size="8" fill="#e8f0e2" font-family="Inter,sans-serif">ASSAM</text>
                 <circle id="dest-dot" cx="0" cy="0" r="8" fill="#b85c2a" opacity="0"/>
@@ -1174,6 +1331,95 @@
               <div class="tyt-insight" id="tyt-insight"></div>
             </div>
           </div>
+        </div>
+
+        <div class="method-detail fade-up" id="tyt-methodology">
+          <h3>Methodology note — price decomposition (auditable)</h3>
+          <p class="section-intro" style="max-width:none;margin-bottom:1rem;">Every bar in Track Your Tea is calculated from primary inputs below. Brand and retailer slices are <strong>residuals</strong> — what remains of retail price after worker wage, auction, and processing are subtracted. All figures are per kg of finished tea, in rupees.</p>
+          <ol>
+            <li><strong>Worker wage per kg:</strong> ₹280 statutory daily minimum (Assam notification, Apr 2026) ÷ 26 kg standard daily plucking quota = <code>₹10.77/kg</code>. Fixed across all brands — the plucker does not share in retail markup.</li>
+            <li><strong>Estate auction price:</strong> GTAC average <code>₹227.70/kg</code> (Tea Board of India, FY 2024–25). Same for every brand in this decomposition.</li>
+            <li><strong>Retail price per kg:</strong> shelf listing converted to ₹/kg — Twinings Tesco UK (June 2025); Tetley Tesco UK 1.25 kg pack; Lipton Walmart US; Vahdam Daily Assam ₹999 / 500g on vahdam.in. Currency: illustrative <code>₹106 = £1</code>, <code>₹84 = $1</code>.</li>
+            <li><strong>Export / processing:</strong> author estimates from industry cost structures — Twinings <code>₹600</code>, Tetley <code>₹500</code> (Tata vertical integration), Lipton <code>₹400</code>, Vahdam domestic processing <code>₹180</code>.</li>
+            <li><strong>Brand margin:</strong> <code>retail − worker − auction − processing − retailer</code> where retailer is solved last; equivalently brand = residual after known upstream costs minus retailer share. Computed values: Twinings <code>₹9,500</code>, Tetley <code>₹3,200</code>, Lipton <code>₹800</code>, Vahdam <code>₹1,200</code>.</li>
+            <li><strong>Retailer / marketplace margin:</strong> final residual to reconcile to retail — Twinings Tesco <code>₹12,662</code>, Tetley <code>₹3,412</code>, Lipton Walmart <code>₹612</code>, Vahdam D2C fees <code>₹379</code>.</li>
+            <li><strong>Worker share %:</strong> <code>(worker wage ÷ retail) × 100</code> — e.g. Twinings: 10.77 ÷ 23,000 = 0.047%.</li>
+            <li><strong>Auction share %:</strong> <code>(auction ÷ retail) × 100</code> — e.g. Twinings: 227.7 ÷ 23,000 = 1.0%.</li>
+            <li><strong>Markup ×:</strong> <code>retail ÷ worker wage per kg</code> — e.g. Twinings: 23,000 ÷ 10.77 ≈ 2,135×.</li>
+          </ol>
+          <div class="method-table-wrap">
+            <table class="method-table">
+              <thead>
+                <tr>
+                  <th>Brand</th>
+                  <th>Retail ₹/kg</th>
+                  <th>Worker</th>
+                  <th>Auction</th>
+                  <th>Processing</th>
+                  <th>Brand</th>
+                  <th>Retailer</th>
+                  <th>Check (sum)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Twinings</td><td>23,000</td><td>10.77</td><td>227.70</td><td>600</td><td>9,500</td><td>12,662</td><td>23,000.47</td></tr>
+                <tr><td>Tetley</td><td>7,350</td><td>10.77</td><td>227.70</td><td>500</td><td>3,200</td><td>3,412</td><td>7,350.47</td></tr>
+                <tr><td>Lipton</td><td>2,050</td><td>10.77</td><td>227.70</td><td>400</td><td>800</td><td>612</td><td>2,050.47</td></tr>
+                <tr><td>Vahdam</td><td>1,998</td><td>10.77</td><td>227.70</td><td>180</td><td>1,200</td><td>379</td><td>1,997.47</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="method-note" style="margin-top:1rem;margin-bottom:0;max-width:none;">Rounding: bar labels round to whole rupees or one decimal; the check column shows components sum to retail within ₹0.50. Processing and split margins are author estimates — the worker, auction, and retail inputs are from cited primary sources.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="policy" class="fade-up">
+      <div class="wrap">
+        <p class="section-label">Reform horizon</p>
+        <h2>Policy implications — if the goal were a living wage</h2>
+        <p class="section-intro">None of these are imminent political wins. They sketch what a coherent reform package would require if tea garden workers were actually meant to benefit from seven decades of labor law — drawn from Oxfam (2019), the Plantations Labour Act framework, ETI/CAO findings, and union demands (ACMS ₹351/day).</p>
+        <div class="policy-cards">
+          <article class="policy-card fade-up">
+            <h3>Enforce the wage that already exists</h3>
+            <p>Independent inspection with penalties tied to estate licenses — not employer self-reporting. ETI/CAO documented wages below statutory minima on certified estates; law without enforcement preserves the ₹167 vs ₹280 gap.</p>
+            <cite>ETI / Sachdev &amp; Satpute; Assam notification Apr 2026</cite>
+          </article>
+          <article class="policy-card fade-up">
+            <h3>Index wages to inflation and productivity</h3>
+            <p>Statutory minima rose from ₹217 (2021) to ₹280 (2026) but still trail the ₹351/day ACMS demand and a living wage. Automatic indexation to CPI and auction prices would prevent real wages from eroding between rare cabinet hikes.</p>
+            <cite>Assam Chah Mazdoor Sangha; wage timeline above</cite>
+          </article>
+          <article class="policy-card fade-up">
+            <h3>Buyer-side price sharing</h3>
+            <p>Oxfam proposed that brands and retailers return a defined share of shelf price to estates — transparent pass-through when auction prices rise, not only when NGOs publish exposés. Shifts value capture without waiting for estate-level charity.</p>
+            <cite>Oxfam (2019) — agenda for change</cite>
+          </article>
+          <article class="policy-card fade-up">
+            <h3>Certification with real wage floors</h3>
+            <p>Rainforest Alliance and Fairtrade labels exist but do not require living wages. Mandatory audited wage floors in buyer contracts — with CAO-style grievance routes — would align ESG marketing with payroll reality.</p>
+            <cite>ETI / CAO; Oxfam (2019)</cite>
+          </article>
+          <article class="policy-card fade-up">
+            <h3>Decouple housing and health from the employer</h3>
+            <p>PLA ties welfare to estate employment, trapping workers geographically. Public provision of housing, water, and clinics — or portable benefits — would reduce captive-labor incentives and strengthen exit options.</p>
+            <cite>Plantations Labour Act, 1951; Saikia &amp; Parida (2026)</cite>
+          </article>
+          <article class="policy-card fade-up">
+            <h3>Quota and penalty reform</h3>
+            <p>Daily leaf targets that ignore rain, yield, and pregnancy — with proportional wage cuts — make underpayment routine. Quotas indexed to conditions; penalties banned or capped; piece rates with guaranteed daily floors regardless of weather.</p>
+            <cite>Indian Express (2025); simulator model on this site</cite>
+          </article>
+          <article class="policy-card fade-up">
+            <h3>Freedom of association and collective bargaining</h3>
+            <p>CAO found insufficient evidence of effective union voice on estates supplying global brands. Protected organizing, sector-wide bargaining, and women pluckers' committees would counter buyer and estate asymmetry.</p>
+            <cite>ETI / CAO; Oxfam (2019)</cite>
+          </article>
+          <article class="policy-card fade-up">
+            <h3>Transparency from cup to garden</h3>
+            <p>Mandatory disclosure of farmgate, auction, and retail prices on packaging — like the Track Your Tea decomposition — so consumers and regulators can see whether a ₹23,000/kg shelf price ever reaches the ₹10.77/kg plucker.</p>
+            <cite>Author calculation; GTAC FY 2024–25; Tesco / Walmart June 2025</cite>
+          </article>
         </div>
       </div>
     </section>
@@ -1278,7 +1524,7 @@
       window.addEventListener("scroll", onScrollNav, { passive: true });
       onScrollNav();
 
-      var sectionIds = ["story", "history", "transition", "viz", "mapSection", "quotaSimulator", "trackYourTea", "conclusion", "literature"];
+      var sectionIds = ["story", "history", "transition", "viz", "mapSection", "quotaSimulator", "trackYourTea", "policy", "conclusion", "literature"];
       if ("IntersectionObserver" in window) {
         var navObs = new IntersectionObserver(function (entries) {
           entries.forEach(function (en) {
@@ -1328,6 +1574,55 @@
           leaf.style.animationDelay = Math.random() * 8 + "s";
           container.appendChild(leaf);
         }
+      })();
+
+      /* Inequality line — grows each downward scroll pass */
+      (function initInequalityScrollGrow() {
+        var line = document.getElementById("inequality-scroll-line");
+        if (!line) return;
+
+        var MAX_SCALE = 1.5;
+        var SCALE_STEP = 0.1;
+        var passes = 0;
+        var wasIntersecting = false;
+        var lastScrollY = window.scrollY;
+        var scrollingDown = true;
+
+        function applyScale() {
+          var scale = Math.min(MAX_SCALE, 1 + passes * SCALE_STEP);
+          line.style.transform = "scale(" + scale.toFixed(3) + ")";
+        }
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          applyScale();
+          return;
+        }
+
+        window.addEventListener(
+          "scroll",
+          function () {
+            scrollingDown = window.scrollY > lastScrollY;
+            lastScrollY = window.scrollY;
+          },
+          { passive: true }
+        );
+
+        if ("IntersectionObserver" in window) {
+          var growObs = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting && scrollingDown && !wasIntersecting) {
+                  passes += 1;
+                  applyScale();
+                }
+                wasIntersecting = entry.isIntersecting;
+              });
+            },
+            { threshold: 0.35, rootMargin: "0px 0px -12% 0px" }
+          );
+          growObs.observe(line);
+        }
+        applyScale();
       })();
 
       /* Story image loader */
@@ -1425,6 +1720,7 @@
       /* Charts on scroll */
       var supplyChainChartInst = null;
       var wageGapChartInst = null;
+      var wageTimelineChartInst = null;
       var chartsInited = false;
       var supplyChainData = {
         labels: ["Brands & supermarkets", "Estate operations & profit", "Worker wages"],
@@ -1495,6 +1791,122 @@
             }]
           });
         }
+        var wtc = document.getElementById("wageTimelineChart");
+        if (wtc) {
+          var timelineLabels = ["2016", "Feb 2021", "Aug 2022", "Oct 2023", "Apr 2026"];
+          wageTimelineChartInst = new Chart(wtc, {
+            type: "line",
+            data: {
+              labels: timelineLabels,
+              datasets: [
+                {
+                  label: "Statutory minimum (notifications)",
+                  data: [null, 217, 232, 250, 280],
+                  borderColor: "#5a9e4b",
+                  backgroundColor: "rgba(90, 158, 75, 0.12)",
+                  borderWidth: 2.5,
+                  stepped: "before",
+                  spanGaps: false,
+                  pointRadius: 5,
+                  pointBackgroundColor: "#5a9e4b",
+                  tension: 0
+                },
+                {
+                  label: "Worker demand reference (₹351)",
+                  data: [351, 351, 351, 351, 351],
+                  borderColor: "#c8a951",
+                  borderDash: [7, 5],
+                  borderWidth: 2,
+                  pointRadius: 0,
+                  fill: false,
+                  tension: 0
+                },
+                {
+                  label: "2016 BJP election promise",
+                  data: [351, null, null, null, null],
+                  type: "scatter",
+                  pointRadius: 9,
+                  pointStyle: "star",
+                  pointBackgroundColor: "#c8a951",
+                  pointBorderColor: "#0d1a0f",
+                  pointBorderWidth: 1,
+                  borderColor: "#c8a951",
+                  showLine: false
+                },
+                {
+                  label: "ETI/CAO reported on estates",
+                  data: [null, null, null, null, 167],
+                  borderColor: "#b85c2a",
+                  borderWidth: 0,
+                  pointRadius: 6,
+                  pointBackgroundColor: "#b85c2a",
+                  pointBorderColor: "#0d1a0f",
+                  pointBorderWidth: 1,
+                  showLine: false
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              interaction: { mode: "index", intersect: false },
+              plugins: {
+                legend: {
+                  position: "bottom",
+                  labels: { color: chartText, font: { family: "'Inter', sans-serif", size: 11 }, boxWidth: 14 }
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function (ctx) {
+                      var v = ctx.parsed.y;
+                      if (v === null || typeof v === "undefined") return null;
+                      return ctx.dataset.label + ": ₹" + v + "/day";
+                    }
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  grid: { color: chartGrid },
+                  ticks: { color: chartText, font: { size: 11 }, maxRotation: 25 }
+                },
+                y: {
+                  beginAtZero: false,
+                  min: 120,
+                  max: 380,
+                  title: { display: true, text: "Daily wage (₹)", color: chartText, font: { size: 11 } },
+                  grid: { color: chartGrid },
+                  ticks: { color: chartText, callback: function (v) { return "₹" + v; } }
+                }
+              }
+            },
+            plugins: [{
+              id: "wageTimelineAnnotations",
+              afterDatasetsDraw: function (chart) {
+                var ctx = chart.ctx;
+                var yScale = chart.scales.y;
+                var xScale = chart.scales.x;
+                var y167 = yScale.getPixelForValue(167);
+                var left = xScale.left;
+                var right = xScale.right;
+                ctx.save();
+                ctx.strokeStyle = "rgba(184, 92, 42, 0.55)";
+                ctx.setLineDash([4, 4]);
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(left, y167);
+                ctx.lineTo(right, y167);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = "#b85c2a";
+                ctx.font = "600 11px Inter, sans-serif";
+                ctx.textAlign = "right";
+                ctx.fillText("ETI reported ₹167", right - 4, y167 - 6);
+                ctx.restore();
+              }
+            }]
+          });
+        }
       }
 
       function animateCounter(el, target, suffix, duration) {
@@ -1552,6 +1964,7 @@
             initCharts();
             if (supplyChainChartInst) supplyChainChartInst.update();
             if (wageGapChartInst) wageGapChartInst.update();
+            if (wageTimelineChartInst) wageTimelineChartInst.update();
             if (en.target.id === "bplCounterPanel") {
               runCounter(document.getElementById("bplCount"));
             }
@@ -1956,6 +2369,7 @@
             '<div class="outcome-row"><span>Penalty deducted</span><strong style="color:' + color + '">₹' + penalty + "</strong></div>" +
             '<div class="outcome-row takehome"><span>Take-home today</span><strong style="color:' + color + '">₹' + takehome + " (~$" + usd + ")</strong></div>" +
             '<div class="outcome-row"><span>US federal min wage (same hours)</span><strong>~$' + US_MIN_COMPARE + "</strong></div>" +
+            '<p class="comparison-note">Exchange rates illustrative (₹84 = $1). US federal minimum wage rate as of 2024–25.</p>' +
             '<p class="outcome-insight">' + insight + "</p>" +
             '<button type="button" id="copy-result" class="btn-copy">Copy my result</button>' +
             '<div class="comparison-card">' +
