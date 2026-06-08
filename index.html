@@ -420,14 +420,14 @@
     }
     .bpl-label { max-width: 36rem; margin: 1rem auto 0; font-size: 1.05rem; color: var(--color-text); }
 
-    /* Map */
+    /* Era journey */
     #mapSection { background: var(--color-surface); }
-    .era-map-wrap { margin-top: 1.5rem; }
+    .era-journey-wrap { margin-top: 1.5rem; }
     .era-tabs {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
     .era-btn {
       padding: 0.55rem 1.1rem;
@@ -447,23 +447,100 @@
       color: #0d1a0f;
       font-weight: 600;
     }
-    .era-content-wrap {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-    @media (max-width: 768px) {
-      .era-content-wrap { grid-template-columns: 1fr; }
-      #era-svg { max-width: 220px; margin: 0 auto; display: block; }
-    }
-    .era-map-panel {
+    .era-journey-chart {
       background: var(--color-card);
       border: 1px solid var(--color-border);
       border-radius: 12px;
-      padding: 1rem;
+      padding: 1.25rem 1rem 1rem;
+      margin-bottom: 1.5rem;
     }
-    #era-svg { width: 100%; height: auto; }
+    .journey-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      position: relative;
+    }
+    .journey-bar::before {
+      content: "";
+      position: absolute;
+      top: 2.15rem;
+      left: 8%;
+      right: 8%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-warm) 50%, var(--color-accent-rust) 100%);
+      opacity: 0.35;
+      z-index: 0;
+    }
+    .journey-segment {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.75rem 0.5rem 0.65rem;
+      border: 1.5px solid var(--color-border);
+      border-radius: 10px;
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      text-align: center;
+    }
+    .journey-segment:hover {
+      border-color: var(--seg-color, var(--color-accent));
+      color: var(--color-text);
+    }
+    .journey-segment.active {
+      border-color: var(--seg-color, var(--color-accent));
+      background: color-mix(in srgb, var(--seg-color, var(--color-accent)) 12%, var(--color-surface));
+      color: var(--color-text);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--seg-color, var(--color-accent)) 25%, transparent);
+    }
+    .journey-segment-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--seg-color, var(--color-accent));
+      border: 2px solid var(--color-card);
+      flex-shrink: 0;
+    }
+    .journey-segment-period {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--seg-color, var(--color-accent-warm));
+    }
+    .journey-segment-flow {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.35;
+    }
+    .journey-segment-tag {
+      font-size: 0.72rem;
+      opacity: 0.85;
+    }
+    .journey-axis {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.85rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+    }
+    .journey-axis-arrow { color: var(--color-accent-warm); font-weight: 700; }
+    @media (max-width: 768px) {
+      .journey-bar { grid-template-columns: 1fr; }
+      .journey-bar::before { display: none; }
+      .journey-segment { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; text-align: left; gap: 0.5rem 0.75rem; }
+      .journey-segment-flow { flex: 1 1 100%; }
+    }
     .era-tag {
       display: inline-block;
       padding: 0.3rem 0.75rem;
@@ -504,6 +581,12 @@
       color: var(--color-accent-warm);
       border-radius: 0 6px 6px 0;
       line-height: 1.6;
+    }
+    .era-fact-panel {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
     }
 
     /* Quota sim */
@@ -1202,36 +1285,39 @@
 
     <section id="mapSection" class="fade-up">
       <div class="wrap">
-        <p class="section-label">Interactive map</p>
         <h2>From estate to cup across three eras</h2>
-        <div class="era-map-wrap">
-          <div class="era-tabs" id="era-tabs" role="tablist" aria-label="Map era">
-            <button type="button" class="era-btn active" data-era="colonial">🏴 Colonial (1840s–1947)</button>
-            <button type="button" class="era-btn" data-era="independence">🇮🇳 Post-Independence (1951–1990s)</button>
-            <button type="button" class="era-btn" data-era="today">🌍 Today (Global)</button>
+        <div class="era-journey-wrap">
+          <div class="era-tabs" id="era-tabs" role="tablist" aria-label="Tea journey era">
+            <button type="button" class="era-btn active" data-era="colonial" role="tab" aria-selected="true">🏴 Colonial (1840s–1947)</button>
+            <button type="button" class="era-btn" data-era="independence" role="tab" aria-selected="false">🇮🇳 Post-Independence (1951–1990s)</button>
+            <button type="button" class="era-btn" data-era="today" role="tab" aria-selected="false">🌍 Today (Global)</button>
           </div>
 
-          <div class="era-content-wrap">
-            <div class="era-map-panel" role="region" aria-label="Map of Assam tea journey">
-              <svg id="era-svg" viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect width="340" height="380" fill="#0f1f14" rx="6"/>
-                <path id="india-shape" fill="rgba(45,92,56,0.22)" stroke="#4a7c59" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" d="M159.7,71.3 L168.6,89.6 L167.9,107.9 L183.9,124.3 L189.3,136.4 L209.9,146.1 L227.8,152.0 L246.0,155.0 L254.7,151.2 L254.2,141.4 L260.8,148.6 L274.9,150.6 L290.8,145.3 L294.5,141.2 L321.2,130.8 L332.1,132.6 L339.6,141.3 L330.5,147.0 L313.3,170.8 L299.6,189.0 L296.0,195.1 L288.6,180.5 L282.1,181.6 L288.0,166.4 L265.5,158.4 L255.8,169.0 L259.4,174.8 L262.5,194.9 L254.9,198.1 L239.2,212.4 L215.6,229.4 L199.5,245.5 L186.7,251.0 L179.6,258.5 L181.5,270.5 L178.1,286.9 L169.1,310.0 L160.4,321.9 L148.0,316.0 L137.0,289.5 L129.8,269.1 L119.9,250.7 L113.3,221.1 L111.6,201.3 L84.1,191.2 L70.6,179.8 L97.0,173.7 L90.0,161.1 L93.1,140.3 L113.4,131.4 L128.1,112.8 L135.7,100.9 L125.1,90.1 L126.3,78.1 L150.5,79.0 Z"/>
-                <ellipse id="assam-dot" cx="310.2" cy="151.7" rx="20" ry="12" fill="#5a9e4b" opacity="0.85"/>
-                <text id="assam-label" x="310.2" y="154.7" text-anchor="middle" font-size="8" fill="#e8f0e2" font-family="Inter,sans-serif">ASSAM</text>
-                <circle id="dest-dot" r="7" fill="#b85c2a" opacity="0"/>
-                <text id="dest-label" text-anchor="middle" font-size="7" fill="#e8f0e2" font-family="Inter,sans-serif"></text>
-                <path id="flow-line" fill="none" stroke="#c8a951" stroke-width="1.5" stroke-dasharray="4 3" opacity="0">
-                  <animate id="flow-anim" attributeName="stroke-dashoffset" from="200" to="0" dur="1.5s" repeatCount="indefinite"/>
-                </path>
-                <circle id="assam-pulse" cx="310.2" cy="151.7" r="16" fill="none" stroke="#5a9e4b" stroke-width="1" opacity="0.4">
-                  <animate attributeName="r" values="14;24;14" dur="2s" repeatCount="indefinite"/>
-                  <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite"/>
-                </circle>
-              </svg>
+          <div class="era-journey-chart" role="region" aria-label="Tea flow from Assam across three eras">
+            <div class="journey-bar" id="journey-bar">
+              <button type="button" class="journey-segment active" data-era="colonial" style="--seg-color:#b85c2a" aria-pressed="true">
+                <span class="journey-segment-dot" aria-hidden="true"></span>
+                <span class="journey-segment-period">1840s–1947</span>
+                <span class="journey-segment-flow">Assam → Britain</span>
+                <span class="journey-segment-tag">Export to Empire</span>
+              </button>
+              <button type="button" class="journey-segment" data-era="independence" style="--seg-color:#c8a951" aria-pressed="false">
+                <span class="journey-segment-dot" aria-hidden="true"></span>
+                <span class="journey-segment-period">1951–1990s</span>
+                <span class="journey-segment-flow">Assam → Delhi</span>
+                <span class="journey-segment-tag">Domestic regulation</span>
+              </button>
+              <button type="button" class="journey-segment" data-era="today" style="--seg-color:#5a9e4b" aria-pressed="false">
+                <span class="journey-segment-dot" aria-hidden="true"></span>
+                <span class="journey-segment-period">Today</span>
+                <span class="journey-segment-flow">Assam → Global</span>
+                <span class="journey-segment-tag">50+ countries</span>
+              </button>
             </div>
-
-            <div class="era-fact-panel" id="era-fact-panel"></div>
+            <p class="journey-axis"><span>Origin: Assam estates</span><span class="journey-axis-arrow" aria-hidden="true">→</span><span>Destination shifts each era</span></p>
           </div>
+
+          <div class="era-fact-panel" id="era-fact-panel" role="tabpanel"></div>
         </div>
       </div>
     </section>
@@ -1327,7 +1413,7 @@
 
     <section id="trackYourTea" class="fade-up">
       <div class="wrap">
-        <p class="section-label">Your contribution</p>
+        <p class="section-label">My contribution</p>
         <h2>Track Your Tea: Where does the money go?</h2>
         <p class="section-intro">The numbers below come from Tea Board of India auction records (GTAC FY 2024–25), supermarket listings verified in June 2025, and the Assam government wage notification from April 2026. Retail price per kg is calculated from Tesco UK and Walmart US listings. Auction price: ₹227.70/kg average. Worker wage per kg: ₹280/day statutory minimum divided by the standard 26 kg daily quota = ₹10.77/kg. Currency conversions are illustrative (₹106 = £1, ₹84 = $1). The price decomposition is the author's own calculation.</p>
         <div class="tyt-section fade-up">
@@ -2002,107 +2088,10 @@
         });
       });
 
-      /* Era map — equirectangular projection centered on India (Natural Earth outline, public domain) */
-      var eraMap = (function () {
-        var W = 340;
-        var H = 380;
-        var CENTER_LNG = 78.96;
-        var CENTER_LAT = 22.59;
-        var SCALE = 9.2;
-        var ASSAM = { lng: 94.2, lat: 26.75 };
-        /* Simplified outer ring: johan/world.geo.json IND, every 3rd vertex */
-        var INDIA_RING = [
-          [77.837451, 35.49401], [78.811086, 33.506198], [78.738894, 31.515906], [80.476721, 29.729865],
-          [81.057203, 28.416095], [83.304249, 27.364506], [85.251779, 26.726198], [87.227472, 26.397898],
-          [88.174804, 26.810405], [88.120441, 27.876542], [88.835643, 27.098966], [90.373275, 26.875724],
-          [92.103712, 27.452614], [92.503119, 27.896876], [95.404802, 29.031717], [96.586591, 28.83098],
-          [97.402561, 27.882536], [96.419366, 27.264589], [94.552658, 24.675238], [93.060294, 22.703111],
-          [92.672721, 22.041239], [91.869928, 23.624346], [91.158963, 23.503527], [91.799596, 25.147432],
-          [89.355094, 26.014407], [88.306373, 24.866079], [88.69994, 24.233715], [89.031961, 22.055708],
-          [88.208497, 21.703172], [86.499351, 20.151638], [83.941006, 18.30201], [82.191242, 16.556664],
-          [80.791999, 15.951972], [80.025069, 15.136415], [80.233274, 13.835771], [79.862547, 12.056215],
-          [78.885345, 9.546136], [77.941165, 8.252959], [76.592979, 8.899276], [75.396101, 11.781245],
-          [74.616717, 13.992583], [73.534199, 15.990652], [72.820909, 19.208234], [72.630533, 21.356009],
-          [69.644928, 22.450775], [68.176645, 23.691965], [71.04324, 24.356524], [70.282873, 25.722229],
-          [70.616496, 27.989196], [72.823752, 28.961592], [74.42138, 30.979815], [75.258642, 32.271105],
-          [74.104294, 33.441473], [74.240203, 34.748887], [76.871722, 34.653544]
-        ];
-
-        function project(lng, lat) {
-          return [
-            (lng - CENTER_LNG) * SCALE + W / 2,
-            (CENTER_LAT - lat) * SCALE + H / 2
-          ];
-        }
-
-        function ringToPath(ring) {
-          return ring.map(function (coord, i) {
-            var p = project(coord[0], coord[1]);
-            return (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1);
-          }).join(" ") + " Z";
-        }
-
-        function flowPath(from, to, bend, screenEnd) {
-          var o = project(from.lng, from.lat);
-          var d = screenEnd || project(to.lng, to.lat);
-          var cx = (o[0] + d[0]) / 2 + (bend && bend.dx ? bend.dx : 0);
-          var cy = (o[1] + d[1]) / 2 + (bend && bend.dy ? bend.dy : 0);
-          return "M" + o[0].toFixed(1) + "," + o[1].toFixed(1) +
-            " Q" + cx.toFixed(1) + "," + cy.toFixed(1) +
-            " " + d[0].toFixed(1) + "," + d[1].toFixed(1);
-        }
-
-        function destScreen(key, dest) {
-          if (key === "colonial") return [24, 30];
-          if (key === "today") {
-            var p = project(dest.lng, dest.lat);
-            return [Math.min(W - 18, Math.max(p[0], W - 44)), Math.min(70, Math.max(p[1], 36))];
-          }
-          return project(dest.lng, dest.lat);
-        }
-
-        function positionAssam() {
-          var assamDot = document.getElementById("assam-dot");
-          var assamLabel = document.getElementById("assam-label");
-          var pulse = document.getElementById("assam-pulse");
-          if (!assamDot) return;
-          var a = project(ASSAM.lng, ASSAM.lat);
-          assamDot.setAttribute("cx", a[0].toFixed(1));
-          assamDot.setAttribute("cy", a[1].toFixed(1));
-          if (assamLabel) {
-            assamLabel.setAttribute("x", a[0].toFixed(1));
-            assamLabel.setAttribute("y", (a[1] + 3).toFixed(1));
-          }
-          if (pulse) {
-            pulse.setAttribute("cx", a[0].toFixed(1));
-            pulse.setAttribute("cy", a[1].toFixed(1));
-            if (!pulse.getAttribute("r")) pulse.setAttribute("r", "16");
-          }
-        }
-
-        function initSvg() {
-          var shape = document.getElementById("india-shape");
-          if (!shape) return;
-          shape.setAttribute("d", ringToPath(INDIA_RING));
-          positionAssam();
-        }
-
-        return {
-          project: project,
-          flowPath: flowPath,
-          destScreen: destScreen,
-          initSvg: initSvg,
-          positionAssam: positionAssam,
-          ASSAM: ASSAM
-        };
-      })();
-
+      /* Era journey timeline */
       var eraData = {
         colonial: {
           label: "Colonial Era — 1840s to 1947",
-          dest: { lng: -2.5, lat: 54.5, label: "Britain" },
-          flowBend: { dx: -90, dy: -50 },
-          color: "#b85c2a",
           tag: "Export to Empire",
           tagColor: "#b85c2a",
           facts: [
@@ -2115,9 +2104,6 @@
         },
         independence: {
           label: "Post-Independence — 1951 to 1990s",
-          dest: { lng: 77.2, lat: 28.6, label: "Delhi / Domestic" },
-          flowBend: { dx: -20, dy: 30 },
-          color: "#c8a951",
           tag: "Formal regulation begins",
           tagColor: "#c8a951",
           facts: [
@@ -2130,9 +2116,6 @@
         },
         today: {
           label: "Today — Global supply chains",
-          dest: { lng: 120, lat: 35, label: "Global" },
-          flowBend: { dx: 40, dy: -55 },
-          color: "#5a9e4b",
           tag: "₹10.77 → ₹23,000/kg",
           tagColor: "#5a9e4b",
           facts: [
@@ -2147,26 +2130,9 @@
 
       function renderEra(key) {
         var d = eraData[key];
-        if (!d || !d.dest) return;
-        var line = document.getElementById("flow-line");
-        var dot = document.getElementById("dest-dot");
-        var label = document.getElementById("dest-label");
+        if (!d) return;
         var panel = document.getElementById("era-fact-panel");
-        if (!line || !dot || !label || !panel) return;
-
-        var screen = eraMap.destScreen(key, d.dest);
-        line.setAttribute("d", eraMap.flowPath(eraMap.ASSAM, d.dest, d.flowBend, screen));
-        line.setAttribute("stroke", d.color);
-        line.style.opacity = "0.85";
-
-        dot.setAttribute("cx", screen[0].toFixed(1));
-        dot.setAttribute("cy", screen[1].toFixed(1));
-        dot.setAttribute("fill", d.color);
-        dot.style.opacity = "1";
-        label.setAttribute("x", screen[0].toFixed(1));
-        label.setAttribute("y", (screen[1] - (key === "colonial" ? 9 : 11)).toFixed(1));
-        label.textContent = d.dest.label;
-        label.style.opacity = "1";
+        if (!panel) return;
 
         panel.innerHTML =
           '<div class="era-tag" style="background:' + d.tagColor + '20;border:1px solid ' + d.tagColor + ';color:' + d.tagColor + '">' + d.tag + '</div>' +
@@ -2179,18 +2145,24 @@
           '<div class="era-insight">' + d.insight + '</div>';
 
         document.querySelectorAll("#era-tabs .era-btn").forEach(function (btn) {
-          btn.classList.toggle("active", btn.getAttribute("data-era") === key);
+          var active = btn.getAttribute("data-era") === key;
+          btn.classList.toggle("active", active);
+          btn.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        document.querySelectorAll("#journey-bar .journey-segment").forEach(function (seg) {
+          var active = seg.getAttribute("data-era") === key;
+          seg.classList.toggle("active", active);
+          seg.setAttribute("aria-pressed", active ? "true" : "false");
         });
       }
 
-      function initEraMap() {
-        eraMap.initSvg();
+      function initEraJourney() {
         renderEra("colonial");
       }
-      document.querySelectorAll("#era-tabs .era-btn").forEach(function (btn) {
+      document.querySelectorAll("#era-tabs .era-btn, #journey-bar .journey-segment").forEach(function (btn) {
         btn.addEventListener("click", function () { renderEra(btn.getAttribute("data-era")); });
       });
-      initEraMap();
+      initEraJourney();
 
       /* Quota simulator */
       (function initQuotaSimulator() {
@@ -2789,7 +2761,6 @@
         buildTimeline();
         initCounters();
         initTrackYourTea();
-        if (typeof eraMap !== "undefined") eraMap.initSvg();
         setTimeout(checkCountersInView, 400);
       }
       document.addEventListener("DOMContentLoaded", onDomReady);
